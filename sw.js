@@ -1,4 +1,4 @@
-const CACHE = 'sommer2027-v17';
+const CACHE = 'sommer2027-v18';
 const CORE = [
   './',
   './index.html',
@@ -12,12 +12,24 @@ const CORE = [
   './ai.css',
   './ai.js',
   './familien-login.html',
+  './ACTIVITY_PHOTOS.json',
+  './index-page.css',
+  './index-inline-1.js',
+  './index-inline-2.js',
+  './ile-de-re-guide-page.css',
+  './ile-de-re-restaurants-page.css',
+  './ile-de-re-restaurants-inline-1.js',
+  './familien-login-page.css',
+  './familien-login-inline-1.js',
+  './gemeinsamer-plan.html',
+  './gemeinsamer-plan-page.css',
+  './gemeinsamer-plan-inline-1.js',
 ];
 self.addEventListener('install', (event) =>
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) => cache.addAll(CORE))
+      .then((cache) => cache.addAll(CORE.map((url) => new Request(url, { cache: 'reload' }))))
       .then(() => self.skipWaiting()),
   ),
 );

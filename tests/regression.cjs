@@ -63,6 +63,13 @@ const { chromium } = require('playwright');
       contentType: 'image/png',
     });
   });
+  async function until(predicate) {
+    for (let attempt = 0; attempt < 100; attempt++) {
+      if (await page.evaluate(predicate)) return;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    throw Error('Timed out waiting for browser state');
+  }
   await page.addInitScript(() => {
     window.cspViolations = [];
     document.addEventListener('securitypolicyviolation', (e) =>
@@ -71,6 +78,11 @@ const { chromium } = require('playwright');
   });
   let errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(origin + '/manifest.webmanifest');
+  await page.evaluate(async () => {
+    await caches.open('sommer2027-v17');
+    await caches.open('unrelated-test-cache');
+  });
   await page.goto(origin, { waitUntil: 'domcontentloaded' });
   await page.locator('.activity').first().waitFor();
   if (!(await page.evaluate(() => !!window.L && !!window.supabase)))
@@ -110,17 +122,13 @@ const { chromium } = require('playwright');
     mimeType: 'application/json',
     buffer: Buffer.from(exported),
   });
-  await page.waitForFunction(
-    () => document.querySelector('#toast').textContent === 'Plan importiert',
-  );
+  await until(() => document.querySelector('#toast').textContent === 'Plan importiert');
   await page.locator('#importInput').setInputFiles({
     name: 'invalid.json',
     mimeType: 'application/json',
     buffer: Buffer.from('{}'),
   });
-  await page.waitForFunction(() =>
-    document.querySelector('#toast').textContent.includes('Ungültige'),
-  );
+  await until(() => document.querySelector('#toast').textContent.includes('Ungültige'));
   page.once('dialog', (dialog) => dialog.accept('Testidee nur lokal'));
   await page.locator('#custom').click();
   if (!(await page.locator('#slots').textContent()).includes('Testidee nur lokal'))
@@ -150,7 +158,7 @@ const { chromium } = require('playwright');
     if (p === 'ai.html' && !(await page.locator('#aiSubmit').isDisabled()))
       throw Error('AI signed-out guard');
     if (p === 'familien-login.html') {
-      await page.waitForFunction(() => !document.querySelector('#signin').disabled);
+      await until(() => !document.querySelector('#signin').disabled);
     }
     if (p === 'ile-de-re-restaurants.html') {
       await page.locator('#place').selectOption('La Flotte');
@@ -158,6 +166,65 @@ const { chromium } = require('playwright');
         throw Error('restaurant filter');
     }
   }
+  await page.goto(origin);
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await until(() => !!navigator.serviceWorker.controller);
+  const cacheState = await page.evaluate(async () => {
+    const names = await caches.keys();
+    const cache = await caches.open('sommer2027-v18');
+    return { names, urls: (await cache.keys()).map((r) => r.url) };
+  });
+  if (
+    cacheState.names.includes('sommer2027-v17') ||
+    !cacheState.names.includes('sommer2027-v18') ||
+    !cacheState.names.includes('unrelated-test-cache')
+  )
+    throw Error('SW upgrade/cache isolation');
+  for (const file of [
+    'ACTIVITY_PHOTOS.json',
+    'index-inline-1.js',
+    'familien-login-inline-1.js',
+    'gemeinsamer-plan-page.css',
+  ])
+    if (!cacheState.urls.some((u) => u.endsWith('/' + file))) throw Error('SW missing ' + file);
+  await page.evaluate(async () => {
+    await fetch('/supabase/private-probe');
+    await fetch('/private-probe', { headers: { Authorization: 'Bearer local-test-only' } });
+  });
+  const leaked = await page.evaluate(async () => {
+    const c = await caches.open('sommer2027-v18');
+    return (await c.keys()).some((r) => r.url.includes('private-probe'));
+  });
+  if (leaked) throw Error('Private request cached');
+  if (process.env.TEST_BROWSER !== 'webkit') await page.unroute('https://**/*');
+  const webkit = process.env.TEST_BROWSER === 'webkit';
+  if (webkit) {
+    await new Promise((resolve) => {
+      server.close(resolve);
+      server.closeAllConnections();
+    });
+    if (server.listening) throw Error('Origin still running');
+    const control = await browser.newPage();
+    let controlFailed = false;
+    try {
+      await control.goto(origin + '/index.html');
+    } catch {
+      controlFailed = true;
+    }
+    await control.close();
+    if (!controlFailed) throw Error('No-worker outage control unexpectedly succeeded');
+  } else {
+    await page.context().setOffline(true);
+  }
+  const fallback = await page.goto(origin + '/index.html');
+  if (!fallback?.fromServiceWorker()) throw Error('Fallback did not come from service worker');
+  await page.locator('.activity').first().waitFor();
+  if ((await page.locator('.activity').count()) !== 59) throw Error('Offline activity data');
+  await page.goto(origin + '/ile-de-re-restaurants.html');
+  await page.locator('#place').selectOption('La Flotte');
+  if ((await page.locator('.food-card:visible').count()) === 0)
+    throw Error('Offline restaurant scripts');
+  await page.context().setOffline(false);
   await page.evaluate(() => {
     const s = document.createElement('script');
     s.textContent = 'window.inlineExecuted=true';
@@ -172,7 +239,7 @@ const { chromium } = require('playwright');
     throw Error('CSP negative test');
   if (errors.length) throw Error(JSON.stringify(errors));
   console.log(
-    'PASS: 59 activities, search, favorites, add, move, remove, undo, persistence, map with 36 island markers and popup, gallery, restaurant filter, import/export roundtrip, invalid import, custom idea, signed-out login/AI, 5 subpages; no unexpected JS page errors or CSP violations; negative CSP tests passed',
+    `PASS: 59 activities, search, favorites, add, move, remove, undo, persistence, map with 36 island markers and popup, gallery, restaurant filter, import/export roundtrip, invalid import, custom idea, signed-out login/AI, 5 subpages; no unexpected JS page errors or CSP violations; negative CSP tests passed; SW v17→v18, unrelated cache preservation, private cache exclusion and cache fallback passed (${process.env.TEST_BROWSER === 'webkit' ? 'origin stopped; offline emulation remains blocked' : 'offline emulation'})`,
   );
   await browser.close();
   server.close();
