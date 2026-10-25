@@ -24,10 +24,7 @@ begin
     raise exception 'Plan exceeds audit size limit';
   end if;
 
-  for d in select value from pg_catalog.jsonb_array_elements_text(
-    (select pg_catalog.coalesce(pg_catalog.jsonb_agg(key), '[]'::jsonb)
-     from pg_catalog.jsonb_object_keys(pg_catalog.coalesce(new.data->'days','{}'::jsonb)) as key)
-  ) loop
+  for d in select key from pg_catalog.jsonb_object_keys(pg_catalog.coalesce(new.data->'days','{}'::jsonb)) as t(key) loop
     foreach s in array array['Morgen','Mittag','Nachmittag','Abend'] loop
       old_arr := case when pg_catalog.jsonb_typeof(old.data#>array['days',d,s])='array' then old.data#>array['days',d,s] else '[]'::jsonb end;
       new_arr := case when pg_catalog.jsonb_typeof(new.data#>array['days',d,s])='array' then new.data#>array['days',d,s] else '[]'::jsonb end;
