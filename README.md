@@ -18,19 +18,26 @@ Im Ordner `python3 -m http.server 8000` starten und `http://localhost:8000` öff
 - **Keine automatische Synchronisation** zwischen Geräten.
 - Die anderen Etappen haben noch keine bestätigten Daten, deshalb noch keinen Kalender.
 - Alle Informationen, Preise und Öffnungszeiten für Juli 2027 müssen vor der Reise geprüft werden.
-- Bilder sind atmosphärische Platzhalter und nicht als echte Aufnahmen der Orte verifiziert.
+- Die Galerie zeigt sechs ausgewählte Unsplash-Fotos mit Quellen. Zusätzliche recherchierte Bildquellen stehen in PHOTO_RESEARCH.json; das Le-PAL-Tiermotiv ist ein Symbolbild, keine Parkaufnahme.
 - Externe Dienste (Karte, Schriften, Fotos) benötigen Internet.
 - Keine vertraulichen Buchungsdaten eingeben.
-- Keine GitHub-Veröffentlichung vorgenommen.
+- Live auf GitHub Pages: https://mikefaehch.github.io/Sommer2027/
 
 ## Bilder
-Sechs konkrete Unsplash-Fotos sind jetzt dokumentiert in `PHOTOS.json` und `CREDITS.md`. Die Bilder werden online geladen. Das Le-PAL-Bild bleibt ein Symbolbild.
+Sechs konkrete Unsplash-Fotos sind jetzt dokumentiert in `PHOTOS.json` und `CREDITS.md`. Die Bilder werden online geladen. Das Le-PAL-Bild ist ein atmosphärisches Tiermotiv und keine Parkaufnahme.
 
 ## Bildwelt V4
-11 weitere ortsverifizierte Bildquellen in `PHOTO_RESEARCH.json`, Unsplash und Pexels. Die Bildquellen sind in der Website unter «Fotos» direkt verlinkt; neue Originalbilder sind noch nicht lokal heruntergeladen. Einheitliche dezente Bildfarbkorrektur und Ausschnitte per CSS.
+11 weitere ortsverifizierte Bildquellen in `PHOTO_RESEARCH.json`, Unsplash und Pexels. Die recherchierten zusätzlichen Quellen bleiben in PHOTO_RESEARCH.json; die Website zeigt eine echte Galerie aus den sechs bestehenden CDN-Fotos. Einheitliche dezente Bildfarbkorrektur und Ausschnitte per CSS.
 
 ## V5 – Bildredaktion
 - Ruhigere Farbbehandlung.
 - Sechs recherchierte Ortsfotos von Unsplash/Pexels sind direkt bei den jeweiligen Erlebnissen als Originalseiten verlinkt; Originaldateien sind noch nicht lokal eingebunden.
-- Le PAL verwendet eine grafische Farbfläche statt eines irreführenden Symbolfotos.
+- Le PAL verwendet ein atmosphärisches Tiermotiv, keine dokumentarische Aufnahme des Parks.
 - Bildquellen und Lizenzen vor Veröffentlichung nochmals prüfen.
+
+## V7 – Redaktion und Offline-Cache
+- Technische Bildrecherche-Texte entfernt; echte Fotogalerie mit sechs Bildern und Quellen.
+- Hero-Nachweis dezent; Le PAL mit Symbolmotiv.
+- Beide Guide-Unterseiten im Service-Worker-Cache (sommer2027-v4).
+- Countdown bis zur Inselwoche. Externe Bilder, Schriften und Karte benötigen online Zugriff.
+- Restauranttipps sind Kandidaten, keine Buchungen.
