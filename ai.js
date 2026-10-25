@@ -6,7 +6,7 @@ const MODES={
  consensus:['Familien-Konsens','Finde Kompromisse auf Basis der vorhandenen Familienabstimmungen.','Welche Aktivitäten passen am besten zu allen Familienmitgliedern?'],
  chat:['Reise-Chat','Frag alles zu eurer Reise.','Was sollten wir in dieser Region auf keinen Fall verpassen?'],
  route:['Routenplaner','Gruppiere nahe Aktivitäten; genaue Strassenrouten und Fahrzeiten müssen separat geprüft werden.','Stelle einen Tagesausflug mit möglichst kurzen Wegen zusammen.'],
- food:['Restaurantberater','Finde passende Restaurantideen; aktuelle Öffnungszeiten und Speisekarten sind nicht live verifiziert.','Kinderfreundlich, gutes Essen, vegetarische Optionen und schöne Atmosphäre.'],
+ food:['Restaurantberater','Nur Restaurants mit mindestens 4,2 Google-Maps-Sternen. Ohne verifizierte Bewertungen werden keine konkreten Restaurants empfohlen.','Kinderfreundlich, gutes Essen, vegetarische Optionen und schöne Atmosphäre.'],
  kids:['Kinder-Reiseführer','Spannende Erklärungen und ein kleines Quiz für Kinder.','Erkläre ein Highlight kindgerecht mit drei überraschenden Fakten und einem Quiz.'],
  diary:['Reisetagebuch','Formuliere aus euren Stichworten einen schönen Tagesbericht. Fotos bleiben nur auf diesem Gerät.','Schreibe einen fröhlichen Ferienbericht aus diesen Erlebnissen: ']
 };
