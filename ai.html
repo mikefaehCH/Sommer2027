@@ -1,1 +1,93 @@
-<!doctype html><html lang="de-CH"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f7f2e8"><title>KI-Reiseassistent · Sommer 2027</title><link rel="stylesheet" href="style.css?v=20261025-13"><link rel="stylesheet" href="ai.css?v=1"></head><body><header class="topbar"><div class="shell head"><a href="index.html#reise" class="logo">Sommer <em>2027</em></a><a href="index.html#plan" class="pill outline">← Zum Ferienplan</a></div></header><main class="shell ai-page"><p class="eyebrow">UNSER FRANKREICH-ABENTEUER</p><h1>Dein KI-Reiseassistent</h1><p class="lead">Acht Helfer für eure Ferien – mit euren Reiseideen und, nach dem Login, eurem gemeinsamen Kalender.</p><p id="aiStatus" class="ai-status" role="status" aria-live="polite">Verbindung wird geprüft …</p><section class="ai-tools" aria-label="KI-Funktionen"><button data-mode="day" class="active">Tagesplaner</button><button data-mode="weather">Wetteralternativen</button><button data-mode="consensus">Familien-Konsens</button><button data-mode="chat">Reise-Chat</button><button data-mode="route">Routenplaner</button><button data-mode="food">Restaurants</button><button data-mode="kids">Kinder-Reiseführer</button><button data-mode="diary">Reisetagebuch</button></section><section class="ai-workspace"><h2 id="modeTitle">KI-Tagesplaner</h2><p id="modeHelp">Erstelle einen entspannten Tag aus euren Aktivitäten.</p><form id="aiForm"><label for="aiRegion">Region</label><select id="aiRegion"><option value="re">Île de Ré</option><option value="amboise">Amboise / Loiretal</option><option value="pal">Le PAL</option></select><label for="aiDate">Datum (optional)</label><input id="aiDate" type="date" min="2027-07-07" max="2027-07-20"><label for="aiQuestion">Dein Wunsch</label><textarea id="aiQuestion" rows="4" maxlength="2500" placeholder="Zum Beispiel: Plane einen entspannten Tag mit wenig Autofahrt und gutem Essen." required></textarea><div id="diaryInputs" hidden><label for="diaryPhotos">Fotos fürs Reisetagebuch (nur lokale Vorschau; werden nicht hochgeladen)</label><input id="diaryPhotos" type="file" accept="image/*" multiple><div id="diaryPreview" class="ai-previews"></div></div><div class="ai-actions"><button id="aiSubmit" class="pill" type="submit" disabled>Vorschlag erstellen</button><button type="button" id="aiClear" class="pill outline">Antwort löschen</button></div></form><div id="aiResult" class="ai-result" aria-live="polite" hidden><h3>Dein Vorschlag</h3><div id="aiAnswer"></div><p class="ai-note">KI-Vorschlag: Fahrzeiten, Öffnungszeiten, Wetter und Verfügbarkeit vor Ort prüfen. Änderungen am Familienplan erfolgen nur manuell.</p><button id="aiCopy" type="button" class="pill outline">Text kopieren</button><a class="pill outline" href="index.html#plan">Kalender öffnen</a></div></section><p class="ai-note">Datenschutz: Deine Eingabe und für die Antwort nötige Reiseinformationen werden an den KI-Anbieter übermittelt. Keine sensiblen Angaben oder privaten Kinderfotos eingeben. Für die KI-Funktionen ist ein freigeschalteter Familien-Login erforderlich.</p></main><script src="supabase/public-config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script><script src="data.js"></script><script src="ai.js?v=1" defer></script></body></html>
+<!doctype html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#f7f2e8" />
+    <title>KI-Reiseassistent · Sommer 2027</title>
+    <link rel="stylesheet" href="style.css?v=20261025-13" />
+    <link rel="stylesheet" href="ai.css?v=1" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell head">
+        <a href="index.html#reise" class="logo">Sommer <em>2027</em></a
+        ><a href="index.html#plan" class="pill outline">← Zum Ferienplan</a>
+      </div>
+    </header>
+    <main class="shell ai-page">
+      <p class="eyebrow">UNSER FRANKREICH-ABENTEUER</p>
+      <h1>Dein KI-Reiseassistent</h1>
+      <p class="lead">
+        Acht Helfer für eure Ferien – mit euren Reiseideen und, nach dem Login, eurem gemeinsamen
+        Kalender.
+      </p>
+      <p id="aiStatus" class="ai-status" role="status" aria-live="polite">
+        Verbindung wird geprüft …
+      </p>
+      <section class="ai-tools" aria-label="KI-Funktionen">
+        <button data-mode="day" class="active">Tagesplaner</button
+        ><button data-mode="weather">Wetteralternativen</button
+        ><button data-mode="consensus">Familien-Konsens</button
+        ><button data-mode="chat">Reise-Chat</button><button data-mode="route">Routenplaner</button
+        ><button data-mode="food">Restaurants</button
+        ><button data-mode="kids">Kinder-Reiseführer</button
+        ><button data-mode="diary">Reisetagebuch</button>
+      </section>
+      <section class="ai-workspace">
+        <h2 id="modeTitle">KI-Tagesplaner</h2>
+        <p id="modeHelp">Erstelle einen entspannten Tag aus euren Aktivitäten.</p>
+        <form id="aiForm">
+          <label for="aiRegion">Region</label
+          ><select id="aiRegion">
+            <option value="re">Île de Ré</option>
+            <option value="amboise">Amboise / Loiretal</option>
+            <option value="pal">Le PAL</option></select
+          ><label for="aiDate">Datum (optional)</label
+          ><input id="aiDate" type="date" min="2027-07-07" max="2027-07-20" /><label
+            for="aiQuestion"
+            >Dein Wunsch</label
+          ><textarea
+            id="aiQuestion"
+            rows="4"
+            maxlength="2500"
+            placeholder="Zum Beispiel: Plane einen entspannten Tag mit wenig Autofahrt und gutem Essen."
+            required
+          ></textarea>
+          <div id="diaryInputs" hidden>
+            <label for="diaryPhotos"
+              >Fotos fürs Reisetagebuch (nur lokale Vorschau; werden nicht hochgeladen)</label
+            ><input id="diaryPhotos" type="file" accept="image/*" multiple />
+            <div id="diaryPreview" class="ai-previews"></div>
+          </div>
+          <div class="ai-actions">
+            <button id="aiSubmit" class="pill" type="submit" disabled>Vorschlag erstellen</button
+            ><button type="button" id="aiClear" class="pill outline">Antwort löschen</button>
+          </div>
+        </form>
+        <div id="aiResult" class="ai-result" aria-live="polite" hidden>
+          <h3>Dein Vorschlag</h3>
+          <div id="aiAnswer"></div>
+          <p class="ai-note">
+            KI-Vorschlag: Fahrzeiten, Öffnungszeiten, Wetter und Verfügbarkeit vor Ort prüfen.
+            Änderungen am Familienplan erfolgen nur manuell.
+          </p>
+          <button id="aiCopy" type="button" class="pill outline">Text kopieren</button
+          ><a class="pill outline" href="index.html#plan">Kalender öffnen</a>
+        </div>
+      </section>
+      <p class="ai-note">
+        Datenschutz: Deine Eingabe und für die Antwort nötige Reiseinformationen werden an den
+        KI-Anbieter übermittelt. Keine sensiblen Angaben oder privaten Kinderfotos eingeben. Für die
+        KI-Funktionen ist ein freigeschalteter Familien-Login erforderlich.
+      </p>
+    </main>
+    <script src="supabase/public-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"
+      defer
+    ></script>
+    <script src="data.js"></script>
+    <script src="ai.js?v=1" defer></script>
+  </body>
+</html>

@@ -1,11 +1,685 @@
-<!doctype html><html lang="de-CH"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f7f2e8"><meta name="description" content="Unser Frankreich-Abenteuer: Amboise, Île de Ré und Le PAL. Reiseideen und flexibler Ferienkalender."><title>Sommer 2027 – Unser Frankreich-Abenteuer</title><link rel="stylesheet" href="style.css?v=20261025-13"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="manifest" href="manifest.webmanifest"></head><body>
-<header class="topbar"><div class="shell head"><a href="#reise" class="logo">Sommer <em>2027</em></a><nav class="desktop" aria-label="Navigation"><a href="#reise">Unsere Reise</a><a href="#plan">Unser Plan</a><a href="#entdecken">Entdecken</a><a href="#karte">Karte</a><a href="#bildwelt">Fotos</a><a href="#unterkuenfte">Unterkünfte</a><a href="#infos">Reisehelfer</a><a href="ai.html">KI-Assistent ✨</a></nav><a href="familien-login.html" class="pill outline" style="padding:8px 12px;font-size:12px">Familien-Login</a><button class="ghost" id="menuToggle" aria-expanded="false" aria-controls="menu" aria-label="Navigationsmenü öffnen">Menü ☰</button></div><nav id="menu" class="menu shell" aria-label="Mobile Navigation" hidden><a href="#reise">Unsere Reise</a><a href="#plan">Unser Plan</a><a href="#entdecken">Entdecken</a><a href="#karte">Karte</a><a href="#bildwelt">Fotos</a><a href="#unterkuenfte">Unterkünfte</a><a href="#infos">Reisehelfer</a><a href="ai.html">KI-Reiseassistent</a><a href="familien-login.html">Familien-Login</a></nav></header>
-<main><section id="reise"><div class="hero"><div class="shell hero-content"><p class="eyebrow light">FRANKREICH · JULI 2027</p><h1>Ein Sommer.<br>Drei Welten.</h1><p>Schlösser an der Loire. Salzige Atlantikluft. Und ein Safari-Abenteuer zum Schluss.</p><a class="pill lightbtn" href="#plan">Unsere Ferien planen <span aria-hidden="true">↗</span></a><a class="hero-credit" href="https://unsplash.com/photos/83fmx2LAgpg" target="_blank" rel="noopener">Foto: Bernd Dittrich · Unsplash</a></div></div><div class="shell section"><p class="eyebrow">UNSER FRANKREICH-ABENTEUER</p><p class="countdown" id="countdown" aria-live="off"></p><h2>Die schönsten Tage sind die, die wir selbst gestalten.</h2><p class="lead">Drei Stationen, ein gemeinsamer Sommer – und genug Zeit für spontane Entdeckungen.</p><div class="chapters"><article class="chapter"><div class="chapter-visual loire"><span>01 / LOIRETAL</span></div><div class="chapter-body"><p class="eyebrow">7.–10. JULI · 3 NÄCHTE</p><h3>Amboise</h3><p>Schlösser, Leonardo da Vinci und französische Lebensart am Fluss.</p><button class="textlink" data-region="amboise">Ideen entdecken ↗</button></div><span class="chapter-credit">Foto: <a href="https://unsplash.com/photos/dB648jGakEA" target="_blank" rel="noopener">Stefan K · Unsplash</a></span></article><article class="chapter"><div class="chapter-visual ile"><span>02 / ATLANTIK</span></div><div class="chapter-body"><p class="eyebrow">10.–17. JULI · 7 NÄCHTE</p><h3>Île de Ré</h3><p>Kleine Häfen, schöne Märkte, Strände und lange Sommerabende.</p><button class="textlink" data-region="re">Ideen entdecken ↗</button></div><span class="chapter-credit">Foto: <a href="https://unsplash.com/photos/rP7vPVE5e48" target="_blank" rel="noopener">Damien Dufour · Unsplash</a></span></article><article class="chapter"><div class="chapter-visual safari"><span>03 / ABENTEUER</span></div><div class="chapter-body"><p class="eyebrow">17.–20. JULI · 3 NÄCHTE</p><h3>Le PAL</h3><p>Tierpark, Fahrgeschäfte und vielleicht eine Safari-Lodge.</p><button class="textlink" data-region="pal">Ideen entdecken ↗</button></div></article></div></div></section>
-<section id="plan" class="section tinted"><div class="shell"><p class="eyebrow">UNSER FERIENKALENDER</p><div class="headingline"><div><h2>Ein Plan, der sich nach uns richtet.</h2><p class="lead">Vier lockere Zeitfenster pro Tag. Nichts ist in Stein gemeisselt.</p></div><button class="pill outline" id="undo">↶ Rückgängig</button></div><div class="shared-toolbar"><p id="cloudStatus" class="cloud-status" role="status">Gemeinsame Planung wird geprüft …</p><button type="button" class="pill outline" id="refreshShared">↻ Gemeinsam aktualisieren</button></div><div class="planner"><div class="planmain"><div class="date-strip" id="dateStrip"></div><div class="panel"><div class="eyebrow" id="planRegion">ÎLE DE RÉ</div><h3 id="dayTitle"></h3><div id="slots"></div><div class="actions"><button id="custom" class="pill outline">+ Eigene Idee</button><button id="export" class="pill outline">↓ Sichern</button><button id="import" class="pill outline">↑ Importieren</button><input id="importInput" type="file" accept=".json,application/json" hidden></div><p class="footnote">Mit Familien-Login wird der Kalender gemeinsam synchronisiert. Ohne Anmeldung bleiben Änderungen nur auf diesem Gerät.</p></div></div><aside class="panel suggestion"><p class="eyebrow">PASSEND ZU DIESEM REISEABSCHNITT</p><h3>Ideen für unseren Tag</h3><div id="suggestions"></div></aside></div><div class="panel history-panel"><h3>Was hat sich geändert?</h3><p class="muted">Die letzten Änderungen aus der gemeinsamen Familienplanung.</p><ol id="changeHistory" aria-live="polite"></ol></div></div></section>
-<section class="shell section" aria-label="Inselguide"><div class="panel" style="background:#e6e9de;border-color:#d3ddce;padding:clamp(22px,4vw,44px)"><p class="eyebrow">NEU · ÎLE DE RÉ</p><h2>Sieben Tage. Ganz viel Atlantik.</h2><p class="lead">Vier liebevoll kombinierte Tagesideen – von La Flotte bis zum Leuchtturm und nach La Rochelle. Alles flexibel, ganz ohne Pflichtprogramm.</p><a class="pill" href="ile-de-re-guide.html">Unseren Inselguide entdecken ↗</a></div></section>
-<section class="shell section" aria-label="Restaurantguide"><div class="panel" style="background:#f2e6d9;border-color:#e4d2c0;padding:clamp(22px,4vw,44px)"><p class="eyebrow">NEU · GENIESSEN AUF DER ÎLE DE RÉ</p><h2>Die schönsten Adressen zum Essen.</h2><p class="lead">Zehn recherchierte Restaurants zwischen La Flotte und Saint-Martin-de-Ré – mit Filter für vegetarische Auswahl und direkten Quellen.</p><a class="pill" href="ile-de-re-restaurants.html">Unsere Restauranttipps entdecken ↗</a></div></section>
-<section id="entdecken" class="shell section"><p class="eyebrow">IDEEN & INSPIRATION</p><h2>Das könnten wir erleben.</h2><p class="lead">Eine sorgfältig zusammengestellte erste Auswahl. Reisezeit: 7.–20. Juli 2027. Öffnungszeiten und Buchungen für 2027 vor der Reise prüfen.</p><div class="filterbar"><label class="searchlabel">Suchen <input id="search" type="search" placeholder="Ort, Erlebnis, Stichwort …"></label><label>Region <select id="regionFilter"><option value="all">Alle Regionen</option><option value="amboise">Amboise</option><option value="re">Île de Ré</option><option value="pal">Le PAL</option></select></label><label>Kategorie <select id="categoryFilter"><option value="all">Alle Kategorien</option></select></label><label>Auswahl <select id="favFilter"><option value="all">Alle</option><option value="favorites">Meine Favoriten</option><option value="top">Top-Highlights</option></select></label></div><p class="results" id="resultCount"></p><div class="activitygrid" id="activityGrid"></div></section>
-<section id="karte" class="section tinted"><div class="shell"><p class="eyebrow">UNTERWEGS IN FRANKREICH</p><h2>Alle Ideen auf der Karte.</h2><p class="lead">Entdecke die Ausflüge jeder Etappe im Detail.</p><div class="map-tabs" role="group" aria-label="Kartenausschnitt wählen"><button type="button" class="map-tab active" data-map-region="amboise" aria-pressed="true">Amboise & Loire</button><button type="button" class="map-tab" data-map-region="re" aria-pressed="false">Île de Ré</button><button type="button" class="map-tab" data-map-region="pal" aria-pressed="false">Le PAL & Umgebung</button></div><div class="mapwrap"><div id="map" aria-label="Karte der Reiseziele"></div><div class="mapfallback" id="mapFallback" hidden>Die Karte benötigt eine Internetverbindung. <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap öffnen ↗</a></div></div></div></section>
-<section id="bildwelt" class="section tinted"><div class="shell"><p class="eyebrow">MAISON D’ÉTÉ · FOTOGALERIE</p><h2>Ein Vorgeschmack auf unseren Sommer.</h2><p class="lead">Ein paar Eindrücke von den Orten, die auf uns warten.</p><div class="photo-library"><article class="photo-choice"><button type="button" class="photo-open" data-photo-detail="0" aria-label="Mehr über Strand Île de Ré erfahren"><img src="https://images.unsplash.com/photo-1630358087682-88993c5b33d2?auto=format&fit=crop&w=850&q=80" alt="Strand Île de Ré" loading="lazy" decoding="async"><span class="photo-caption"><strong>Strand Île de Ré</strong><span class="photo-hint">Ort entdecken <span aria-hidden="true">↗</span></span></span></button><a class="photo-credit" href="https://unsplash.com/photos/83fmx2LAgpg" target="_blank" rel="noopener noreferrer" aria-label="Bildquelle für Strand Île de Ré auf Unsplash öffnen">Foto: Bernd Dittrich · Unsplash</a></article><article class="photo-choice"><button type="button" class="photo-open" data-photo-detail="1" aria-label="Mehr über Château d’Amboise erfahren"><img src="https://images.unsplash.com/photo-1624627922267-e3f096904292?auto=format&fit=crop&w=850&q=80" alt="Château d’Amboise" loading="lazy" decoding="async"><span class="photo-caption"><strong>Château d’Amboise</strong><span class="photo-hint">Ort entdecken <span aria-hidden="true">↗</span></span></span></button><a class="photo-credit" href="https://unsplash.com/photos/dB648jGakEA" target="_blank" rel="noopener noreferrer" aria-label="Bildquelle für Château d’Amboise auf Unsplash öffnen">Foto: Stefan K · Unsplash</a></article><article class="photo-choice"><button type="button" class="photo-open" data-photo-detail="2" aria-label="Mehr über Strand Île de Ré erfahren"><img src="https://images.unsplash.com/photo-1596737982005-c9000c991014?auto=format&fit=crop&w=850&q=80" alt="Strand Île de Ré" loading="lazy" decoding="async"><span class="photo-caption"><strong>Strand Île de Ré</strong><span class="photo-hint">Ort entdecken <span aria-hidden="true">↗</span></span></span></button><a class="photo-credit" href="https://unsplash.com/photos/rP7vPVE5e48" target="_blank" rel="noopener noreferrer" aria-label="Bildquelle für Strand Île de Ré auf Unsplash öffnen">Foto: Damien Dufour · Unsplash</a></article><article class="photo-choice"><button type="button" class="photo-open" data-photo-detail="3" aria-label="Mehr über Clos Lucé erfahren"><img src="https://images.unsplash.com/photo-1713359256737-156978b04c77?auto=format&fit=crop&w=850&q=80" alt="Clos Lucé" loading="lazy" decoding="async"><span class="photo-caption"><strong>Clos Lucé</strong><span class="photo-hint">Ort entdecken <span aria-hidden="true">↗</span></span></span></button><a class="photo-credit" href="https://unsplash.com/photos/Gbqy4gzFiJU" target="_blank" rel="noopener noreferrer" aria-label="Bildquelle für Clos Lucé auf Unsplash öffnen">Foto: Hongbin · Unsplash</a></article><article class="photo-choice"><button type="button" class="photo-open" data-photo-detail="4" aria-label="Mehr über Hafen La Rochelle erfahren"><img src="https://images.unsplash.com/photo-1744709561288-74517c00d17c?auto=format&fit=crop&w=850&q=80" alt="Hafen La Rochelle" loading="lazy" decoding="async"><span class="photo-caption"><strong>Hafen La Rochelle</strong><span class="photo-hint">Ort entdecken <span aria-hidden="true">↗</span></span></span></button><a class="photo-credit" href="https://unsplash.com/photos/smMhJmpcWIs" target="_blank" rel="noopener noreferrer" aria-label="Bildquelle für Hafen La Rochelle auf Unsplash öffnen">Foto: Carnet de Voyage d'Alex · Unsplash</a></article><article class="photo-choice"><button type="button" class="photo-open" data-photo-detail="5" aria-label="Mehr über Château Royal d’Amboise erfahren"><img src="https://images.unsplash.com/photo-1646345533510-5d23b6b730d9?auto=format&fit=crop&w=850&q=80" alt="Château Royal d’Amboise" loading="lazy" decoding="async"><span class="photo-caption"><strong>Château Royal d’Amboise</strong><span class="photo-hint">Ort entdecken <span aria-hidden="true">↗</span></span></span></button><a class="photo-credit" href="https://unsplash.com/photos/n14FOz-olkI" target="_blank" rel="noopener noreferrer" aria-label="Bildquelle für Château Royal d’Amboise auf Unsplash öffnen">Foto: Matthieu Oger · Unsplash</a></article></div></div></section><section id="unterkuenfte" class="shell section"><p class="eyebrow">UNSER ZUHAUSE UNTERWEGS</p><h2>Die Unterkünfte.</h2><div class="lodgings"><article class="panel"><p class="eyebrow">AMBOISE</p><h3>Hotel noch offen</h3><p>3 Nächte vom 7.–10. Juli. Lage, Parkplatz und familienfreundliche Zimmer prüfen.</p></article><article class="panel"><p class="eyebrow">ÎLE DE RÉ · 10.–17. JULI</p><h3>Ferienhaus noch offen</h3><p>Bevorzugte Orte: La Flotte, Saint-Martin-de-Ré oder Le Bois-Plage-en-Ré.</p></article><article class="panel"><p class="eyebrow">LE PAL</p><h3>Safari-Unterkunft prüfen</h3><p>Savana RESERVE oder Les Lodges du PAL – noch nicht gebucht.</p><a href="https://www.lepal.com/" target="_blank" rel="noopener">Offizielle Website ↗</a></article></div></section>
-<section id="infos" class="section tinted"><div class="shell"><p class="eyebrow">GUT ZU WISSEN</p><h2>Alles Wichtige griffbereit.</h2><div class="infogrid"><article class="panel"><h3>Reisedaten</h3><p>Île de Ré: 10.–17. Juli 2027. Amboise: 7.–10. Juli (3 Nächte). Le PAL: 17.–20. Juli (3 Nächte). Am 20. Juli fahren wir direkt nach Baden zurück.</p></article><article class="panel"><h3>Frankreich am 14. Juli</h3><p>Nationalfeiertag. Mögliche Veranstaltungen, Öffnungszeiten und Verkehr vor der Reise prüfen.</p></article><article class="panel"><h3>Wetter & Gezeiten</h3><p>Konkrete Wetterprognosen sind erst kurz vor der Reise sinnvoll. Für Strandtage die aktuellen Bedingungen und Gezeiten prüfen.</p></article><article class="panel"><h3>Datenschutz & Sicherung</h3><p>Keine Buchungscodes oder vertraulichen Daten eingeben. Den Plan regelmässig als JSON exportieren.</p></article></div></div></section></main>
-<footer><div class="shell">Sommer 2027 · Unser Frankreich-Abenteuer </div></footer><nav class="mobile-nav" aria-label="Schnellnavigation"><a href="#reise" aria-label="Reise"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-7h6v7"/></svg><small>Reise</small></a><a href="#plan" aria-label="Plan"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg><small>Plan</small></a><a href="#entdecken" aria-label="Ideen"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/></svg><small>Ideen</small></a><a href="#karte" aria-label="Karte"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><small>Karte</small></a></nav><div id="toast" class="toast" role="status" aria-live="polite"></div><script>!function(){const el=document.getElementById('countdown');if(!el)return;const today=new Date();today.setHours(0,0,0,0);const target=new Date(2027,6,7);const days=Math.ceil((target-today)/86400000);el.textContent=days>0?'Noch '+days+' Tage bis zur Abreise':days===0?'Heute geht’s nach Frankreich!':''}();</script><script src="supabase/public-config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script><script src="data.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script><script src="app.js?v=20261025-14" defer></script><dialog id="moveDialog" class="slot-dialog" aria-labelledby="moveDialogTitle"><div class="move-form"><p class="eyebrow">AKTIVITÄT VERSCHIEBEN</p><h2 id="moveDialogTitle"></h2><label>Tag<select id="moveDate"></select></label><label>Zeitfenster<select id="moveSlot"><option>Morgen</option><option>Mittag</option><option>Nachmittag</option><option>Abend</option></select></label><div class="move-actions"><button type="button" class="pill outline" data-move-cancel>Abbrechen</button><button type="button" class="pill" data-move-save>Verschieben</button></div></div></dialog><dialog id="slotDialog" class="slot-dialog" aria-labelledby="slotDialogTitle"><form method="dialog"><button type="button" class="slot-close" data-close-slot aria-label="Schliessen">×</button><p class="eyebrow">ZUM FERIENPLAN HINZUFÜGEN</p><h2 id="slotDialogTitle"></h2><p id="slotDialogDate" class="muted"></p><p>Wann passt die Aktivität am besten?</p><div class="slot-options"><button type="button" data-slot-choice="Morgen">☀ Morgen</button><button type="button" data-slot-choice="Mittag">◐ Mittag</button><button type="button" data-slot-choice="Nachmittag">☼ Nachmittag</button><button type="button" data-slot-choice="Abend">☾ Abend</button></div></form></dialog><dialog id="photoDialog" class="photo-dialog" aria-labelledby="photoDialogTitle"><button type="button" class="photo-close" aria-label="Schliessen">×</button><p class="eyebrow">UNSER FRANKREICH-SOMMER</p><h2 id="photoDialogTitle"></h2><p id="photoDialogText"></p><p id="photoDialogTip" class="photo-tip"></p><a id="photoDialogLink" class="pill" href="#entdecken">Alle Ideen dieser Etappe ansehen →</a></dialog><script>const PHOTO_DETAILS=[["Strände der Île de Ré","Lange Sandstrände, Dünen und kleine Badebuchten machen die Insel ideal für entspannte Familientage.","Für Familien: Gros Jonc bei Le Bois-Plage oder die Strände von La Couarde. Wind, Strömungen und Gezeiten vor dem Baden prüfen.","re"],["Château d’Amboise","Das königliche Schloss thront über der Loire und erzählt von der französischen Renaissance.","Besonders schön: der Blick auf den Fluss, die Schlossgärten und ein Spaziergang durch die Altstadt von Amboise.","amboise"],["Île de Ré entdecken","Zwischen Atlantik, Salzgärten und weiss getünchten Dörfern lässt sich die Insel wunderbar mit dem Velo erkunden.","Ideen: Saint-Martin-de-Ré, der Leuchtturm Phare des Baleines und eine gemütliche Velotour durch die Salzgärten.","re"],["Clos Lucé","Im ehemaligen Wohnhaus von Leonardo da Vinci entdeckt ihr seine Ideen, Erfindungen und Lebensgeschichte.","Für Kinder besonders spannend: die nachgebauten Maschinen und der Park mit interaktiven Stationen.","amboise"],["La Rochelle","Die historische Hafenstadt vor der Île de Ré bietet alte Türme, lebhafte Gassen und Restaurants am Wasser.","Als Ausflug: durch den Vieux-Port schlendern, ein Glacé essen und die Altstadt entdecken.","re"],["Château Royal d’Amboise","Das Schloss hoch über der Loire war eine wichtige königliche Residenz und bietet weite Ausblicke.","Kombiniert den Besuch mit Clos Lucé und einer Pause in den Cafés von Amboise.","amboise"]];const photoDialog=document.getElementById('photoDialog');document.querySelectorAll('[data-photo-detail]').forEach(button=>button.addEventListener('click',()=>{const d=PHOTO_DETAILS[Number(button.dataset.photoDetail)];if(!d)return;document.getElementById('photoDialogTitle').textContent=d[0];document.getElementById('photoDialogText').textContent=d[1];document.getElementById('photoDialogTip').textContent=d[2];document.getElementById('photoDialogLink').href='#entdecken';photoDialog.showModal()}));photoDialog.querySelector('.photo-close').addEventListener('click',()=>photoDialog.close());photoDialog.addEventListener('click',e=>{if(e.target===photoDialog)photoDialog.close()});document.getElementById('photoDialogLink').addEventListener('click',()=>photoDialog.close());</script></body></html>
+<!doctype html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#f7f2e8" />
+    <meta
+      name="description"
+      content="Unser Frankreich-Abenteuer: Amboise, Île de Ré und Le PAL. Reiseideen und flexibler Ferienkalender."
+    />
+    <title>Sommer 2027 – Unser Frankreich-Abenteuer</title>
+    <link rel="stylesheet" href="style.css?v=20261025-13" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="manifest" href="manifest.webmanifest" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell head">
+        <a href="#reise" class="logo">Sommer <em>2027</em></a>
+        <nav class="desktop" aria-label="Navigation">
+          <a href="#reise">Unsere Reise</a><a href="#plan">Unser Plan</a
+          ><a href="#entdecken">Entdecken</a><a href="#karte">Karte</a><a href="#bildwelt">Fotos</a
+          ><a href="#unterkuenfte">Unterkünfte</a><a href="#infos">Reisehelfer</a
+          ><a href="ai.html">KI-Assistent ✨</a>
+        </nav>
+        <a
+          href="familien-login.html"
+          class="pill outline"
+          style="padding: 8px 12px; font-size: 12px"
+          >Familien-Login</a
+        ><button
+          class="ghost"
+          id="menuToggle"
+          aria-expanded="false"
+          aria-controls="menu"
+          aria-label="Navigationsmenü öffnen"
+        >
+          Menü ☰
+        </button>
+      </div>
+      <nav id="menu" class="menu shell" aria-label="Mobile Navigation" hidden>
+        <a href="#reise">Unsere Reise</a><a href="#plan">Unser Plan</a
+        ><a href="#entdecken">Entdecken</a><a href="#karte">Karte</a><a href="#bildwelt">Fotos</a
+        ><a href="#unterkuenfte">Unterkünfte</a><a href="#infos">Reisehelfer</a
+        ><a href="ai.html">KI-Reiseassistent</a><a href="familien-login.html">Familien-Login</a>
+      </nav>
+    </header>
+    <main>
+      <section id="reise">
+        <div class="hero">
+          <div class="shell hero-content">
+            <p class="eyebrow light">FRANKREICH · JULI 2027</p>
+            <h1>Ein Sommer.<br />Drei Welten.</h1>
+            <p>
+              Schlösser an der Loire. Salzige Atlantikluft. Und ein Safari-Abenteuer zum Schluss.
+            </p>
+            <a class="pill lightbtn" href="#plan"
+              >Unsere Ferien planen <span aria-hidden="true">↗</span></a
+            ><a
+              class="hero-credit"
+              href="https://unsplash.com/photos/83fmx2LAgpg"
+              target="_blank"
+              rel="noopener"
+              >Foto: Bernd Dittrich · Unsplash</a
+            >
+          </div>
+        </div>
+        <div class="shell section">
+          <p class="eyebrow">UNSER FRANKREICH-ABENTEUER</p>
+          <p class="countdown" id="countdown" aria-live="off"></p>
+          <h2>Die schönsten Tage sind die, die wir selbst gestalten.</h2>
+          <p class="lead">
+            Drei Stationen, ein gemeinsamer Sommer – und genug Zeit für spontane Entdeckungen.
+          </p>
+          <div class="chapters">
+            <article class="chapter">
+              <div class="chapter-visual loire"><span>01 / LOIRETAL</span></div>
+              <div class="chapter-body">
+                <p class="eyebrow">7.–10. JULI · 3 NÄCHTE</p>
+                <h3>Amboise</h3>
+                <p>Schlösser, Leonardo da Vinci und französische Lebensart am Fluss.</p>
+                <button class="textlink" data-region="amboise">Ideen entdecken ↗</button>
+              </div>
+              <span class="chapter-credit"
+                >Foto:
+                <a href="https://unsplash.com/photos/dB648jGakEA" target="_blank" rel="noopener"
+                  >Stefan K · Unsplash</a
+                ></span
+              >
+            </article>
+            <article class="chapter">
+              <div class="chapter-visual ile"><span>02 / ATLANTIK</span></div>
+              <div class="chapter-body">
+                <p class="eyebrow">10.–17. JULI · 7 NÄCHTE</p>
+                <h3>Île de Ré</h3>
+                <p>Kleine Häfen, schöne Märkte, Strände und lange Sommerabende.</p>
+                <button class="textlink" data-region="re">Ideen entdecken ↗</button>
+              </div>
+              <span class="chapter-credit"
+                >Foto:
+                <a href="https://unsplash.com/photos/rP7vPVE5e48" target="_blank" rel="noopener"
+                  >Damien Dufour · Unsplash</a
+                ></span
+              >
+            </article>
+            <article class="chapter">
+              <div class="chapter-visual safari"><span>03 / ABENTEUER</span></div>
+              <div class="chapter-body">
+                <p class="eyebrow">17.–20. JULI · 3 NÄCHTE</p>
+                <h3>Le PAL</h3>
+                <p>Tierpark, Fahrgeschäfte und vielleicht eine Safari-Lodge.</p>
+                <button class="textlink" data-region="pal">Ideen entdecken ↗</button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="plan" class="section tinted">
+        <div class="shell">
+          <p class="eyebrow">UNSER FERIENKALENDER</p>
+          <div class="headingline">
+            <div>
+              <h2>Ein Plan, der sich nach uns richtet.</h2>
+              <p class="lead">Vier lockere Zeitfenster pro Tag. Nichts ist in Stein gemeisselt.</p>
+            </div>
+            <button class="pill outline" id="undo">↶ Rückgängig</button>
+          </div>
+          <div class="shared-toolbar">
+            <p id="cloudStatus" class="cloud-status" role="status">
+              Gemeinsame Planung wird geprüft …
+            </p>
+            <button type="button" class="pill outline" id="refreshShared">
+              ↻ Gemeinsam aktualisieren
+            </button>
+          </div>
+          <div class="planner">
+            <div class="planmain">
+              <div class="date-strip" id="dateStrip"></div>
+              <div class="panel">
+                <div class="eyebrow" id="planRegion">ÎLE DE RÉ</div>
+                <h3 id="dayTitle"></h3>
+                <div id="slots"></div>
+                <div class="actions">
+                  <button id="custom" class="pill outline">+ Eigene Idee</button
+                  ><button id="export" class="pill outline">↓ Sichern</button
+                  ><button id="import" class="pill outline">↑ Importieren</button
+                  ><input id="importInput" type="file" accept=".json,application/json" hidden />
+                </div>
+                <p class="footnote">
+                  Mit Familien-Login wird der Kalender gemeinsam synchronisiert. Ohne Anmeldung
+                  bleiben Änderungen nur auf diesem Gerät.
+                </p>
+              </div>
+            </div>
+            <aside class="panel suggestion">
+              <p class="eyebrow">PASSEND ZU DIESEM REISEABSCHNITT</p>
+              <h3>Ideen für unseren Tag</h3>
+              <div id="suggestions"></div>
+            </aside>
+          </div>
+          <div class="panel history-panel">
+            <h3>Was hat sich geändert?</h3>
+            <p class="muted">Die letzten Änderungen aus der gemeinsamen Familienplanung.</p>
+            <ol id="changeHistory" aria-live="polite"></ol>
+          </div>
+        </div>
+      </section>
+      <section class="shell section" aria-label="Inselguide">
+        <div
+          class="panel"
+          style="background: #e6e9de; border-color: #d3ddce; padding: clamp(22px, 4vw, 44px)"
+        >
+          <p class="eyebrow">NEU · ÎLE DE RÉ</p>
+          <h2>Sieben Tage. Ganz viel Atlantik.</h2>
+          <p class="lead">
+            Vier liebevoll kombinierte Tagesideen – von La Flotte bis zum Leuchtturm und nach La
+            Rochelle. Alles flexibel, ganz ohne Pflichtprogramm.
+          </p>
+          <a class="pill" href="ile-de-re-guide.html">Unseren Inselguide entdecken ↗</a>
+        </div>
+      </section>
+      <section class="shell section" aria-label="Restaurantguide">
+        <div
+          class="panel"
+          style="background: #f2e6d9; border-color: #e4d2c0; padding: clamp(22px, 4vw, 44px)"
+        >
+          <p class="eyebrow">NEU · GENIESSEN AUF DER ÎLE DE RÉ</p>
+          <h2>Die schönsten Adressen zum Essen.</h2>
+          <p class="lead">
+            Zehn recherchierte Restaurants zwischen La Flotte und Saint-Martin-de-Ré – mit Filter
+            für vegetarische Auswahl und direkten Quellen.
+          </p>
+          <a class="pill" href="ile-de-re-restaurants.html">Unsere Restauranttipps entdecken ↗</a>
+        </div>
+      </section>
+      <section id="entdecken" class="shell section">
+        <p class="eyebrow">IDEEN & INSPIRATION</p>
+        <h2>Das könnten wir erleben.</h2>
+        <p class="lead">
+          Eine sorgfältig zusammengestellte erste Auswahl. Reisezeit: 7.–20. Juli 2027.
+          Öffnungszeiten und Buchungen für 2027 vor der Reise prüfen.
+        </p>
+        <div class="filterbar">
+          <label class="searchlabel"
+            >Suchen
+            <input id="search" type="search" placeholder="Ort, Erlebnis, Stichwort …" /></label
+          ><label
+            >Region
+            <select id="regionFilter">
+              <option value="all">Alle Regionen</option>
+              <option value="amboise">Amboise</option>
+              <option value="re">Île de Ré</option>
+              <option value="pal">Le PAL</option>
+            </select></label
+          ><label
+            >Kategorie
+            <select id="categoryFilter">
+              <option value="all">Alle Kategorien</option>
+            </select></label
+          ><label
+            >Auswahl
+            <select id="favFilter">
+              <option value="all">Alle</option>
+              <option value="favorites">Meine Favoriten</option>
+              <option value="top">Top-Highlights</option>
+            </select></label
+          >
+        </div>
+        <p class="results" id="resultCount"></p>
+        <div class="activitygrid" id="activityGrid"></div>
+      </section>
+      <section id="karte" class="section tinted">
+        <div class="shell">
+          <p class="eyebrow">UNTERWEGS IN FRANKREICH</p>
+          <h2>Alle Ideen auf der Karte.</h2>
+          <p class="lead">Entdecke die Ausflüge jeder Etappe im Detail.</p>
+          <div class="map-tabs" role="group" aria-label="Kartenausschnitt wählen">
+            <button
+              type="button"
+              class="map-tab active"
+              data-map-region="amboise"
+              aria-pressed="true"
+            >
+              Amboise & Loire</button
+            ><button type="button" class="map-tab" data-map-region="re" aria-pressed="false">
+              Île de Ré</button
+            ><button type="button" class="map-tab" data-map-region="pal" aria-pressed="false">
+              Le PAL & Umgebung
+            </button>
+          </div>
+          <div class="mapwrap">
+            <div id="map" aria-label="Karte der Reiseziele"></div>
+            <div class="mapfallback" id="mapFallback" hidden>
+              Die Karte benötigt eine Internetverbindung.
+              <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener"
+                >OpenStreetMap öffnen ↗</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="bildwelt" class="section tinted">
+        <div class="shell">
+          <p class="eyebrow">MAISON D’ÉTÉ · FOTOGALERIE</p>
+          <h2>Ein Vorgeschmack auf unseren Sommer.</h2>
+          <p class="lead">Ein paar Eindrücke von den Orten, die auf uns warten.</p>
+          <div class="photo-library">
+            <article class="photo-choice">
+              <button
+                type="button"
+                class="photo-open"
+                data-photo-detail="0"
+                aria-label="Mehr über Strand Île de Ré erfahren"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1630358087682-88993c5b33d2?auto=format&fit=crop&w=850&q=80"
+                  alt="Strand Île de Ré"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="photo-caption"
+                  ><strong>Strand Île de Ré</strong
+                  ><span class="photo-hint"
+                    >Ort entdecken <span aria-hidden="true">↗</span></span
+                  ></span
+                ></button
+              ><a
+                class="photo-credit"
+                href="https://unsplash.com/photos/83fmx2LAgpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bildquelle für Strand Île de Ré auf Unsplash öffnen"
+                >Foto: Bernd Dittrich · Unsplash</a
+              >
+            </article>
+            <article class="photo-choice">
+              <button
+                type="button"
+                class="photo-open"
+                data-photo-detail="1"
+                aria-label="Mehr über Château d’Amboise erfahren"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1624627922267-e3f096904292?auto=format&fit=crop&w=850&q=80"
+                  alt="Château d’Amboise"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="photo-caption"
+                  ><strong>Château d’Amboise</strong
+                  ><span class="photo-hint"
+                    >Ort entdecken <span aria-hidden="true">↗</span></span
+                  ></span
+                ></button
+              ><a
+                class="photo-credit"
+                href="https://unsplash.com/photos/dB648jGakEA"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bildquelle für Château d’Amboise auf Unsplash öffnen"
+                >Foto: Stefan K · Unsplash</a
+              >
+            </article>
+            <article class="photo-choice">
+              <button
+                type="button"
+                class="photo-open"
+                data-photo-detail="2"
+                aria-label="Mehr über Strand Île de Ré erfahren"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1596737982005-c9000c991014?auto=format&fit=crop&w=850&q=80"
+                  alt="Strand Île de Ré"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="photo-caption"
+                  ><strong>Strand Île de Ré</strong
+                  ><span class="photo-hint"
+                    >Ort entdecken <span aria-hidden="true">↗</span></span
+                  ></span
+                ></button
+              ><a
+                class="photo-credit"
+                href="https://unsplash.com/photos/rP7vPVE5e48"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bildquelle für Strand Île de Ré auf Unsplash öffnen"
+                >Foto: Damien Dufour · Unsplash</a
+              >
+            </article>
+            <article class="photo-choice">
+              <button
+                type="button"
+                class="photo-open"
+                data-photo-detail="3"
+                aria-label="Mehr über Clos Lucé erfahren"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1713359256737-156978b04c77?auto=format&fit=crop&w=850&q=80"
+                  alt="Clos Lucé"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="photo-caption"
+                  ><strong>Clos Lucé</strong
+                  ><span class="photo-hint"
+                    >Ort entdecken <span aria-hidden="true">↗</span></span
+                  ></span
+                ></button
+              ><a
+                class="photo-credit"
+                href="https://unsplash.com/photos/Gbqy4gzFiJU"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bildquelle für Clos Lucé auf Unsplash öffnen"
+                >Foto: Hongbin · Unsplash</a
+              >
+            </article>
+            <article class="photo-choice">
+              <button
+                type="button"
+                class="photo-open"
+                data-photo-detail="4"
+                aria-label="Mehr über Hafen La Rochelle erfahren"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1744709561288-74517c00d17c?auto=format&fit=crop&w=850&q=80"
+                  alt="Hafen La Rochelle"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="photo-caption"
+                  ><strong>Hafen La Rochelle</strong
+                  ><span class="photo-hint"
+                    >Ort entdecken <span aria-hidden="true">↗</span></span
+                  ></span
+                ></button
+              ><a
+                class="photo-credit"
+                href="https://unsplash.com/photos/smMhJmpcWIs"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bildquelle für Hafen La Rochelle auf Unsplash öffnen"
+                >Foto: Carnet de Voyage d'Alex · Unsplash</a
+              >
+            </article>
+            <article class="photo-choice">
+              <button
+                type="button"
+                class="photo-open"
+                data-photo-detail="5"
+                aria-label="Mehr über Château Royal d’Amboise erfahren"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1646345533510-5d23b6b730d9?auto=format&fit=crop&w=850&q=80"
+                  alt="Château Royal d’Amboise"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="photo-caption"
+                  ><strong>Château Royal d’Amboise</strong
+                  ><span class="photo-hint"
+                    >Ort entdecken <span aria-hidden="true">↗</span></span
+                  ></span
+                ></button
+              ><a
+                class="photo-credit"
+                href="https://unsplash.com/photos/n14FOz-olkI"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Bildquelle für Château Royal d’Amboise auf Unsplash öffnen"
+                >Foto: Matthieu Oger · Unsplash</a
+              >
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="unterkuenfte" class="shell section">
+        <p class="eyebrow">UNSER ZUHAUSE UNTERWEGS</p>
+        <h2>Die Unterkünfte.</h2>
+        <div class="lodgings">
+          <article class="panel">
+            <p class="eyebrow">AMBOISE</p>
+            <h3>Hotel noch offen</h3>
+            <p>3 Nächte vom 7.–10. Juli. Lage, Parkplatz und familienfreundliche Zimmer prüfen.</p>
+          </article>
+          <article class="panel">
+            <p class="eyebrow">ÎLE DE RÉ · 10.–17. JULI</p>
+            <h3>Ferienhaus noch offen</h3>
+            <p>Bevorzugte Orte: La Flotte, Saint-Martin-de-Ré oder Le Bois-Plage-en-Ré.</p>
+          </article>
+          <article class="panel">
+            <p class="eyebrow">LE PAL</p>
+            <h3>Safari-Unterkunft prüfen</h3>
+            <p>Savana RESERVE oder Les Lodges du PAL – noch nicht gebucht.</p>
+            <a href="https://www.lepal.com/" target="_blank" rel="noopener"
+              >Offizielle Website ↗</a
+            >
+          </article>
+        </div>
+      </section>
+      <section id="infos" class="section tinted">
+        <div class="shell">
+          <p class="eyebrow">GUT ZU WISSEN</p>
+          <h2>Alles Wichtige griffbereit.</h2>
+          <div class="infogrid">
+            <article class="panel">
+              <h3>Reisedaten</h3>
+              <p>
+                Île de Ré: 10.–17. Juli 2027. Amboise: 7.–10. Juli (3 Nächte). Le PAL: 17.–20. Juli
+                (3 Nächte). Am 20. Juli fahren wir direkt nach Baden zurück.
+              </p>
+            </article>
+            <article class="panel">
+              <h3>Frankreich am 14. Juli</h3>
+              <p>
+                Nationalfeiertag. Mögliche Veranstaltungen, Öffnungszeiten und Verkehr vor der Reise
+                prüfen.
+              </p>
+            </article>
+            <article class="panel">
+              <h3>Wetter & Gezeiten</h3>
+              <p>
+                Konkrete Wetterprognosen sind erst kurz vor der Reise sinnvoll. Für Strandtage die
+                aktuellen Bedingungen und Gezeiten prüfen.
+              </p>
+            </article>
+            <article class="panel">
+              <h3>Datenschutz & Sicherung</h3>
+              <p>
+                Keine Buchungscodes oder vertraulichen Daten eingeben. Den Plan regelmässig als JSON
+                exportieren.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer><div class="shell">Sommer 2027 · Unser Frankreich-Abenteuer</div></footer>
+    <nav class="mobile-nav" aria-label="Schnellnavigation">
+      <a href="#reise" aria-label="Reise"
+        ><svg
+          class="nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m3 10 9-7 9 7" />
+          <path d="M5 9v11h14V9" />
+          <path d="M9 20v-7h6v7" /></svg
+        ><small>Reise</small></a
+      ><a href="#plan" aria-label="Plan"
+        ><svg
+          class="nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M16 3v4M8 3v4M3 10h18" />
+          <path d="m9 16 2 2 4-4" /></svg
+        ><small>Plan</small></a
+      ><a href="#entdecken" aria-label="Ideen"
+        ><svg
+          class="nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z" /></svg
+        ><small>Ideen</small></a
+      ><a href="#karte" aria-label="Karte"
+        ><svg
+          class="nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+          <circle cx="12" cy="10" r="2.5" /></svg
+        ><small>Karte</small></a
+      >
+    </nav>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script>
+      !(function () {
+        const el = document.getElementById('countdown');
+        if (!el) return;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const target = new Date(2027, 6, 7);
+        const days = Math.ceil((target - today) / 86400000);
+        el.textContent =
+          days > 0
+            ? 'Noch ' + days + ' Tage bis zur Abreise'
+            : days === 0
+              ? 'Heute geht’s nach Frankreich!'
+              : '';
+      })();
+    </script>
+    <script src="supabase/public-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"
+      defer
+    ></script>
+    <script src="data.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+    <script src="app.js?v=20261025-14" defer></script>
+    <dialog id="moveDialog" class="slot-dialog" aria-labelledby="moveDialogTitle">
+      <div class="move-form">
+        <p class="eyebrow">AKTIVITÄT VERSCHIEBEN</p>
+        <h2 id="moveDialogTitle"></h2>
+        <label>Tag<select id="moveDate"></select></label
+        ><label
+          >Zeitfenster<select id="moveSlot">
+            <option>Morgen</option>
+            <option>Mittag</option>
+            <option>Nachmittag</option>
+            <option>Abend</option>
+          </select></label
+        >
+        <div class="move-actions">
+          <button type="button" class="pill outline" data-move-cancel>Abbrechen</button
+          ><button type="button" class="pill" data-move-save>Verschieben</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="slotDialog" class="slot-dialog" aria-labelledby="slotDialogTitle">
+      <form method="dialog">
+        <button type="button" class="slot-close" data-close-slot aria-label="Schliessen">×</button>
+        <p class="eyebrow">ZUM FERIENPLAN HINZUFÜGEN</p>
+        <h2 id="slotDialogTitle"></h2>
+        <p id="slotDialogDate" class="muted"></p>
+        <p>Wann passt die Aktivität am besten?</p>
+        <div class="slot-options">
+          <button type="button" data-slot-choice="Morgen">☀ Morgen</button
+          ><button type="button" data-slot-choice="Mittag">◐ Mittag</button
+          ><button type="button" data-slot-choice="Nachmittag">☼ Nachmittag</button
+          ><button type="button" data-slot-choice="Abend">☾ Abend</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="photoDialog" class="photo-dialog" aria-labelledby="photoDialogTitle">
+      <button type="button" class="photo-close" aria-label="Schliessen">×</button>
+      <p class="eyebrow">UNSER FRANKREICH-SOMMER</p>
+      <h2 id="photoDialogTitle"></h2>
+      <p id="photoDialogText"></p>
+      <p id="photoDialogTip" class="photo-tip"></p>
+      <a id="photoDialogLink" class="pill" href="#entdecken">Alle Ideen dieser Etappe ansehen →</a>
+    </dialog>
+    <script>
+      const PHOTO_DETAILS = [
+        [
+          'Strände der Île de Ré',
+          'Lange Sandstrände, Dünen und kleine Badebuchten machen die Insel ideal für entspannte Familientage.',
+          'Für Familien: Gros Jonc bei Le Bois-Plage oder die Strände von La Couarde. Wind, Strömungen und Gezeiten vor dem Baden prüfen.',
+          're',
+        ],
+        [
+          'Château d’Amboise',
+          'Das königliche Schloss thront über der Loire und erzählt von der französischen Renaissance.',
+          'Besonders schön: der Blick auf den Fluss, die Schlossgärten und ein Spaziergang durch die Altstadt von Amboise.',
+          'amboise',
+        ],
+        [
+          'Île de Ré entdecken',
+          'Zwischen Atlantik, Salzgärten und weiss getünchten Dörfern lässt sich die Insel wunderbar mit dem Velo erkunden.',
+          'Ideen: Saint-Martin-de-Ré, der Leuchtturm Phare des Baleines und eine gemütliche Velotour durch die Salzgärten.',
+          're',
+        ],
+        [
+          'Clos Lucé',
+          'Im ehemaligen Wohnhaus von Leonardo da Vinci entdeckt ihr seine Ideen, Erfindungen und Lebensgeschichte.',
+          'Für Kinder besonders spannend: die nachgebauten Maschinen und der Park mit interaktiven Stationen.',
+          'amboise',
+        ],
+        [
+          'La Rochelle',
+          'Die historische Hafenstadt vor der Île de Ré bietet alte Türme, lebhafte Gassen und Restaurants am Wasser.',
+          'Als Ausflug: durch den Vieux-Port schlendern, ein Glacé essen und die Altstadt entdecken.',
+          're',
+        ],
+        [
+          'Château Royal d’Amboise',
+          'Das Schloss hoch über der Loire war eine wichtige königliche Residenz und bietet weite Ausblicke.',
+          'Kombiniert den Besuch mit Clos Lucé und einer Pause in den Cafés von Amboise.',
+          'amboise',
+        ],
+      ];
+      const photoDialog = document.getElementById('photoDialog');
+      document.querySelectorAll('[data-photo-detail]').forEach((button) =>
+        button.addEventListener('click', () => {
+          const d = PHOTO_DETAILS[Number(button.dataset.photoDetail)];
+          if (!d) return;
+          document.getElementById('photoDialogTitle').textContent = d[0];
+          document.getElementById('photoDialogText').textContent = d[1];
+          document.getElementById('photoDialogTip').textContent = d[2];
+          document.getElementById('photoDialogLink').href = '#entdecken';
+          photoDialog.showModal();
+        }),
+      );
+      photoDialog
+        .querySelector('.photo-close')
+        .addEventListener('click', () => photoDialog.close());
+      photoDialog.addEventListener('click', (e) => {
+        if (e.target === photoDialog) photoDialog.close();
+      });
+      document
+        .getElementById('photoDialogLink')
+        .addEventListener('click', () => photoDialog.close());
+    </script>
+  </body>
+</html>
