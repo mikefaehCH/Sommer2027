@@ -12,68 +12,7 @@ const DAYS = Array.from({ length: 14 }, (_, i) => {
   ].join('-');
 });
 const byId = Object.fromEntries(ACTIVITIES.map((x) => [x.id, x]));
-const PHOTO_BY_ACTIVITY = {};
-const PHOTO_SEARCH_QUERIES = {
-  'clos-luce': 'Château du Clos Lucé Amboise',
-  'chateau-amboise': "Château d'Amboise",
-  chenonceau: 'Château de Chenonceau',
-  chaumont: 'Château de Chaumont-sur-Loire jardins',
-  'amboise-altstadt': 'Amboise Loire vieille ville',
-  'amboise-markt': 'Marché Amboise',
-  'loire-boot': 'Loire bateau Amboise',
-  'mini-chateaux': 'Parc Mini-Châteaux Amboise',
-  pagode: 'Pagode de Chanteloup Amboise',
-  'loire-rad': 'Loire à vélo Amboise',
-  villandry: 'Jardins du Château de Villandry',
-  blois: 'Blois vieille ville Loire',
-  montresor: 'Montrésor Indre-et-Loire village',
-  caves: 'Cave troglodyte Amboise',
-  'loire-picknick': 'Loire river Amboise',
-  'la-flotte': 'Port de La Flotte Île de Ré',
-  'flotte-markt': 'Marché de La Flotte Île de Ré',
-  'saint-martin': 'Port Saint-Martin-de-Ré',
-  vauban: 'Fortifications Vauban Saint-Martin-de-Ré',
-  'bois-plage': 'Plage des Gollandières Bois-Plage-en-Ré',
-  'gros-jonc': 'Plage Gros Jonc Île de Ré',
-  couarde: 'La Couarde-sur-Mer village',
-  prises: 'Plage des Prises La Couarde',
-  loix: 'Loix Île de Ré village',
-  salz: 'Marais salants Loix Île de Ré',
-  grouin: 'Plage du Grouin Loix',
-  ars: 'Ars-en-Ré église village',
-  phare: 'Phare des Baleines Île de Ré',
-  conche: 'Conche des Baleines plage',
-  portes: 'Les Portes-en-Ré village',
-  lilleau: 'Réserve naturelle Lilleau des Niges',
-  trousse: 'Forêt de Trousse-Chemise Île de Ré',
-  rivedoux: 'Rivedoux-Plage pont Île de Ré',
-  'sainte-marie': 'Sainte-Marie-de-Ré village',
-  abbaye: 'Abbaye des Châteliers La Flotte',
-  'fort-pree': 'Fort de la Prée Île de Ré',
-  velo: 'Cyclisme Île de Ré pistes cyclables',
-  boot: 'Bateau voile Île de Ré',
-  paddle: 'Stand up paddle Île de Ré',
-  kajak: 'Kayak Île de Ré',
-  rochelle: 'Vieux Port La Rochelle',
-  aquarium: 'Aquarium La Rochelle bâtiment',
-  'rochelle-markt': 'Marché central La Rochelle',
-  'rochelle-towers': 'Tours du Vieux-Port La Rochelle',
-  glace: 'Glace crème Saint-Martin-de-Ré',
-  picknick: 'Pique-nique plage Île de Ré',
-  'natur-spaziergang': 'Côte sauvage Île de Ré sentier',
-  maritime: 'Musée Ernest Cognacq Saint-Martin-de-Ré',
-  platin: 'Musée du Platin La Flotte',
-  'abend-hafen': 'Port Saint-Martin-de-Ré restaurant',
-  '14juillet': "Feu d'artifice 14 juillet France",
-  'lepal-parc': 'Le PAL parc attractions Dompierre',
-  'lepal-zoo': 'Le PAL parc zoologique',
-  savana: 'Le PAL Savana RESERVE',
-  lodges: 'Les Lodges du PAL',
-  'pal-familienbahnen': 'Le PAL attractions manèges',
-  'pal-wasser': 'Le PAL attractions aquatiques',
-  'pal-pause': 'Le PAL animaux parc',
-  'pal-abend': 'Les Lodges du PAL nuit',
-};
+let activityPhotos = {};
 const PHOTO_REFERENCES = {
   'la-flotte': {
     title: 'La Flotte – Leuchtturm',
@@ -471,84 +410,6 @@ async function castVote(id, value) {
 
 /* Individuelle Fotos aus Wikimedia Commons: Quellen und Lizenzen bleiben am Bild sichtbar.
    Kein Foto wird als Ortsaufnahme ausgegeben, bevor eine passende Dateibeschreibung vorliegt. */
-const photoCache = new Map();
-const photoInFlight = new Set();
-const photoUsed = new Set();
-let photoObserver = null;
-function photoPlain(v) {
-  return (new DOMParser().parseFromString(String(v || ''), 'text/html').body.textContent || '')
-    .trim()
-    .slice(0, 140);
-}
-function photoMatch(a, title) {
-  const normalized = (x) =>
-    x
-      .toLocaleLowerCase('de')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9]+/g, ' ');
-  const t = normalized(title);
-  const q = normalized(PHOTO_SEARCH_QUERIES[a.id] || a.name)
-    .split(' ')
-    .filter(
-      (w) =>
-        w.length >= 4 &&
-        ![
-          'plage',
-          'chateau',
-          'saint',
-          'parc',
-          'loire',
-          'ile',
-          'photo',
-          'file',
-          'image',
-          'village',
-        ].includes(w),
-    );
-  return q.some((w) => t.includes(w)) || t.includes(normalized(a.area).trim());
-}
-async function findCommonsPhoto(a) {
-  const query = PHOTO_SEARCH_QUERIES[a.id];
-  if (!query) return null;
-  const url =
-    'https://commons.wikimedia.org/w/api.php?' +
-    new URLSearchParams({
-      action: 'query',
-      generator: 'search',
-      gsrsearch: 'filetype:bitmap ' + query,
-      gsrnamespace: '6',
-      gsrlimit: '15',
-      prop: 'imageinfo',
-      iiprop: 'url|extmetadata',
-      iiurlwidth: '760',
-      format: 'json',
-      origin: '*',
-    });
-  const response = await fetch(url, { mode: 'cors' });
-  if (!response.ok) throw Error('Commons HTTP ' + response.status);
-  const data = await response.json();
-  const pages = Object.values(data.query?.pages || {})
-    .filter((p) => p.imageinfo?.[0]?.thumburl && photoMatch(a, p.title))
-    .sort((x, y) => (x.index || 0) - (y.index || 0));
-  for (const p of pages) {
-    const info = p.imageinfo[0],
-      meta = info.extmetadata || {};
-    const key = p.title;
-    if (photoUsed.has(key)) continue;
-    const license = photoPlain(meta.LicenseShortName?.value);
-    if (!license || !/CC|public domain|PD/i.test(license)) continue;
-    photoUsed.add(key);
-    return {
-      url: info.thumburl,
-      source: info.descriptionurl || info.url,
-      author: photoPlain(meta.Artist?.value) || 'Wikimedia Commons',
-      license,
-      title: p.title,
-    };
-  }
-  return null;
-}
 function showCommonsPhoto(id, photo) {
   document.querySelectorAll('[data-photo-id]').forEach((node) => {
     if (node.dataset.photoId !== id) return;
@@ -559,7 +420,7 @@ function showCommonsPhoto(id, photo) {
       const l = document.createElement('a');
       l.href =
         'https://commons.wikimedia.org/w/index.php?search=' +
-        encodeURIComponent(PHOTO_SEARCH_QUERIES[id]) +
+        encodeURIComponent(getActivity(id)?.name || '') +
         '&title=Special:MediaSearch&type=image';
       l.target = '_blank';
       l.rel = 'noopener noreferrer';
@@ -587,50 +448,30 @@ function showCommonsPhoto(id, photo) {
     node.append(img, credit);
   });
 }
-async function loadActivityPhoto(id) {
-  if (photoCache.has(id)) {
-    showCommonsPhoto(id, photoCache.get(id));
-    return;
-  }
-  if (photoInFlight.has(id)) return;
-  const a = getActivity(id);
-  if (!a) return;
-  photoInFlight.add(id);
-  try {
-    const p = await findCommonsPhoto(a);
-    photoCache.set(id, p);
-    showCommonsPhoto(id, p);
-  } catch (e) {
-    console.warn('Bildsuche nicht verfügbar', id, e);
-    showCommonsPhoto(id, null);
-  } finally {
-    photoInFlight.delete(id);
-  }
-}
 function observeActivityPhotos() {
-  if (photoObserver) photoObserver.disconnect();
-  const nodes = document.querySelectorAll('[data-photo-id]');
-  if (!('IntersectionObserver' in window)) {
-    nodes.forEach((n) => loadActivityPhoto(n.dataset.photoId));
-    return;
-  }
-  photoObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          photoObserver.unobserve(e.target);
-          loadActivityPhoto(e.target.dataset.photoId);
-        }
-      });
-    },
-    { rootMargin: '350px' },
-  );
-  nodes.forEach((n) => {
-    const id = n.dataset.photoId;
-    if (photoCache.has(id)) showCommonsPhoto(id, photoCache.get(id));
-    else photoObserver.observe(n);
-  });
+  document
+    .querySelectorAll('[data-photo-id]')
+    .forEach((node) =>
+      showCommonsPhoto(node.dataset.photoId, activityPhotos[node.dataset.photoId] || null),
+    );
 }
+fetch('ACTIVITY_PHOTOS.json')
+  .then((response) => {
+    if (!response.ok) throw Error('Bildkatalog nicht verfügbar');
+    return response.json();
+  })
+  .then((entries) => {
+    activityPhotos = Object.fromEntries(
+      entries
+        .filter(
+          (entry) =>
+            entry.status === 'approved' && entry.photo && entry.checkedAt && entry.reviewer,
+        )
+        .map((entry) => [entry.id, entry.photo]),
+    );
+    observeActivityPhotos();
+  })
+  .catch(() => observeActivityPhotos());
 function renderDiscover() {
   const q = $('#search').value.toLocaleLowerCase('de');
   const category = $('#categoryFilter').value;
@@ -655,7 +496,7 @@ function renderDiscover() {
   $('#activityGrid').innerHTML = matches
     .map(
       (a) =>
-        `<article class="activity"><div class="activity-photo-placeholder" data-photo-id="${escapeHTML(a.id)}" aria-label="Foto wird gesucht"><span>${escapeHTML(a.category)}</span><small>Bild wird geladen</small></div><span class="tag">${escapeHTML(REGIONS[a.region])} · ${escapeHTML(a.priority)}</span><h3>${escapeHTML(a.name)}</h3><div class="location">${escapeHTML(a.area)} · ${escapeHTML(a.category)}</div><p>${escapeHTML(a.description)}</p>${PHOTO_REFERENCES[a.id] ? `<div class="photo-reference"><span>Ortsfoto: ${escapeHTML(PHOTO_REFERENCES[a.id].provider)}</span><a href="${escapeHTML(PHOTO_REFERENCES[a.id].source)}" target="_blank" rel="noopener noreferrer">Foto ansehen ↗</a></div>` : ''}${voteControls(a)}<div class="cardactions"><button class="smallbtn" data-add="${a.id}">+ Planen</button><button class="fav ${state.favorites.includes(a.id) ? 'on' : ''}" data-fav="${a.id}" aria-pressed="${state.favorites.includes(a.id)}" aria-label="Favorit markieren">♡ ${state.favorites.includes(a.id) ? 'Gemerkt' : 'Merken'}</button><a href="${escapeHTML(a.source || 'https://www.iledere.com/')}" target="_blank" rel="noopener noreferrer">Quelle ↗</a><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.name + ' ' + a.area + ' France')}" target="_blank" rel="noopener noreferrer">Karte ↗</a></div></article>`,
+        `<article class="activity"><div class="activity-photo-placeholder" data-photo-id="${escapeHTML(a.id)}" aria-label="Aktivitätsfoto"><span>${escapeHTML(a.category)}</span><small>Foto nicht verfügbar</small></div><span class="tag">${escapeHTML(REGIONS[a.region])} · ${escapeHTML(a.priority)}</span><h3>${escapeHTML(a.name)}</h3><div class="location">${escapeHTML(a.area)} · ${escapeHTML(a.category)}</div><p>${escapeHTML(a.description)}</p>${PHOTO_REFERENCES[a.id] ? `<div class="photo-reference"><span>Ortsfoto: ${escapeHTML(PHOTO_REFERENCES[a.id].provider)}</span><a href="${escapeHTML(PHOTO_REFERENCES[a.id].source)}" target="_blank" rel="noopener noreferrer">Foto ansehen ↗</a></div>` : ''}${voteControls(a)}<div class="cardactions"><button class="smallbtn" data-add="${a.id}">+ Planen</button><button class="fav ${state.favorites.includes(a.id) ? 'on' : ''}" data-fav="${a.id}" aria-pressed="${state.favorites.includes(a.id)}" aria-label="Favorit markieren">♡ ${state.favorites.includes(a.id) ? 'Gemerkt' : 'Merken'}</button><a href="${escapeHTML(a.source || 'https://www.iledere.com/')}" target="_blank" rel="noopener noreferrer">Quelle ↗</a><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.name + ' ' + a.area + ' France')}" target="_blank" rel="noopener noreferrer">Karte ↗</a></div></article>`,
     )
     .join('');
   observeActivityPhotos();
