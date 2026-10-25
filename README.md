@@ -50,3 +50,11 @@ Sechs konkrete Unsplash-Fotos sind jetzt dokumentiert in `PHOTOS.json` und `CRED
 - **iPhone-Hinweis:** Google OAuth aus einer installierten Home-Bildschirm-Web-App kann im Safari-Browser statt in der App enden. Für den Login vorerst Safari verwenden.
 - `supabase/public-config.js` enthält nur öffentliche Konfigurationswerte; niemals Service-Role-Schlüssel oder OAuth-Secrets ins Repository übernehmen.
 - Supabase JS wird derzeit über einen nicht exakt gepinnten `@2`-CDN-Pfad geladen. Feste Version und Content-Security-Policy sind vor dem produktiven Einsatz noch zu ergänzen.
+
+## Familienkalender – erste Integration (Oktober 2026)
+- Hauptkalender umfasst 7.–20. Juli 2027; freigeschaltete Google-Nutzer laden und speichern den gemeinsamen Plan in Supabase.
+- Die Stimmen werden je Person in `activity_votes` gespeichert, mit Änderungsübersicht aus `change_log`.
+- Optimistische Sperre über `updated_at` verhindert stilles Überschreiben konkurrierender Kalenderänderungen; bei Konflikten wird der aktuelle Plan neu geladen.
+- Nicht angemeldete Nutzer können weiterhin nur lokal planen; dies ist **nicht** der gemeinsame Familienplan.
+- Noch offen: Browser-übergreifende End-to-End-Tests, automatische Live-Updates, detaillierte Kalender-Diffs, Gast-Leselink und vollständige Offline-Synchronisation.
+- Für bestehende Supabase-Installationen vor dem Testen des Entfernens einer Stimme die additive Migration `supabase/migrations/20261025_fix_vote_audit.sql` im SQL Editor ausführen.
