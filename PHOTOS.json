@@ -1,0 +1,44 @@
+[
+  {
+    "key": "hero",
+    "url": "https://images.unsplash.com/photo-1630358087682-88993c5b33d2?auto=format&fit=crop&w=1200&q=80",
+    "author": "Bernd Dittrich",
+    "subject": "Strand Île de Ré",
+    "source": "https://unsplash.com/photos/83fmx2LAgpg"
+  },
+  {
+    "key": "amboise",
+    "url": "https://images.unsplash.com/photo-1624627922267-e3f096904292?auto=format&fit=crop&w=1200&q=80",
+    "author": "Stefan K",
+    "subject": "Château d’Amboise",
+    "source": "https://unsplash.com/photos/dB648jGakEA"
+  },
+  {
+    "key": "ile",
+    "url": "https://images.unsplash.com/photo-1596737982005-c9000c991014?auto=format&fit=crop&w=1200&q=80",
+    "author": "Damien Dufour",
+    "subject": "Strand Île de Ré",
+    "source": "https://unsplash.com/photos/rP7vPVE5e48"
+  },
+  {
+    "key": "clos-luce",
+    "url": "https://images.unsplash.com/photo-1713359256737-156978b04c77?auto=format&fit=crop&w=1200&q=80",
+    "author": "Hongbin",
+    "subject": "Clos Lucé",
+    "source": "https://unsplash.com/photos/Gbqy4gzFiJU"
+  },
+  {
+    "key": "rochelle",
+    "url": "https://images.unsplash.com/photo-1744709561288-74517c00d17c?auto=format&fit=crop&w=1200&q=80",
+    "author": "Carnet de Voyage d'Alex",
+    "subject": "Hafen La Rochelle",
+    "source": "https://unsplash.com/photos/smMhJmpcWIs"
+  },
+  {
+    "key": "chateau-amboise",
+    "url": "https://images.unsplash.com/photo-1646345533510-5d23b6b730d9?auto=format&fit=crop&w=1200&q=80",
+    "author": "Matthieu Oger",
+    "subject": "Château Royal d’Amboise",
+    "source": "https://unsplash.com/photos/n14FOz-olkI"
+  }
+]

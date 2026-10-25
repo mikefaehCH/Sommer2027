@@ -1,0 +1,101 @@
+[
+  {
+    "activity_id": "la-flotte",
+    "title": "La Flotte – Leuchtturm",
+    "author": "Thomas de LUZE",
+    "provider": "Unsplash",
+    "source": "https://unsplash.com/photos/white-lighthouse-on-dock-during-daytime-hWmoQVTE_Ag",
+    "verification": "Verifizierte Aufnahme in La Flotte",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "saint-martin",
+    "title": "Saint-Martin-de-Ré – Dächer und Meer",
+    "author": "lemapuche breton",
+    "provider": "Pexels",
+    "source": "https://www.pexels.com/photo/aerial-view-of-saint-martin-de-re-rooftops-and-ocean-33503828/",
+    "verification": "Verifizierte Luftaufnahme",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "vauban",
+    "title": "Saint-Martin – Festungsanlage",
+    "author": "Armand Khoury",
+    "provider": "Unsplash",
+    "source": "https://unsplash.com/photos/white-concrete-wall-on-green-grass-field-under-blue-sky-during-daytime-Ne7D-r77AYg",
+    "verification": "Verifizierte Aufnahme der Befestigung",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "phare",
+    "title": "Phare des Baleines – Küste",
+    "author": "Lucas Gallone",
+    "provider": "Unsplash",
+    "source": "https://unsplash.com/photos/an-aerial-view-of-a-lighthouse-on-a-beach-quTBF1FY8VQ",
+    "verification": "Verifizierte Aufnahme auf der Île de Ré",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "phare-interieur",
+    "title": "Phare des Baleines – Wendeltreppe",
+    "author": "Nicolas Hoizey",
+    "provider": "Unsplash",
+    "source": "https://unsplash.com/photos/black-and-white-spiral-staircase-VU8HxMAP79U",
+    "verification": "Verifizierte Aufnahme im Leuchtturm",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "la-flotte-ambiance",
+    "title": "La Flotte – Blumentür",
+    "author": "Damien Dufour",
+    "provider": "Unsplash",
+    "source": "https://unsplash.com/photos/green-wooden-door-with-red-and-white-flowers-4Zhdk6Co6BU",
+    "verification": "Verifizierte Aufnahme in La Flotte",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "chenonceau",
+    "title": "Chenonceau – Schloss am Wasser",
+    "author": "Colin Watts",
+    "provider": "Unsplash",
+    "source": "https://unsplash.com/photos/a-large-castle-sitting-on-top-of-a-body-of-water-LvqAWNFKSxQ",
+    "verification": "Verifizierte Aufnahme des Schlosses",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "chenonceau-garten",
+    "title": "Chenonceau – Gärten",
+    "author": "Leonis Caeli",
+    "provider": "Unsplash",
+    "source": "https://unsplash.com/photos/a-large-building-with-many-bushes-in-front-of-it-with-chateau-de-chenonceau-in-the-background-CQvIK5I9U1g",
+    "verification": "Verifizierte Aufnahme der Gartenanlage",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "rochelle-pexels",
+    "title": "La Rochelle – Alter Hafen",
+    "author": "Pablo",
+    "provider": "Pexels",
+    "source": "https://www.pexels.com/photo/scenic-view-of-la-rochelle-harbor-and-towers-32821994/",
+    "verification": "Verifizierte Aufnahme des Alten Hafens",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "rochelle-sunset",
+    "title": "La Rochelle – Abendstimmung",
+    "author": "Atypeek Dgn",
+    "provider": "Pexels",
+    "source": "https://www.pexels.com/photo/sunset-over-la-rochelle-harbor-sailing-boats-docked-38914465/",
+    "verification": "Verifizierte Hafenaufnahme bei Sonnenuntergang",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  },
+  {
+    "activity_id": "rochelle-arch",
+    "title": "La Rochelle – Altstadt",
+    "author": "Richard Frazier",
+    "provider": "Pexels",
+    "source": "https://www.pexels.com/photo/historic-harbor-gateway-in-la-rochelle-against-cloudy-sky-35641044/",
+    "verification": "Verifizierte Aufnahme des historischen Hafentors",
+    "status": "recherchiert; Originaldatei noch nicht lokal eingebunden"
+  }
+]

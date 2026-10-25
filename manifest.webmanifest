@@ -1,0 +1,9 @@
+{
+  "name": "Sommer 2027 – Unser Frankreich-Abenteuer",
+  "short_name": "Sommer 2027",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f2e8",
+  "theme_color": "#f7f2e8",
+  "lang": "de-CH"
+}
