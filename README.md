@@ -46,7 +46,7 @@ Sechs konkrete Unsplash-Fotos sind jetzt dokumentiert in `PHOTOS.json` und `CRED
 - `familien-login.html`: Google OAuth über Supabase; Zugriff auf private Daten nur für freigeschaltete Einträge in `family_members` (RLS).
 - `gemeinsamer-plan.html`: geschützte Vorschau des Supabase-Plans und optionaler einmaliger Import. Für diese Reise ist kein Import erforderlich, da noch keine Planung besteht.
 - `supabase/schema.sql`: Datenbankschema und Zugriffsregeln; `supabase/SETUP.md`: Einrichtungsanleitung. Das SQL-Schema ist nicht vollständig idempotent und darf nicht ohne Prüfung erneut ausgeführt werden.
-- **Noch nicht produktiv:** Der Hauptkalender in `app.js` speichert lokal, nicht in Supabase. Gemeinsames Bearbeiten, Abstimmungen, Änderungsverlauf im UI und geheimer Gäste-Leselink fehlen noch.
+- **Aktueller Stand:** Angemeldete Familienmitglieder synchronisieren den Hauptkalender über Supabase, inklusive Abstimmungen und Änderungsverlauf. Ohne Anmeldung wird weiterhin lokal geplant. Ein geheimer Gäste-Leselink ist noch nicht umgesetzt.
 - **iPhone-Hinweis:** Google OAuth aus einer installierten Home-Bildschirm-Web-App kann im Safari-Browser statt in der App enden. Für den Login vorerst Safari verwenden.
 - `supabase/public-config.js` enthält nur öffentliche Konfigurationswerte; niemals Service-Role-Schlüssel oder OAuth-Secrets ins Repository übernehmen.
 - Supabase JS wird derzeit über einen nicht exakt gepinnten `@2`-CDN-Pfad geladen. Feste Version und Content-Security-Policy sind vor dem produktiven Einsatz noch zu ergänzen.
