@@ -1,0 +1,26 @@
+{
+  "policy": "default-src 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js https://unpkg.com/leaflet@1.9.4/dist/leaflet.js; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com https://unpkg.com/leaflet@1.9.4/dist/leaflet.css; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://thumb.wikimedia.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org; connect-src 'self' https://kgtowblwixgfdnbgcjeq.supabase.co; worker-src 'self'; manifest-src 'self'",
+  "delivery": "HTML meta, before any resource",
+  "limitations": [
+    "frame-ancestors requires HTTP headers and is not enforceable by a meta policy on GitHub Pages."
+  ],
+  "inventory": {
+    "scripts": ["self", "Supabase 2.57.0 UMD (SRI)", "Leaflet 1.9.4 (SRI)"],
+    "styles": ["self", "Leaflet 1.9.4 CSS (SRI)", "Google Fonts CSS"],
+    "fonts": ["fonts.gstatic.com"],
+    "images": [
+      "self",
+      "images.unsplash.com",
+      "thumb.wikimedia.org",
+      "a/b/c.tile.openstreetmap.org",
+      "data: (Leaflet)",
+      "blob: (local diary preview)"
+    ],
+    "connections": [
+      "self (image catalog)",
+      "kgtowblwixgfdnbgcjeq.supabase.co (auth, REST, Edge Function)"
+    ],
+    "workers": ["self (service worker)"],
+    "externalLinks": "Navigation links do not require resource allowlisting."
+  }
+}

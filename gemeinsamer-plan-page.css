@@ -1,0 +1,57 @@
+.wrap {
+  max-width: 850px;
+  margin: 55px auto 100px;
+  padding: 0 20px;
+}
+.panelx {
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--white);
+  margin: 18px 0;
+}
+.panelx p {
+  line-height: 1.65;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.actions button,
+.actions label {
+  cursor: pointer;
+}
+.muted {
+  color: var(--muted);
+}
+.notice {
+  background: #ecebe3;
+  padding: 14px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+.danger {
+  color: #9a3a34;
+}
+.days {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.day {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+}
+.day ul {
+  padding-left: 19px;
+}
+.day li {
+  margin: 6px 0;
+}
+@media (max-width: 650px) {
+  .days {
+    grid-template-columns: 1fr;
+  }
+}

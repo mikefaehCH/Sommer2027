@@ -1,0 +1,23 @@
+[
+  {
+    "url": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js",
+    "integrity": "sha384-/E7xfJz9bbCsrwJAbrt9CO5JB1REPVQjuSrQT4Cpz2BQBocDVsGLB2/VMAEzYaf+",
+    "bytes": 129895,
+    "verified": "2026-10-25",
+    "method": "Two independent HTTPS downloads; identical bytes; SHA-384"
+  },
+  {
+    "url": "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+    "integrity": "sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH",
+    "bytes": 147552,
+    "verified": "2026-10-25",
+    "method": "Two independent HTTPS downloads; identical bytes; SHA-384"
+  },
+  {
+    "url": "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+    "integrity": "sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H",
+    "bytes": 14806,
+    "verified": "2026-10-25",
+    "method": "Two independent HTTPS downloads; identical bytes; SHA-384"
+  }
+]

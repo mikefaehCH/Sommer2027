@@ -1,0 +1,706 @@
+[
+  {
+    "id": "clos-luce",
+    "name": "Clos Lucé – Leonardo da Vinci",
+    "query": "Château du Clos Lucé Amboise",
+    "status": "approved",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Amboise_-_Ch%C3%A2teau_du_Clos_Luc%C3%A9_-_001.jpg/960px-Amboise_-_Ch%C3%A2teau_du_Clos_Luc%C3%A9_-_001.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Amboise_-_Ch%C3%A2teau_du_Clos_Luc%C3%A9_-_001.jpg",
+      "title": "File:Amboise - Château du Clos Lucé - 001.jpg",
+      "author": "Thesupermat",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": "2026-10-25",
+    "reviewer": "Codex – visuelle Einzelprüfung",
+    "reviewNotes": "Motiv visuell geprüft; Schloss und Ortsbezug passend. Wikimedia-Dateiseite geladen und Lizenzlink bestätigt; Metadaten mit Autor vorhanden. Keine Bildbearbeitung."
+  },
+  {
+    "id": "chateau-amboise",
+    "name": "Château Royal d’Amboise",
+    "query": "Château d'Amboise",
+    "status": "approved",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Ch%C3%A2teau_d%27Amboise._View_from_the_east.jpg/960px-Ch%C3%A2teau_d%27Amboise._View_from_the_east.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_d%27Amboise._View_from_the_east.jpg",
+      "title": "File:Château d'Amboise. View from the east.jpg",
+      "author": "Ввласенко",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "checkedAt": "2026-10-25",
+    "reviewer": "Codex – visuelle Einzelprüfung",
+    "reviewNotes": "Motiv visuell geprüft; Schloss und Ortsbezug passend. Wikimedia-Dateiseite geladen und Lizenzlink bestätigt; Metadaten mit Autor vorhanden. Keine Bildbearbeitung."
+  },
+  {
+    "id": "chenonceau",
+    "name": "Château de Chenonceau",
+    "query": "Château de Chenonceau",
+    "status": "rejected",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Ch%C3%A2teau_de_Chenonceau_-_chapelle_-_clocher_%28Chenonceaux%29.jpg/960px-Ch%C3%A2teau_de_Chenonceau_-_chapelle_-_clocher_%28Chenonceaux%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_de_Chenonceau_-_chapelle_-_clocher_(Chenonceaux).jpg",
+      "title": "File:Château de Chenonceau - chapelle - clocher (Chenonceaux).jpg",
+      "author": "Gzen92",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": "2026-10-25",
+    "reviewer": "Codex – visuelle Einzelprüfung",
+    "reviewNotes": "Nur Glockenturm als Detail; für die Aktivitätskarte kein ausreichend repräsentatives Schlossmotiv."
+  },
+  {
+    "id": "chaumont",
+    "name": "Domaine de Chaumont-sur-Loire",
+    "query": "Château de Chaumont-sur-Loire jardins",
+    "status": "approved",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Ch%C3%A2teau_de_Chaumont-sur-Loire_vu_des_jardins.JPG/960px-Ch%C3%A2teau_de_Chaumont-sur-Loire_vu_des_jardins.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_de_Chaumont-sur-Loire_vu_des_jardins.JPG",
+      "title": "File:Château de Chaumont-sur-Loire vu des jardins.JPG",
+      "author": "Carcajou",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "checkedAt": "2026-10-25",
+    "reviewer": "Codex – visuelle Einzelprüfung",
+    "reviewNotes": "Motiv visuell geprüft; Schloss und Ortsbezug passend. Wikimedia-Dateiseite geladen und Lizenzlink bestätigt; Metadaten mit Autor vorhanden. Keine Bildbearbeitung."
+  },
+  {
+    "id": "amboise-altstadt",
+    "name": "Altstadt und Loire-Ufer",
+    "query": "Amboise Loire vieille ville",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/L%C3%A9onard_de_Vinci_-_statue_de_Amleto_Cataldi_-_Amboise_%28Indre-et-Loire%29_%2823512968905%29.jpg/960px-L%C3%A9onard_de_Vinci_-_statue_de_Amleto_Cataldi_-_Amboise_%28Indre-et-Loire%29_%2823512968905%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:L%C3%A9onard_de_Vinci_-_statue_de_Amleto_Cataldi_-_Amboise_(Indre-et-Loire)_(23512968905).jpg",
+      "title": "File:Léonard de Vinci - statue de Amleto Cataldi - Amboise (Indre-et-Loire) (23512968905).jpg",
+      "author": "Daniel Jolivet",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "amboise-markt",
+    "name": "Markt in Amboise",
+    "query": "Marché Amboise",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Amboise._%28Le_Mail_et_la_rue_du_March%C3%A9%29_-_dessin_-_Bergeron_-_btv1b77414931.jpg/960px-Amboise._%28Le_Mail_et_la_rue_du_March%C3%A9%29_-_dessin_-_Bergeron_-_btv1b77414931.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Amboise._(Le_Mail_et_la_rue_du_March%C3%A9)_-_dessin_-_Bergeron_-_btv1b77414931.jpg",
+      "title": "File:Amboise. (Le Mail et la rue du Marché) - dessin - Bergeron - btv1b77414931.jpg",
+      "author": "Bergeron (18..-18.. ; dessinateur). Dessinateur",
+      "license": "Public domain",
+      "licenseUrl": null
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "loire-boot",
+    "name": "Bootsfahrt auf der Loire",
+    "query": "Loire bateau Amboise",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/ChateaudAmboiseChambre03.jpg/960px-ChateaudAmboiseChambre03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:ChateaudAmboiseChambre03.jpg",
+      "title": "File:ChateaudAmboiseChambre03.jpg",
+      "author": "Mircea Ostoia from Focsani, Romania",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "mini-chateaux",
+    "name": "Parc des Mini-Châteaux",
+    "query": "Parc Mini-Châteaux Amboise",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Mini-Ch%C3%A2teaux_-_Ch%C3%A2teau-Guillaume_2.jpg/960px-Mini-Ch%C3%A2teaux_-_Ch%C3%A2teau-Guillaume_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Mini-Ch%C3%A2teaux_-_Ch%C3%A2teau-Guillaume_2.jpg",
+      "title": "File:Mini-Châteaux - Château-Guillaume 2.jpg",
+      "author": "René Cortin",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "pagode",
+    "name": "Pagode de Chanteloup",
+    "query": "Pagode de Chanteloup Amboise",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Pagode_de_Chanteloup_-_Amboise_15.jpg/960px-Pagode_de_Chanteloup_-_Amboise_15.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Pagode_de_Chanteloup_-_Amboise_15.jpg",
+      "title": "File:Pagode de Chanteloup - Amboise 15.jpg",
+      "author": "Giogo",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "loire-rad",
+    "name": "Kurze Velotour an der Loire",
+    "query": "Loire à vélo Amboise",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Loire_between_Tours_and_Amboise_2012_%281%29.jpg/960px-Loire_between_Tours_and_Amboise_2012_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Loire_between_Tours_and_Amboise_2012_(1).jpg",
+      "title": "File:Loire between Tours and Amboise 2012 (1).jpg",
+      "author": "JopkeB",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "villandry",
+    "name": "Gärten von Villandry",
+    "query": "Jardins du Château de Villandry",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/16_Villandry_%2896%29_%2813197365114%29.jpg/960px-16_Villandry_%2896%29_%2813197365114%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:16_Villandry_(96)_(13197365114).jpg",
+      "title": "File:16 Villandry (96) (13197365114).jpg",
+      "author": "xorge",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "blois",
+    "name": "Altstadt von Blois",
+    "query": "Blois vieille ville Loire",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Alluyes_%28Eure-et-Loir%29_%2829848317632%29.jpg/960px-Alluyes_%28Eure-et-Loir%29_%2829848317632%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Alluyes_(Eure-et-Loir)_(29848317632).jpg",
+      "title": "File:Alluyes (Eure-et-Loir) (29848317632).jpg",
+      "author": "Daniel Jolivet",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "montresor",
+    "name": "Montrésor entdecken",
+    "query": "Montrésor Indre-et-Loire village",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Montr%C3%A9sor_Bords_de_l%27Indrois.jpg/960px-Montr%C3%A9sor_Bords_de_l%27Indrois.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Montr%C3%A9sor_Bords_de_l%27Indrois.jpg",
+      "title": "File:Montrésor Bords de l'Indrois.jpg",
+      "author": "JLPC",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "caves",
+    "name": "Höhlenkeller und regionale Küche",
+    "query": "Cave troglodyte Amboise",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Amboise_07.JPG/960px-Amboise_07.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Amboise_07.JPG",
+      "title": "File:Amboise 07.JPG",
+      "author": "Abujoy",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "loire-picknick",
+    "name": "Picknick am Loire-Ufer",
+    "query": "Loire river Amboise",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Loire+river+Amboise&gsrnamespace=6&gsrlimit=5&prop=imageinfo&"
+  },
+  {
+    "id": "la-flotte",
+    "name": "La Flotte & Hafen",
+    "query": "Port de La Flotte Île de Ré",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Port+de+La+Flotte+%C3%8Ele+de+R%C3%A9&gsrnamespace=6&gsrlimit"
+  },
+  {
+    "id": "flotte-markt",
+    "name": "Markt von La Flotte",
+    "query": "Marché de La Flotte Île de Ré",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+March%C3%A9+de+La+Flotte+%C3%8Ele+de+R%C3%A9&gsrnamespace=6&g"
+  },
+  {
+    "id": "saint-martin",
+    "name": "Saint-Martin-de-Ré",
+    "query": "Port Saint-Martin-de-Ré",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Saint-Martin-de-R%C3%A9%2C_port%2C_close-up%2C_R%C3%A9_island%2C_Charente-Maritime.jpg/960px-Saint-Martin-de-R%C3%A9%2C_port%2C_close-up%2C_R%C3%A9_island%2C_Charente-Maritime.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Saint-Martin-de-R%C3%A9,_port,_close-up,_R%C3%A9_island,_Charente-Maritime.jpg",
+      "title": "File:Saint-Martin-de-Ré, port, close-up, Ré island, Charente-Maritime.jpg",
+      "author": "Jebulon",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "vauban",
+    "name": "Vauban-Festungsanlagen",
+    "query": "Fortifications Vauban Saint-Martin-de-Ré",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Saint_Martin_en_r%C3%A9_2009.JPG/960px-Saint_Martin_en_r%C3%A9_2009.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Saint_Martin_en_r%C3%A9_2009.JPG",
+      "title": "File:Saint Martin en ré 2009.JPG",
+      "author": "Villefluctuante",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "bois-plage",
+    "name": "Plage des Gollandières",
+    "query": "Plage des Gollandières Bois-Plage-en-Ré",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "gros-jonc",
+    "name": "Plage de Gros Jonc",
+    "query": "Plage Gros Jonc Île de Ré",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "couarde",
+    "name": "La Couarde-sur-Mer",
+    "query": "La Couarde-sur-Mer village",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "prises",
+    "name": "Plage des Prises",
+    "query": "Plage des Prises La Couarde",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "loix",
+    "name": "Loix entdecken",
+    "query": "Loix Île de Ré village",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "salz",
+    "name": "Salzgärten & Salzhandwerk",
+    "query": "Marais salants Loix Île de Ré",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Marais_salants_-_Loix_%28%C3%AEle_de_r%C3%A9%29.jpg/960px-Marais_salants_-_Loix_%28%C3%AEle_de_r%C3%A9%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Marais_salants_-_Loix_(%C3%AEle_de_r%C3%A9).jpg",
+      "title": "File:Marais salants - Loix (île de ré).jpg",
+      "author": "Giancarlo - Foto 4U",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "grouin",
+    "name": "Plage du Grouin",
+    "query": "Plage du Grouin Loix",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "ars",
+    "name": "Ars-en-Ré",
+    "query": "Ars-en-Ré église village",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "phare",
+    "name": "Phare des Baleines",
+    "query": "Phare des Baleines Île de Ré",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Phare+des+Baleines+%C3%8Ele+de+R%C3%A9&gsrnamespace=6&gsrlimi"
+  },
+  {
+    "id": "conche",
+    "name": "Plage de la Conche des Baleines",
+    "query": "Conche des Baleines plage",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Conche+des+Baleines+plage&gsrnamespace=6&gsrlimit=5&prop=imag"
+  },
+  {
+    "id": "portes",
+    "name": "Les Portes-en-Ré",
+    "query": "Les Portes-en-Ré village",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Les+Portes-en-R%C3%A9+village&gsrnamespace=6&gsrlimit=5&prop="
+  },
+  {
+    "id": "lilleau",
+    "name": "Réserve de Lilleau des Niges",
+    "query": "Réserve naturelle Lilleau des Niges",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+R%C3%A9serve+naturelle+Lilleau+des+Niges&gsrnamespace=6&gsrli"
+  },
+  {
+    "id": "trousse",
+    "name": "Trousse-Chemise",
+    "query": "Forêt de Trousse-Chemise Île de Ré",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Search is currently too busy. Please try again later."
+  },
+  {
+    "id": "rivedoux",
+    "name": "Rivedoux-Plage",
+    "query": "Rivedoux-Plage pont Île de Ré",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Pont-%C3%8Ele-de-R%C3%A9_1.jpg/960px-Pont-%C3%8Ele-de-R%C3%A9_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Pont-%C3%8Ele-de-R%C3%A9_1.jpg",
+      "title": "File:Pont-Île-de-Ré 1.jpg",
+      "author": "User:Ile-de-re",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "sainte-marie",
+    "name": "Sainte-Marie-de-Ré",
+    "query": "Sainte-Marie-de-Ré village",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Eglisestmariedere.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "source": "https://commons.wikimedia.org/wiki/File:Eglisestmariedere.jpg",
+      "title": "File:Eglisestmariedere.jpg",
+      "author": "Pep.per at French Wikipedia",
+      "license": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "abbaye",
+    "name": "Abbaye des Châteliers",
+    "query": "Abbaye des Châteliers La Flotte",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/105_-_Abbaye_des_Ch%C3%A2teliers_-_La_Flotte.jpg/960px-105_-_Abbaye_des_Ch%C3%A2teliers_-_La_Flotte.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:105_-_Abbaye_des_Ch%C3%A2teliers_-_La_Flotte.jpg",
+      "title": "File:105 - Abbaye des Châteliers - La Flotte.jpg",
+      "author": "Patrick Despoix",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "fort-pree",
+    "name": "Fort la Prée",
+    "query": "Fort de la Prée Île de Ré",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Fort_de_la_Pr%C3%A9e%2C_ile_de_R%C3%A9_-_De_La_Favoli%C3%A8re_-_btv1b53153216x_%282_of_3%29.jpg/960px-Fort_de_la_Pr%C3%A9e%2C_ile_de_R%C3%A9_-_De_La_Favoli%C3%A8re_-_btv1b53153216x_%282_of_3%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Fort_de_la_Pr%C3%A9e,_ile_de_R%C3%A9_-_De_La_Favoli%C3%A8re_-_btv1b53153216x_(2_of_3).jpg",
+      "title": "File:Fort de la Prée, ile de Ré - De La Favolière - btv1b53153216x (2 of 3).jpg",
+      "author": "La Favolière (16..-17..? ; Sr, ingénieur). Cartographe",
+      "license": "Public domain",
+      "licenseUrl": null
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "velo",
+    "name": "Gemütliche Velotour",
+    "query": "Cyclisme Île de Ré pistes cyclables",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "boot",
+    "name": "Bootsausflug ab der Insel",
+    "query": "Bateau voile Île de Ré",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Jacques_de_Th%C3%A9zac_%C3%8Ele_de_Sein_2.jpg/960px-Jacques_de_Th%C3%A9zac_%C3%8Ele_de_Sein_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Jacques_de_Th%C3%A9zac_%C3%8Ele_de_Sein_2.jpg",
+      "title": "File:Jacques de Thézac Île de Sein 2.jpg",
+      "author": "Jacques de Thézac",
+      "license": "Public domain",
+      "licenseUrl": null
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "paddle",
+    "name": "Stand-up-Paddling",
+    "query": "Stand up paddle Île de Ré",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "kajak",
+    "name": "Kajak oder Segeln",
+    "query": "Kayak Île de Ré",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "rochelle",
+    "name": "La Rochelle – Altstadt & Hafen",
+    "query": "Vieux Port La Rochelle",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/La_rochelle%2C_Le_vieux_port.JPG/960px-La_rochelle%2C_Le_vieux_port.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:La_rochelle,_Le_vieux_port.JPG",
+      "title": "File:La rochelle, Le vieux port.JPG",
+      "author": "Mister Brown",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "aquarium",
+    "name": "Aquarium La Rochelle",
+    "query": "Aquarium La Rochelle bâtiment",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Aquarium+La+Rochelle+b%C3%A2timent&gsrnamespace=6&gsrlimit=5&"
+  },
+  {
+    "id": "rochelle-markt",
+    "name": "Marché Central La Rochelle",
+    "query": "Marché central La Rochelle",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+March%C3%A9+central+La+Rochelle&gsrnamespace=6&gsrlimit=5&pro"
+  },
+  {
+    "id": "rochelle-towers",
+    "name": "Hafentürme La Rochelle",
+    "query": "Tours du Vieux-Port La Rochelle",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Tours+du+Vieux-Port+La+Rochelle&gsrnamespace=6&gsrlimit=5&pro"
+  },
+  {
+    "id": "glace",
+    "name": "Glace am Hafen",
+    "query": "Glace crème Saint-Martin-de-Ré",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Glace+cr%C3%A8me+Saint-Martin-de-R%C3%A9&gsrnamespace=6&gsrli"
+  },
+  {
+    "id": "picknick",
+    "name": "Picknick am Strand",
+    "query": "Pique-nique plage Île de Ré",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "natur-spaziergang",
+    "name": "Küstenspaziergang",
+    "query": "Côte sauvage Île de Ré sentier",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "maritime",
+    "name": "Musée Ernest Cognacq",
+    "query": "Musée Ernest Cognacq Saint-Martin-de-Ré",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Mus%C3%A9e_Ernest-Cognacq_%281%29_Saint-Martin-de-R%C3%A9.jpg/960px-Mus%C3%A9e_Ernest-Cognacq_%281%29_Saint-Martin-de-R%C3%A9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Ernest-Cognacq_(1)_Saint-Martin-de-R%C3%A9.jpg",
+      "title": "File:Musée Ernest-Cognacq (1) Saint-Martin-de-Ré.jpg",
+      "author": "Chris06",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "platin",
+    "name": "Musée du Platin",
+    "query": "Musée du Platin La Flotte",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "abend-hafen",
+    "name": "Abendessen am Hafen",
+    "query": "Port Saint-Martin-de-Ré restaurant",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Paris_comique_sous_le_second_Empire.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "source": "https://commons.wikimedia.org/wiki/File:Paris_comique_sous_le_second_Empire.png",
+      "title": "File:Paris comique sous le second Empire.png",
+      "author": "Etiennebernard45",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "14juillet",
+    "name": "Nationalfeiertag in Frankreich",
+    "query": "Feu d'artifice 14 juillet France",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Feu_d%27artifice_du_14_juillet_2021_%C3%A0_Wissous_%2814%29.jpg/960px-Feu_d%27artifice_du_14_juillet_2021_%C3%A0_Wissous_%2814%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Feu_d%27artifice_du_14_juillet_2021_%C3%A0_Wissous_(14).jpg",
+      "title": "File:Feu d'artifice du 14 juillet 2021 à Wissous (14).jpg",
+      "author": "Like tears in rain",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "lepal-parc",
+    "name": "Le PAL – Freizeitpark",
+    "query": "Le PAL parc attractions Dompierre",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Le_carrousel_2020.jpg/960px-Le_carrousel_2020.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Le_carrousel_2020.jpg",
+      "title": "File:Le carrousel 2020.jpg",
+      "author": "Aurkawl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "lepal-zoo",
+    "name": "Le PAL – Tierpark",
+    "query": "Le PAL parc zoologique",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Le_Pal_King_Kong_banner.jpg/960px-Le_Pal_King_Kong_banner.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Le_Pal_King_Kong_banner.jpg",
+      "title": "File:Le Pal King Kong banner.jpg",
+      "author": "King Kong Le Pal.jpg : Thetrackman derivative work : Barbe-sauvage",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "savana",
+    "name": "Savana RESERVE prüfen",
+    "query": "Le PAL Savana RESERVE",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  },
+  {
+    "id": "lodges",
+    "name": "Les Lodges du PAL prüfen",
+    "query": "Les Lodges du PAL",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Lodges_du_PAL.JPG/960px-Lodges_du_PAL.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Lodges_du_PAL.JPG",
+      "title": "File:Lodges du PAL.JPG",
+      "author": "Freddo",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "pal-familienbahnen",
+    "name": "Familienfreundliche Bahnen",
+    "query": "Le PAL attractions manèges",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Le+PAL+attractions+man%C3%A8ges&gsrnamespace=6&gsrlimit=5&pro"
+  },
+  {
+    "id": "pal-wasser",
+    "name": "Wasserattraktionen",
+    "query": "Le PAL attractions aquatiques",
+    "status": "research-error",
+    "photo": null,
+    "checkedAt": null,
+    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Le+PAL+attractions+aquatiques&gsrnamespace=6&gsrlimit=5&prop="
+  },
+  {
+    "id": "pal-pause",
+    "name": "Ruhige Tierbeobachtung",
+    "query": "Le PAL animaux parc",
+    "status": "unreviewed",
+    "photo": {
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Distributeur_de_nourriture_pour_animaux%3B_parc_d%27attraction_LE_PAL_%28Saint-Pour%C3%A7ain-sur-Besbre%2CFR03%29.jpg/960px-Distributeur_de_nourriture_pour_animaux%3B_parc_d%27attraction_LE_PAL_%28Saint-Pour%C3%A7ain-sur-Besbre%2CFR03%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source": "https://commons.wikimedia.org/wiki/File:Distributeur_de_nourriture_pour_animaux;_parc_d%27attraction_LE_PAL_(Saint-Pour%C3%A7ain-sur-Besbre,FR03).jpg",
+      "title": "File:Distributeur de nourriture pour animaux; parc d'attraction LE PAL (Saint-Pourçain-sur-Besbre,FR03).jpg",
+      "author": "jean-louis Zimmermann",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    "checkedAt": null
+  },
+  {
+    "id": "pal-abend",
+    "name": "Abend in der Lodge",
+    "query": "Les Lodges du PAL nuit",
+    "status": "missing",
+    "photo": null,
+    "checkedAt": null
+  }
+]

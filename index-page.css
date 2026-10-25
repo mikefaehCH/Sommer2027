@@ -1,0 +1,14 @@
+.index-style-1 {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.index-style-2 {
+  background: #e6e9de;
+  border-color: #d3ddce;
+  padding: clamp(22px, 4vw, 44px);
+}
+.index-style-3 {
+  background: #f2e6d9;
+  border-color: #e4d2c0;
+  padding: clamp(22px, 4vw, 44px);
+}

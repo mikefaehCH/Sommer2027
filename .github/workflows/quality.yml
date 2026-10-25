@@ -1,0 +1,32 @@
+name: Hardening quality checks
+on:
+  push:
+    branches: [chore/sommer2027-hardening]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+        viewport: [desktop, mobile, se]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npm run format:check
+      - run: npm run check
+      - run: npm run verify:sri
+      - run: npm test
+        env:
+          TEST_BROWSER: ${{ matrix.browser }}
+          TEST_VIEWPORT: ${{ matrix.viewport }}
