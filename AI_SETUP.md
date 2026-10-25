@@ -19,3 +19,7 @@ Die Edge Function validiert den Supabase-JWT und prüft `family_members` über R
 - Prompts, Aktivitätsdaten, Kalender und Abstimmungen werden an den konfigurierten KI-Anbieter gesendet. Keine sensiblen Angaben eingeben. Datenschutz und API-Kosten vor Aktivierung prüfen.
 - Es gibt derzeit kein serverseitiges Rate-Limit je Nutzer. Vor breiter Nutzung ergänzen.
 - Deployment und Browser-End-to-End-Test sind noch nicht durchgeführt.
+
+## Verbindliche Restaurantregel
+- Alle Restaurantempfehlungen in sämtlichen KI-Modi müssen eine **nachweislich aktuelle Google-Maps-Bewertung von mindestens 4,2/5** haben.
+- Die aktuelle Implementierung hat **keine Google-Maps-Places-Anbindung**. Deshalb gibt der Assistent keine konkreten, unbestätigten Restaurantempfehlungen aus. Eine Places-API-Integration mit serverseitigem Rating-Filter ist vor der Ausgabe konkreter Empfehlungen nötig; Bewertungen niemals erfinden.
