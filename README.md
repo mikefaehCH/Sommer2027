@@ -1,61 +1,86 @@
 # Sommer 2027 – Unser Frankreich-Abenteuer
 
-Eigenständige statische Website (HTML, CSS, JavaScript) für Amboise, Île de Ré und Le PAL.
+Statische Reisewebsite für Amboise, Île de Ré und Le PAL mit 59 kuratierten Aktivitäten.
 
-## Lokal testen
-Im Ordner `python3 -m http.server 8000` starten und `http://localhost:8000` öffnen. Auf dem iPhone kann die HTML-Datei auch lokal angezeigt werden, für die Karte braucht es aber eine Internetverbindung.
+## Lokal starten
 
-## Funktionen
-- 59 kuratierte Reiseideen (36 Île de Ré, 15 Amboise, 8 Le PAL), jeweils mit Quellenlink
-- Suche, Region- und Kategoriefilter, Favoriten
-- Ferienkalender für die bestätigte Inselwoche 10.–17. Juli 2027
-- Aktivitäten eintragen, verschieben, entfernen, eigene Ideen, Rückgängig
-- Browser-Speicherung, JSON-Export und -Import
-- Interaktive OpenStreetMap-Karte über Leaflet mit drei regionalen Kartenausschnitten und kontrastreichen Markern (online)
-- Responsive Navigation und grundlegende Offline-Nutzung
+`python3 -m http.server 8000` im Repository starten und http://localhost:8000 öffnen.
+Für Service Worker ist localhost oder HTTPS erforderlich. Eine direkt geöffnete HTML-Datei
+unterstützt weder den Bildkatalog noch alle App-Funktionen.
 
-## Grenzen / offene Punkte
-- **Keine automatische Synchronisation** zwischen Geräten.
-- Die anderen Etappen haben noch keine bestätigten Daten, deshalb noch keinen Kalender.
-- Alle Informationen, Preise und Öffnungszeiten für Juli 2027 müssen vor der Reise geprüft werden.
-- Die Galerie zeigt sechs ausgewählte Unsplash-Fotos mit Quellen. Zusätzliche recherchierte Bildquellen stehen in PHOTO_RESEARCH.json; das Le-PAL-Tiermotiv ist ein Symbolbild, keine Parkaufnahme.
-- Externe Dienste (Karte, Schriften, Fotos) benötigen Internet.
-- Keine vertraulichen Buchungsdaten eingeben.
-- Live auf GitHub Pages: https://mikefaehch.github.io/Sommer2027/
+## Bestehende Funktionen
 
-## Bilder
-Sechs konkrete Unsplash-Fotos sind jetzt dokumentiert in `PHOTOS.json` und `CREDITS.md`. Die Bilder werden online geladen. Das Le-PAL-Bild ist ein atmosphärisches Tiermotiv und keine Parkaufnahme.
+- Suche, Regionen, Kategorien und Favoriten; Quellenlinks je Reiseidee.
+- Ferienkalender vom 7.–20. Juli 2027: Einplanen, Verschieben, Entfernen, eigene Ideen,
+  Rückgängig sowie JSON-Import und -Export.
+- Ohne Anmeldung: lokale Speicherung auf dem jeweiligen Gerät.
+- Für freigeschaltete Familienmitglieder: gemeinsamer Supabase-Kalender,
+  personenbezogene Abstimmungen und Änderungsverlauf. Optimistische Sperren über
+  `updated_at` verhindern stilles Überschreiben konkurrierender Planänderungen.
+- OpenStreetMap mit Leaflet, drei regionale Ausschnitte und Aktivitätsmarker.
+- Inselguide, Restaurantkandidaten, Galerie und KI-Reiseassistent mit acht Modi.
 
-## Bildwelt V4
-11 weitere ortsverifizierte Bildquellen in `PHOTO_RESEARCH.json`, Unsplash und Pexels. Die recherchierten zusätzlichen Quellen bleiben in PHOTO_RESEARCH.json; die Website zeigt eine echte Galerie aus den sechs bestehenden CDN-Fotos. Einheitliche dezente Bildfarbkorrektur und Ausschnitte per CSS.
+## Bilder und Quellen
 
-## V5 – Bildredaktion
-- Ruhigere Farbbehandlung.
-- Sechs recherchierte Ortsfotos von Unsplash/Pexels sind direkt bei den jeweiligen Erlebnissen als Originalseiten verlinkt; Originaldateien sind noch nicht lokal eingebunden.
-- Le PAL verwendet ein atmosphärisches Tiermotiv, keine dokumentarische Aufnahme des Parks.
-- Bildquellen und Lizenzen vor Veröffentlichung nochmals prüfen.
+Die sechs bestehenden Unsplash-Galeriebilder und Hero-Motive bleiben erhalten.
+Nachweise: `PHOTOS.json`, `PHOTO_RESEARCH.json` und `CREDITS.md`.
+Das Le-PAL-Tiermotiv ist ein Symbolbild, keine Parkaufnahme.
 
-## V7 – Redaktion und Offline-Cache
-- Technische Bildrecherche-Texte entfernt; echte Fotogalerie mit sechs Bildern und Quellen.
-- Hero-Nachweis dezent; Le PAL mit Symbolmotiv.
-- Beide Guide-Unterseiten im Service-Worker-Cache (sommer2027-v4).
-- Countdown bis zur Inselwoche. Externe Bilder, Schriften und Karte benötigen online Zugriff.
-- Restauranttipps sind Kandidaten, keine Buchungen.
+`ACTIVITY_PHOTOS.json` enthält für jede der 59 Aktivitäten einen redaktionellen Prüfstatus.
+Die Website zeigt ausschliesslich Einträge mit `status: approved`, `checkedAt` und `reviewer`.
+Ungeprüfte, ungeeignete oder fehlende Bilder ergeben weiterhin Platzhalter mit Recherchelink.
+Autor, Titel, Lizenz und Originalseite stehen im Katalog; Autor und Lizenz am Bild.
+Die Angabe einer freien Lizenz belegt allein noch keinen passenden Ortsbezug.
 
-## Familien-Login und Supabase (Pilot)
-- `familien-login.html`: Google OAuth über Supabase; Zugriff auf private Daten nur für freigeschaltete Einträge in `family_members` (RLS).
-- `gemeinsamer-plan.html`: geschützte Vorschau des Supabase-Plans und optionaler einmaliger Import. Für diese Reise ist kein Import erforderlich, da noch keine Planung besteht.
-- `supabase/schema.sql`: Datenbankschema und Zugriffsregeln; `supabase/SETUP.md`: Einrichtungsanleitung. Das SQL-Schema ist nicht vollständig idempotent und darf nicht ohne Prüfung erneut ausgeführt werden.
-- **Aktueller Stand:** Angemeldete Familienmitglieder synchronisieren den Hauptkalender über Supabase, inklusive Abstimmungen und Änderungsverlauf. Ohne Anmeldung wird weiterhin lokal geplant. Ein geheimer Gäste-Leselink ist noch nicht umgesetzt.
-- **iPhone-Hinweis:** Google OAuth aus einer installierten Home-Bildschirm-Web-App kann im Safari-Browser statt in der App enden. Für den Login vorerst Safari verwenden.
-- `supabase/public-config.js` enthält nur öffentliche Konfigurationswerte; niemals Service-Role-Schlüssel oder OAuth-Secrets ins Repository übernehmen.
-- Supabase JS wird derzeit über einen nicht exakt gepinnten `@2`-CDN-Pfad geladen. Feste Version und Content-Security-Policy sind vor dem produktiven Einsatz noch zu ergänzen.
+Einmalige Recherche: `node scripts/research-photos.cjs`. Das Werkzeug verwendet die
+Wikimedia-API und akzeptiert nur CC BY, CC BY-SA, CC0 oder Public Domain mit Autor.
+HTTP-Fehler werden dokumentiert; es gibt keine automatische Bildsuche zur Laufzeit.
+Die lokale Reviewseite `http://localhost:8000/scripts/photo-review.html` zeigt alle Einträge.
+Vor einer Freigabe Motiv, Ortsbezug und Angaben auf der Originalseite manuell prüfen.
+Freigaben bleiben bei einer erneuten Recherche erhalten. Ein Kandidat ist keine Freigabe.
 
-## Familienkalender – erste Integration (Oktober 2026)
-- Hauptkalender umfasst 7.–20. Juli 2027; freigeschaltete Google-Nutzer laden und speichern den gemeinsamen Plan in Supabase.
-- Die Stimmen werden je Person in `activity_votes` gespeichert, mit Änderungsübersicht aus `change_log`.
-- Optimistische Sperre über `updated_at` verhindert stilles Überschreiben konkurrierender Kalenderänderungen; bei Konflikten wird der aktuelle Plan neu geladen.
-- Nicht angemeldete Nutzer können weiterhin nur lokal planen; dies ist **nicht** der gemeinsame Familienplan.
-- Noch offen: Browser-übergreifende End-to-End-Tests, automatische Live-Updates, detaillierte Kalender-Diffs, Gast-Leselink und vollständige Offline-Synchronisation.
-- Für bestehende Supabase-Installationen vor dem Testen des Entfernens einer Stimme die additive Migration `supabase/migrations/20261025_fix_vote_audit.sql` im SQL Editor ausführen.
-\n## KI-Reiseassistent (acht Funktionen)\nDie neue Seite `ai.html` bietet Tagesplanung, Wetteralternativen, Familien-Konsens, Reise-Chat, geografische Tourenvorschläge, Restaurantideen, Kinder-Reiseführer und Reisetagebuch. Die geschützte Supabase Edge Function ist im Repository vorbereitet, aber **erst nach dem Deployment und Setzen des OPENAI_API_KEY aktiv**. Einrichtung, Grenzen und Datenschutz: `AI_SETUP.md`. Die KI speichert keine Änderungen am Kalender.\n
+## Sicherheit
+
+- Browserkonfiguration in `supabase/public-config.js` enthält nur öffentliche Werte.
+  Service-Role-Schlüssel, OAuth-Secrets und `OPENAI_API_KEY` gehören niemals ins Repository.
+- Supabase RLS beschränkt private Tabellen auf freigeschaltete `family_members`.
+  Die Website und deren Quellcode sind öffentlich; der Login schützt Datenbankzugriff,
+  nicht die öffentlichen HTML-Seiten. Die RLS-Konfiguration der produktiven Datenbank
+  muss separat geprüft werden; lokale Tests beweisen ihre Installation nicht.
+- Die KI-Anfragen gehen über eine geschützte Supabase Edge Function.
+  Der OpenAI-Key bleibt serverseitig. Deployment und Konfiguration siehe `AI_SETUP.md`.
+  Die KI schreibt keine Kalenderänderungen. Eingaben werden an den KI-Anbieter übertragen.
+- Supabase JS 2.57.0 und Leaflet 1.9.4 sind exakt gepinnt, mit SHA-384-SRI und
+  `crossorigin="anonymous"`. URLs und verifizierte Hashes stehen in `DEPENDENCIES.json`.
+- Alle Seiten verwenden eine CSP vor den Ressourcen. Inline-Skripte und HTML-Styles
+  sind ausgelagert; Inline-Handler und `eval` sind nicht erlaubt. Ressourceninventar und
+  Policy: `CSP.json`. Keine Wildcard-Freigabe für Supabase oder Script-CDNs.
+- Die CSP wird auf GitHub Pages als HTML-Meta ausgeliefert. `frame-ancestors` kann dort
+  nicht per Meta erzwungen werden und benötigt einen konfigurierbaren HTTP-Header.
+- SQL-Schema und Migrationen werden durch diese Konsolidierung nicht ausgeführt.
+  `supabase/schema.sql` ist nicht vollständig idempotent; vor Ausführung prüfen.
+
+**iPhone-Hinweis:** Google OAuth aus einer installierten Home-Bildschirm-Web-App kann
+im Safari-Browser statt in der App enden. Für den Login vorerst Safari verwenden.
+
+## Offline und Grenzen
+
+Der Service Worker v18 hält öffentliche App-Dateien lokal bereit. Externe Bibliotheken,
+Fotos, Schriften und Kartenkacheln sind nicht Teil dieses Caches. Login, gemeinsamer Plan
+und KI benötigen Internet. Private Supabase-Antworten und authentifizierte Requests
+werden nicht im Service-Worker-Cache gespeichert. Es gibt keine vollständige
+Offline-Synchronisation, keinen Gäste-Leselink und keine automatischen Live-Updates.
+
+Restaurantangaben sind Kandidaten, keine Buchungen. Google-Bewertungen Stand Oktober
+2026 – vor dem Besuch nochmals prüfen. Preise, Öffnungszeiten und Angebote für Juli 2027
+vor der Reise erneut prüfen. Keine vertraulichen Buchungsdaten in öffentliche Inhalte schreiben.
+
+## Qualitätssicherung
+
+`npm ci`, danach `npx playwright install chromium webkit` (gegebenenfalls mit den
+benötigten Systembibliotheken). `npm run format:check`, `npm run check`,
+`npm run verify:sri` und `npm test`. Die Browserprüfung nutzt isolierten lokalen Speicher
+und deterministische externe Ressourcen; produktive Familiendaten werden nicht beschrieben.
+Offene Live-Prüfungen und tatsächlich ausgeführte Tests stehen in `HARDENING_REPORT.md`.
+
+Live: https://mikefaehch.github.io/Sommer2027/
