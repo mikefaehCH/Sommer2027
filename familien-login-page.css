@@ -1,0 +1,42 @@
+.login-wrap {
+  max-width: 620px;
+  margin: 70px auto 100px;
+  padding: 0 22px;
+}
+.login-card {
+  padding: 36px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.login-card p {
+  line-height: 1.7;
+}
+.login-status {
+  padding: 16px;
+  border-radius: 12px;
+  background: #f0eee6;
+  margin: 18px 0;
+  overflow-wrap: anywhere;
+}
+.login-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.login-actions button {
+  font: inherit;
+}
+.login-actions [hidden] {
+  display: none !important;
+}
+.login-user {
+  font-weight: 700;
+}
+.login-meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+.login-error {
+  color: #9d3939;
+}

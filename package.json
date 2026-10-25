@@ -1,0 +1,14 @@
+{
+  "name": "sommer2027-quality-checks",
+  "private": true,
+  "scripts": {
+    "format:check": "prettier --check \"**/*.{html,css,js,ts,json,cjs}\"",
+    "check": "node tests/static.cjs",
+    "verify:sri": "node scripts/verify-sri.cjs",
+    "test": "node tests/regression.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.51.1",
+    "prettier": "3.6.2"
+  }
+}

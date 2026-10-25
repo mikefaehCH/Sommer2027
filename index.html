@@ -2,6 +2,10 @@
 <html lang="de-CH">
   <head>
     <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js https://unpkg.com/leaflet@1.9.4/dist/leaflet.js; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com https://unpkg.com/leaflet@1.9.4/dist/leaflet.css; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://thumb.wikimedia.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org; connect-src 'self' https://kgtowblwixgfdnbgcjeq.supabase.co; worker-src 'self'; manifest-src 'self'"
+    />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content="#f7f2e8" />
     <meta
@@ -17,6 +21,7 @@
       crossorigin="anonymous"
     />
     <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="index-page.css" />
   </head>
   <body>
     <header class="topbar">
@@ -28,11 +33,7 @@
           ><a href="#unterkuenfte">Unterkünfte</a><a href="#infos">Reisehelfer</a
           ><a href="ai.html">KI-Assistent ✨</a>
         </nav>
-        <a
-          href="familien-login.html"
-          class="pill outline"
-          style="padding: 8px 12px; font-size: 12px"
-          >Familien-Login</a
+        <a href="familien-login.html" class="pill outline index-style-1">Familien-Login</a
         ><button
           class="ghost"
           id="menuToggle"
@@ -171,10 +172,7 @@
         </div>
       </section>
       <section class="shell section" aria-label="Inselguide">
-        <div
-          class="panel"
-          style="background: #e6e9de; border-color: #d3ddce; padding: clamp(22px, 4vw, 44px)"
-        >
+        <div class="panel index-style-2">
           <p class="eyebrow">NEU · ÎLE DE RÉ</p>
           <h2>Sieben Tage. Ganz viel Atlantik.</h2>
           <p class="lead">
@@ -185,10 +183,7 @@
         </div>
       </section>
       <section class="shell section" aria-label="Restaurantguide">
-        <div
-          class="panel"
-          style="background: #f2e6d9; border-color: #e4d2c0; padding: clamp(22px, 4vw, 44px)"
-        >
+        <div class="panel index-style-3">
           <p class="eyebrow">NEU · GENIESSEN AUF DER ÎLE DE RÉ</p>
           <h2>Die schönsten Adressen zum Essen.</h2>
           <p class="lead">
@@ -559,22 +554,7 @@
       >
     </nav>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script>
-      !(function () {
-        const el = document.getElementById('countdown');
-        if (!el) return;
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const target = new Date(2027, 6, 7);
-        const days = Math.ceil((target - today) / 86400000);
-        el.textContent =
-          days > 0
-            ? 'Noch ' + days + ' Tage bis zur Abreise'
-            : days === 0
-              ? 'Heute geht’s nach Frankreich!'
-              : '';
-      })();
-    </script>
+    <script src="index-inline-1.js"></script>
     <script src="supabase/public-config.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"
@@ -632,66 +612,6 @@
       <p id="photoDialogTip" class="photo-tip"></p>
       <a id="photoDialogLink" class="pill" href="#entdecken">Alle Ideen dieser Etappe ansehen →</a>
     </dialog>
-    <script>
-      const PHOTO_DETAILS = [
-        [
-          'Strände der Île de Ré',
-          'Lange Sandstrände, Dünen und kleine Badebuchten machen die Insel ideal für entspannte Familientage.',
-          'Für Familien: Gros Jonc bei Le Bois-Plage oder die Strände von La Couarde. Wind, Strömungen und Gezeiten vor dem Baden prüfen.',
-          're',
-        ],
-        [
-          'Château d’Amboise',
-          'Das königliche Schloss thront über der Loire und erzählt von der französischen Renaissance.',
-          'Besonders schön: der Blick auf den Fluss, die Schlossgärten und ein Spaziergang durch die Altstadt von Amboise.',
-          'amboise',
-        ],
-        [
-          'Île de Ré entdecken',
-          'Zwischen Atlantik, Salzgärten und weiss getünchten Dörfern lässt sich die Insel wunderbar mit dem Velo erkunden.',
-          'Ideen: Saint-Martin-de-Ré, der Leuchtturm Phare des Baleines und eine gemütliche Velotour durch die Salzgärten.',
-          're',
-        ],
-        [
-          'Clos Lucé',
-          'Im ehemaligen Wohnhaus von Leonardo da Vinci entdeckt ihr seine Ideen, Erfindungen und Lebensgeschichte.',
-          'Für Kinder besonders spannend: die nachgebauten Maschinen und der Park mit interaktiven Stationen.',
-          'amboise',
-        ],
-        [
-          'La Rochelle',
-          'Die historische Hafenstadt vor der Île de Ré bietet alte Türme, lebhafte Gassen und Restaurants am Wasser.',
-          'Als Ausflug: durch den Vieux-Port schlendern, ein Glacé essen und die Altstadt entdecken.',
-          're',
-        ],
-        [
-          'Château Royal d’Amboise',
-          'Das Schloss hoch über der Loire war eine wichtige königliche Residenz und bietet weite Ausblicke.',
-          'Kombiniert den Besuch mit Clos Lucé und einer Pause in den Cafés von Amboise.',
-          'amboise',
-        ],
-      ];
-      const photoDialog = document.getElementById('photoDialog');
-      document.querySelectorAll('[data-photo-detail]').forEach((button) =>
-        button.addEventListener('click', () => {
-          const d = PHOTO_DETAILS[Number(button.dataset.photoDetail)];
-          if (!d) return;
-          document.getElementById('photoDialogTitle').textContent = d[0];
-          document.getElementById('photoDialogText').textContent = d[1];
-          document.getElementById('photoDialogTip').textContent = d[2];
-          document.getElementById('photoDialogLink').href = '#entdecken';
-          photoDialog.showModal();
-        }),
-      );
-      photoDialog
-        .querySelector('.photo-close')
-        .addEventListener('click', () => photoDialog.close());
-      photoDialog.addEventListener('click', (e) => {
-        if (e.target === photoDialog) photoDialog.close();
-      });
-      document
-        .getElementById('photoDialogLink')
-        .addEventListener('click', () => photoDialog.close());
-    </script>
+    <script src="index-inline-2.js"></script>
   </body>
 </html>
