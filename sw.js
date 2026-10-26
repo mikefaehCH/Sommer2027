@@ -1,4 +1,4 @@
-const CACHE = 'sommer2027-v18';
+const CACHE = 'sommer2027-v19';
 const CORE = [
   './',
   './index.html',
