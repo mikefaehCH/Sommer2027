@@ -437,7 +437,7 @@ function showCommonsPhoto(id, photo) {
     img.className = 'activity-photo';
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.alt = 'Wikimedia-Foto: ' + photo.title;
+    img.alt = (photo.provider || 'Wikimedia') + '-Foto: ' + photo.title;
     img.src = photo.url;
     img.onerror = () => {
       img.remove();
@@ -448,7 +448,13 @@ function showCommonsPhoto(id, photo) {
     credit.href = photo.source;
     credit.target = '_blank';
     credit.rel = 'noopener noreferrer';
-    credit.textContent = photo.author + ' · ' + photo.license + ' · Wikimedia Commons';
+    credit.textContent =
+      photo.author +
+      ' · ' +
+      photo.license +
+      ' · ' +
+      (photo.provider || 'Wikimedia Commons') +
+      (photo.motif === 'Symbolbild' ? ' · Symbolbild' : '');
     node.classList.add('has-photo');
     node.append(img, credit);
   });
