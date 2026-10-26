@@ -71,7 +71,7 @@
     "id": "amboise-altstadt",
     "name": "Altstadt und Loire-Ufer",
     "query": "Amboise Loire vieille ville",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/L%C3%A9onard_de_Vinci_-_statue_de_Amleto_Cataldi_-_Amboise_%28Indre-et-Loire%29_%2823512968905%29.jpg/960px-L%C3%A9onard_de_Vinci_-_statue_de_Amleto_Cataldi_-_Amboise_%28Indre-et-Loire%29_%2823512968905%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:L%C3%A9onard_de_Vinci_-_statue_de_Amleto_Cataldi_-_Amboise_(Indre-et-Loire)_(23512968905).jpg",
@@ -80,7 +80,9 @@
       "license": "CC BY 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-26",
+    "reviewer": "Mike",
+    "reviewNotes": "achtung, das ist nur das Loire Ufer | Entscheidung Mike: approved"
   },
   {
     "id": "amboise-markt",
@@ -116,7 +118,7 @@
     "id": "mini-chateaux",
     "name": "Parc des Mini-Châteaux",
     "query": "Parc Mini-Châteaux Amboise",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Mini-Ch%C3%A2teaux_-_Ch%C3%A2teau-Guillaume_2.jpg/960px-Mini-Ch%C3%A2teaux_-_Ch%C3%A2teau-Guillaume_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:Mini-Ch%C3%A2teaux_-_Ch%C3%A2teau-Guillaume_2.jpg",
@@ -125,7 +127,9 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-26",
+    "reviewer": "Mike",
+    "reviewNotes": "Entscheidung Mike: approved"
   },
   {
     "id": "pagode",
@@ -161,7 +165,7 @@
     "id": "villandry",
     "name": "Gärten von Villandry",
     "query": "Jardins du Château de Villandry",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/16_Villandry_%2896%29_%2813197365114%29.jpg/960px-16_Villandry_%2896%29_%2813197365114%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:16_Villandry_(96)_(13197365114).jpg",
@@ -170,7 +174,9 @@
       "license": "CC BY-SA 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-26",
+    "reviewer": "Mike",
+    "reviewNotes": "Entscheidung Mike: approved"
   },
   {
     "id": "blois",
@@ -318,7 +324,7 @@
     "id": "salz",
     "name": "Salzgärten & Salzhandwerk",
     "query": "Marais salants Loix Île de Ré",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Marais_salants_-_Loix_%28%C3%AEle_de_r%C3%A9%29.jpg/960px-Marais_salants_-_Loix_%28%C3%AEle_de_r%C3%A9%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:Marais_salants_-_Loix_(%C3%AEle_de_r%C3%A9).jpg",
@@ -327,7 +333,9 @@
       "license": "CC BY 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-26",
+    "reviewer": "Mike",
+    "reviewNotes": "Entscheidung Mike: approved"
   },
   {
     "id": "grouin",
@@ -651,7 +659,7 @@
     "id": "lodges",
     "name": "Les Lodges du PAL prüfen",
     "query": "Les Lodges du PAL",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Lodges_du_PAL.JPG/960px-Lodges_du_PAL.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:Lodges_du_PAL.JPG",
@@ -660,7 +668,9 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-26",
+    "reviewer": "Mike",
+    "reviewNotes": "Entscheidung Mike: approved"
   },
   {
     "id": "pal-familienbahnen",
