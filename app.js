@@ -325,6 +325,92 @@ function renderDates() {
     return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'aria-label="' + escapeHTML(dateTitle(d) + ': ' + special.label) + '"' : ''}><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${special.icon}</span><span class="date-event-label">${escapeHTML(special.label)}</span>` : ''}</button>`;
   }).join('');
 }
+const AGREED_ITINERARY = {
+  "2027-07-10": {
+    "Morgen": "Direktfahrt Amboise → Île de Ré",
+    "Mittag": "Mittagspause unterwegs",
+    "Nachmittag": "Ankunft und Unterkunft beziehen",
+    "Abend": "Hafen La Flotte und Abendessen"
+  },
+  "2027-07-11": {
+    "Morgen": "Markt von La Flotte und Hafen",
+    "Mittag": "Mittagessen spontan",
+    "Nachmittag": "Strandnachmittag",
+    "Abend": "Freier Abend"
+  },
+  "2027-07-12": {
+    "Morgen": "Spaziergang durch die Salzgärten bei Loix",
+    "Mittag": "Mittagessen in einer Brasserie",
+    "Nachmittag": "Optional Strand oder Erholung",
+    "Abend": "Abend frei"
+  },
+  "2027-07-13": {
+    "Morgen": "La Rochelle: Alter Hafen",
+    "Mittag": "Französisches Mittagessen",
+    "Nachmittag": "Altstadt La Rochelle; Aquarium heute optional",
+    "Abend": "Abend frei"
+  },
+  "2027-07-14": {
+    "Morgen": "Entspannter Strandtag am Nationalfeiertag 🇫🇷",
+    "Mittag": "Picknick oder Strandrestaurant",
+    "Nachmittag": "Strand und freie Zeit",
+    "Abend": "Abend nahe Unterkunft; Feuerwerk optional"
+  },
+  "2027-07-15": {
+    "Morgen": "Ars-en-Ré und Dorfspaziergang",
+    "Mittag": "Mittagessen im Restaurant",
+    "Nachmittag": "Strand Plage de la Conche; Leuchtturm optional",
+    "Abend": "Abend frei"
+  },
+  "2027-07-16": {
+    "Morgen": "🎂 Emilias 7. Geburtstag: Aquarium La Rochelle",
+    "Mittag": "Geburtstagsmittagessen; Maja optional",
+    "Nachmittag": "Schatzsuche und Glacé in Saint-Martin-de-Ré",
+    "Abend": "Gemütlicher Geburtstagsabend"
+  },
+  "2027-07-17": {
+    "Morgen": "Letzter Inselmorgen, packen und auschecken",
+    "Mittag": "Fahrt Richtung Le PAL, Pause unterwegs",
+    "Nachmittag": "Ankunft Safari-Hotel am späten Nachmittag",
+    "Abend": "Safari-Hotel und Abendessen"
+  },
+  "2027-07-18": {
+    "Morgen": "Le PAL: Tiere und Safari",
+    "Mittag": "Mittagessen im Park",
+    "Nachmittag": "Attraktionen und Tiererlebnisse",
+    "Abend": "Abend im Safari-Hotel"
+  },
+  "2027-07-19": {
+    "Morgen": "Le PAL: Lieblingsattraktionen",
+    "Mittag": "Mittagessen im Park",
+    "Nachmittag": "Fahrgeschäfte, Shows und Tiere",
+    "Abend": "Abend im Safari-Hotel"
+  },
+  "2027-07-20": {
+    "Morgen": "Frühstück und Auschecken",
+    "Mittag": "Heimfahrt Richtung Baden",
+    "Nachmittag": "Fahrt / Ankunft zuhause",
+    "Abend": "Wieder daheim"
+  },
+  "2027-07-07": {
+    "Morgen": "Autofahrt Baden → Amboise, Abfahrt ca. 07:00",
+    "Mittag": "Mittagspause unterwegs",
+    "Nachmittag": "Ankunft und Unterkunft beziehen",
+    "Abend": "Abendessen spontan in Amboise"
+  },
+  "2027-07-08": {
+    "Morgen": "Château du Clos Lucé – Leonardo da Vinci",
+    "Mittag": "Restaurant in der Altstadt von Amboise",
+    "Nachmittag": "Château Royal d’Amboise",
+    "Abend": "Freier Abend"
+  },
+  "2027-07-09": {
+    "Morgen": "Château de Chenonceau",
+    "Mittag": "Crêpes im Le Médicis",
+    "Nachmittag": "Freizeit / optional Bootsfahrt",
+    "Abend": "Abendessen spontan"
+  }
+};
 function renderSlots() {
   $('#dayTitle').textContent = dateTitle(selected);
   $('#planRegion').textContent =
@@ -345,7 +431,7 @@ function renderSlots() {
               return `<div class="slotentry"><div><strong>${escapeHTML(a?.name || 'Unbekannte Aktivität')}</strong><small>${escapeHTML(a?.area || 'Eigene Idee')}</small></div><div class="slotbuttons"><button data-move="${escapeHTML(id)}" data-slot="${slot}" title="Verschieben">↕</button><button data-remove="${escapeHTML(id)}" data-slot="${slot}" aria-label="${escapeHTML(a?.name || 'Eintrag')} entfernen">✕</button></div></div>`;
             })
             .join('')
-        : `<div class="slotentry"><span class="muted">Zeit für spontane Ideen</span><button data-empty="${slot}" aria-label="Idee für ${slot} hinzufügen">＋</button></div>`
+        : `<div class="slotentry"><div><strong>${escapeHTML(AGREED_ITINERARY[selected]?.[slot] || "Zeit für spontane Ideen")}</strong><small>Gemeinsam geplanter Reiseentwurf · nicht gespeichert</small></div><button data-empty="${slot}" aria-label="Eigene Idee für ${slot} hinzufügen">＋</button></div>`
     }</div></div>`;
   }).join('');
 }
