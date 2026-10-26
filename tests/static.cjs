@@ -18,8 +18,14 @@ for (const e of photos) {
     assert.match(e.photo.license, /^(CC BY(?:-SA)? \d\.\d|CC0(?: 1\.0)?|Public domain)$/i);
     for (const k of ['title', 'author', 'source', 'url']) assert.ok(e.photo[k]);
     assert.ok(!/[<>]/.test(e.photo.author));
+    if (e.photo.provider !== undefined) assert.equal(e.photo.provider, 'Unsplash');
+    if (e.photo.motif !== undefined) assert.ok(['Ort', 'Symbolbild'].includes(e.photo.motif));
   }
   if (e.status === 'approved') assert.ok(e.checkedAt && e.reviewer && e.reviewNotes);
+  if (e.status === 'unreviewed') {
+    assert.ok(e.checkedAt == null);
+    assert.ok(e.reviewer == null);
+  }
 }
 const deps = JSON.parse(fs.readFileSync('DEPENDENCIES.json'));
 const policy = JSON.parse(fs.readFileSync('CSP.json')).policy;
