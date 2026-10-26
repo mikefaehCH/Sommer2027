@@ -314,10 +314,15 @@ function dateTitle(s) {
     year: 'numeric',
   }).format(new Date(s + 'T12:00:00'));
 }
+const SPECIAL_DAYS = {
+  '2027-07-14': { label: 'Nationalfeiertag', icon: '🇫🇷', type: 'national' },
+  '2027-07-16': { label: 'Emilias 7. Geburtstag', icon: '🎂', type: 'birthday' },
+};
 function renderDates() {
   $('#dateStrip').innerHTML = DAYS.map((d) => {
     const dt = new Date(d + 'T12:00:00');
-    return `<button class="datebtn ${d === selected ? 'active' : ''}" data-date="${d}" aria-pressed="${d === selected}"><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small></button>`;
+    const special = SPECIAL_DAYS[d];
+    return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'aria-label="' + escapeHTML(dateTitle(d) + ': ' + special.label) + '"' : ''}><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${special.icon}</span><span class="date-event-label">${escapeHTML(special.label)}</span>` : ''}</button>`;
   }).join('');
 }
 function renderSlots() {
