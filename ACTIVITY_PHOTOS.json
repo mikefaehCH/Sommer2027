@@ -566,16 +566,18 @@
     "id": "maritime",
     "name": "Musée Ernest Cognacq",
     "query": "Musée Ernest Cognacq Saint-Martin-de-Ré",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
-      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Mus%C3%A9e_Ernest-Cognacq_%281%29_Saint-Martin-de-R%C3%A9.jpg/960px-Mus%C3%A9e_Ernest-Cognacq_%281%29_Saint-Martin-de-R%C3%A9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Ernest-Cognacq_(1)_Saint-Martin-de-R%C3%A9.jpg",
-      "title": "File:Musée Ernest-Cognacq (1) Saint-Martin-de-Ré.jpg",
-      "author": "Chris06",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Facade_New_Clerjotte_ile_de_Re_1.jpg/500px-Facade_New_Clerjotte_ile_de_Re_1.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Facade_New_Clerjotte_ile_de_Re_1.jpg",
+      "title": "Facade New Clerjotte ile de Re 1.jpg",
+      "author": "Pep.per",
+      "license": "CC BY-SA 1.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/1.0/"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-26",
+    "reviewer": "Nutzerfreigabe; Commons-Angaben vom Nutzer bereitgestellt",
+    "reviewNotes": "Musée Ernest Cognacq, Hôtel de Clerjotte, Saint-Martin-de-Ré; Originalauflösung 500×267. Namensnennung und CC BY-SA 1.0 erforderlich. Bild nicht bearbeitet."
   },
   {
     "id": "platin",
