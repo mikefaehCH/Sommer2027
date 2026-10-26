@@ -171,12 +171,12 @@ const { chromium } = require('playwright');
   await until(() => !!navigator.serviceWorker.controller);
   const cacheState = await page.evaluate(async () => {
     const names = await caches.keys();
-    const cache = await caches.open('sommer2027-v18');
+    const cache = await caches.open('sommer2027-v19');
     return { names, urls: (await cache.keys()).map((r) => r.url) };
   });
   if (
     cacheState.names.includes('sommer2027-v17') ||
-    !cacheState.names.includes('sommer2027-v18') ||
+    !cacheState.names.includes('sommer2027-v19') ||
     !cacheState.names.includes('unrelated-test-cache')
   )
     throw Error('SW upgrade/cache isolation');
@@ -192,7 +192,7 @@ const { chromium } = require('playwright');
     await fetch('/private-probe', { headers: { Authorization: 'Bearer local-test-only' } });
   });
   const leaked = await page.evaluate(async () => {
-    const c = await caches.open('sommer2027-v18');
+    const c = await caches.open('sommer2027-v19');
     return (await c.keys()).some((r) => r.url.includes('private-probe'));
   });
   if (leaked) throw Error('Private request cached');
