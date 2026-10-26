@@ -297,6 +297,11 @@ a {
   background: var(--sea);
   color: white;
 }
+.datebtn.special-national { border-color: #c86d72; background: #fff0f0; }
+.datebtn.special-birthday { border-color: #b679b3; background: #fff0fa; }
+.datebtn.special-national.active, .datebtn.special-birthday.active { background: var(--sea); color: white; }
+.date-event { display: block; font-size: 21px; margin-top: 5px; }
+.date-event-label { display: block; font-size: 9px; line-height: 1.2; font-weight: 700; max-width: 90px; margin-top: 3px; }
 .slot {
   display: grid;
   grid-template-columns: 100px 1fr;
