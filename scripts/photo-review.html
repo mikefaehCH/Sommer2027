@@ -1,19 +1,12 @@
 <!doctype html>
 <html lang="de-CH">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Bildprüfung – Sommer 2027</title>
-    <link rel="stylesheet" href="photo-review.css" />
-  </head>
-  <body>
-    <h1>Bildprüfung: alle Aktivitäten</h1>
-    <p>
-      Redaktionelles Werkzeug. Ein Suchtreffer ist keine Freigabe. Motiv, Ortsbezug, Autor und
-      Lizenz auf der Originalseite prüfen. Erst danach im Katalog status: approved, checkedAt
-      (ISO-Datum) und reviewer setzen. Fehlende oder ungeprüfte Bilder bleiben Platzhalter.
-    </p>
-    <div id="photos"></div>
-    <script src="photo-review.js"></script>
-  </body>
-</html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bildfreigabe · Sommer 2027</title><link rel="stylesheet" href="photo-review.css">
+</head>
+<body>
+<header><div class="wrap"><p class="eyebrow">SOMMER 2027 · BILDREDAKTION</p><h1>Die besten Bilder auswählen</h1><p>Prüfe Motiv und Ort anhand des Bildes und der Originalquelle. Mein Score ist eine <strong>Metadaten-Einschätzung</strong>, keine visuelle oder rechtliche Garantie.</p><div class="toolbar"><span id="summary">Lade Bildkatalog …</span><button id="export" type="button">Entscheidungen exportieren</button><button id="reset" class="quiet" type="button">Lokale Auswahl zurücksetzen</button></div></div></header>
+<main class="wrap"><div class="filters"><label>Status <select id="filter"><option value="pending">Noch zu entscheiden</option><option value="all">Alle 59</option><option value="decided">Meine Entscheidungen</option><option value="missing">Ohne Kandidat</option></select></label><label>Suche <input id="search" placeholder="Ort oder Aktivität" type="search"></label></div><div id="photos" class="photos"></div></main>
+<footer class="wrap">Entscheidungen bleiben in diesem Browser gespeichert. Der JSON-Export kann anschliessend ins Repository übernommen werden. Keine automatische Veröffentlichung.</footer>
+<script src="photo-review.js"></script>
+</body></html>

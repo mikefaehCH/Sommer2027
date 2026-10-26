@@ -101,7 +101,7 @@
     "id": "loire-boot",
     "name": "Bootsfahrt auf der Loire",
     "query": "Loire bateau Amboise",
-    "status": "unreviewed",
+    "status": "rejected",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/ChateaudAmboiseChambre03.jpg/960px-ChateaudAmboiseChambre03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:ChateaudAmboiseChambre03.jpg",
@@ -110,7 +110,9 @@
       "license": "CC BY-SA 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-25",
+    "reviewer": "Metadaten-Vorprüfung (keine visuelle Freigabe)",
+    "reviewNotes": "Dateititel nennt ein Schlosszimmer, nicht eine Bootsfahrt auf der Loire."
   },
   {
     "id": "mini-chateaux",
@@ -176,7 +178,7 @@
     "id": "blois",
     "name": "Altstadt von Blois",
     "query": "Blois vieille ville Loire",
-    "status": "unreviewed",
+    "status": "rejected",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Alluyes_%28Eure-et-Loir%29_%2829848317632%29.jpg/960px-Alluyes_%28Eure-et-Loir%29_%2829848317632%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:Alluyes_(Eure-et-Loir)_(29848317632).jpg",
@@ -185,7 +187,9 @@
       "license": "CC BY 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-25",
+    "reviewer": "Metadaten-Vorprüfung (keine visuelle Freigabe)",
+    "reviewNotes": "Dateititel nennt Alluyes (Eure-et-Loir), nicht Blois."
   },
   {
     "id": "montresor",
@@ -462,7 +466,7 @@
     "id": "boot",
     "name": "Bootsausflug ab der Insel",
     "query": "Bateau voile Île de Ré",
-    "status": "unreviewed",
+    "status": "rejected",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Jacques_de_Th%C3%A9zac_%C3%8Ele_de_Sein_2.jpg/960px-Jacques_de_Th%C3%A9zac_%C3%8Ele_de_Sein_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:Jacques_de_Th%C3%A9zac_%C3%8Ele_de_Sein_2.jpg",
@@ -471,7 +475,9 @@
       "license": "Public domain",
       "licenseUrl": null
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-25",
+    "reviewer": "Metadaten-Vorprüfung (keine visuelle Freigabe)",
+    "reviewNotes": "Dateititel nennt Île de Sein, nicht Île de Ré."
   },
   {
     "id": "paddle",
@@ -560,16 +566,18 @@
     "id": "maritime",
     "name": "Musée Ernest Cognacq",
     "query": "Musée Ernest Cognacq Saint-Martin-de-Ré",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
-      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Mus%C3%A9e_Ernest-Cognacq_%281%29_Saint-Martin-de-R%C3%A9.jpg/960px-Mus%C3%A9e_Ernest-Cognacq_%281%29_Saint-Martin-de-R%C3%A9.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Ernest-Cognacq_(1)_Saint-Martin-de-R%C3%A9.jpg",
-      "title": "File:Musée Ernest-Cognacq (1) Saint-Martin-de-Ré.jpg",
-      "author": "Chris06",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Facade_New_Clerjotte_ile_de_Re_1.jpg/500px-Facade_New_Clerjotte_ile_de_Re_1.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Facade_New_Clerjotte_ile_de_Re_1.jpg",
+      "title": "Facade New Clerjotte ile de Re 1.jpg",
+      "author": "Pep.per",
+      "license": "CC BY-SA 1.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/1.0/"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-26",
+    "reviewer": "Nutzerfreigabe; Commons-Angaben vom Nutzer bereitgestellt",
+    "reviewNotes": "Musée Ernest Cognacq, Hôtel de Clerjotte, Saint-Martin-de-Ré; Originalauflösung 500×267. Namensnennung und CC BY-SA 1.0 erforderlich. Bild nicht bearbeitet."
   },
   {
     "id": "platin",
@@ -583,7 +591,7 @@
     "id": "abend-hafen",
     "name": "Abendessen am Hafen",
     "query": "Port Saint-Martin-de-Ré restaurant",
-    "status": "unreviewed",
+    "status": "rejected",
     "photo": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Paris_comique_sous_le_second_Empire.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
       "source": "https://commons.wikimedia.org/wiki/File:Paris_comique_sous_le_second_Empire.png",
@@ -592,7 +600,9 @@
       "license": "CC0",
       "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-25",
+    "reviewer": "Metadaten-Vorprüfung (keine visuelle Freigabe)",
+    "reviewNotes": "Dateititel nennt eine Paris-Illustration, nicht ein Hafenrestaurant."
   },
   {
     "id": "14juillet",
@@ -628,7 +638,7 @@
     "id": "lepal-zoo",
     "name": "Le PAL – Tierpark",
     "query": "Le PAL parc zoologique",
-    "status": "unreviewed",
+    "status": "rejected",
     "photo": {
       "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Le_Pal_King_Kong_banner.jpg/960px-Le_Pal_King_Kong_banner.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
       "source": "https://commons.wikimedia.org/wiki/File:Le_Pal_King_Kong_banner.jpg",
@@ -637,7 +647,9 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-25",
+    "reviewer": "Metadaten-Vorprüfung (keine visuelle Freigabe)",
+    "reviewNotes": "Dateititel nennt ein King-Kong-Banner, nicht eine repräsentative Tierparkaufnahme."
   },
   {
     "id": "savana",
