@@ -24,7 +24,10 @@ const persist = () => {
 };
 function updateProgress() {
   document.querySelector('#progress').textContent =
-    Object.keys(decisions).length + ' von ' + entries.length + ' Entscheidungen vorgemerkt';
+    entries.filter((e) => e.status !== 'approved' && decisions[e.id]).length +
+    ' von ' +
+    entries.filter((e) => e.status !== 'approved').length +
+    ' offenen Bildern vorgemerkt';
 }
 function field(label, value, type = 'text') {
   const wrap = el('label', label);
@@ -37,7 +40,7 @@ function field(label, value, type = 'text') {
 function render() {
   const container = document.querySelector('#photos');
   container.replaceChildren();
-  for (const e of entries) {
+  for (const e of entries.filter((entry) => entry.status !== 'approved')) {
     const article = el('article');
     article.append(el('h2', e.name), el('p', e.id + ' · Katalogstatus: ' + e.status, 'muted'));
     if (e.photo) {
