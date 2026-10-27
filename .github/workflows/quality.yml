@@ -23,12 +23,8 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Install browser and system dependencies
-        timeout-minutes: 7
-        run: |
-          timeout 180s npx playwright install --with-deps ${{ matrix.browser }} || {
-            echo 'Browser installation failed or timed out; retrying once.'
-            timeout 180s npx playwright install --with-deps ${{ matrix.browser }}
-          }
+        timeout-minutes: 10
+        run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run format:check
       - run: npm run check
       - run: npm run verify:sri
