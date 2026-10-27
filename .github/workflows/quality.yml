@@ -23,7 +23,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps ${{ matrix.browser }}
-      - run: npx prettier tests/security.cjs
       - run: npm run format:check
       - run: npm run check
       - run: npm run verify:sri
