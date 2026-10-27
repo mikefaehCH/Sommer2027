@@ -1470,3 +1470,58 @@ textarea:focus-visible {
   border: 2px solid #b679b3;
   background: #fff6fd;
 }
+
+.plan-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+}
+.plan-photo {
+  width: 50px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+.slotentry .plan-activity-link {
+  text-align: left;
+  font-weight: 700;
+  color: var(--sea);
+}
+.plan-add {
+  border: 0;
+  background: transparent;
+  color: var(--sea);
+  padding: 9px 2px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+.planner-picker {
+  width: min(560px, 92vw);
+}
+.planner-picker input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+.planner-choices {
+  max-height: 45vh;
+  overflow: auto;
+  display: grid;
+  gap: 4px;
+}
+.planner-choices button {
+  display: grid;
+  text-align: left;
+  gap: 3px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+}
+.planner-choices small {
+  color: var(--muted);
+}
