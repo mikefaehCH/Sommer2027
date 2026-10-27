@@ -60,7 +60,20 @@ Deno.serve(async (req) => {
       .eq('user_id', user.id)
       .maybeSingle();
     if (memberError || !member) return json({ error: 'Kein Familienzugriff' }, 403);
-    const body = await req.json();
+    if (!req.headers.get('content-type')?.toLowerCase().startsWith('application/json'))
+      return json({ error: 'JSON erforderlich' }, 415);
+    const declaredSize = Number(req.headers.get('content-length') || 0);
+    if (declaredSize > 50000) return json({ error: 'Anfrage zu gross' }, 413);
+    const raw = await req.text();
+    if (raw.length > 50000) return json({ error: 'Anfrage zu gross' }, 413);
+    let body;
+    try {
+      body = JSON.parse(raw);
+    } catch {
+      return json({ error: 'Ungueltiges JSON' }, 400);
+    }
+    if (!body || typeof body !== 'object' || Array.isArray(body))
+      return json({ error: 'Ungueltige Anfrage' }, 400);
     if (
       !modes.has(body.mode) ||
       !regions[body.region] ||
@@ -85,10 +98,10 @@ Deno.serve(async (req) => {
       'priority',
     ]);
     const items = Array.isArray(body.activities)
-      ? body.activities.slice(0, 65).map((a) =>
+      ? body.activities.slice(0, 65).filter((a) => a && typeof a === 'object' && !Array.isArray(a)).map((a) =>
           Object.fromEntries(
             Object.entries(a)
-              .filter(([k, v]) => allowed.has(k) && ['string', 'number'].includes(typeof v))
+              .filter(([k, v]) => allowed.has(k) && (typeof v === 'string' || (typeof v === 'number' && Number.isFinite(v))))
               .map(([k, v]) => [k, typeof v === 'string' ? v.slice(0, 350) : v]),
           ),
         )
