@@ -8,7 +8,7 @@
     "test": "node tests/service-worker.cjs && node tests/regression.cjs"
   },
   "devDependencies": {
-    "playwright": "1.51.1",
+    "playwright": "1.55.1",
     "prettier": "3.6.2"
   }
 }
