@@ -1,7 +1,7 @@
 name: Hardening quality checks
 on:
   push:
-    branches: [chore/sommer2027-hardening]
+    branches: [chore/sommer2027-hardening, fix/edge-request-validation]
   pull_request:
     branches: [main]
   workflow_dispatch:
