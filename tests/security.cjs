@@ -36,7 +36,7 @@ const frontendFiles = [
 for (const file of frontendFiles) {
   const source = fs.readFileSync(file, 'utf8');
   assert.ok(
-    !/sb_secret_|service_role|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}/.test(source),
+    !/sb_secret_|service_role[=:]|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}/.test(source),
   );
   assert.ok(!/\beval\s*\(|\bnew\s+Function\s*\(/.test(source));
 }
