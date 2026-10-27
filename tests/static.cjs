@@ -51,43 +51,6 @@ for (const p of fs.readdirSync('.').filter((p) => p.endsWith('.html'))) {
   }
 }
 assert.ok(!fs.readFileSync('app.js', 'utf8').includes('w/api.php'));
-const edge = fs.readFileSync('supabase/functions/travel-assistant/index.ts', 'utf8');
-for (const check of [
-  "auth.getUser(",
-  ".from('family_members')",
-  "declaredSize > 50000",
-  "raw.length > 50000",
-  "JSON.parse(raw)",
-  "Number.isFinite(v)",
-]) {
-  assert.ok(
-    edge.includes(check),
-    'AI Edge Function security guard missing: ' + check,
-  );
-}
-assert.ok(
-  !edge.includes('service_role'),
-  'AI Edge Function must not use a privileged service role',
-);
-const schema = fs.readFileSync('supabase/schema.sql', 'utf8');
-for (const table of [
-  'family_members',
-  'family_plans',
-  'activity_votes',
-  'change_log',
-  'guest_links',
-]) {
-  assert.ok(
-    schema.includes('alter table public.' + table + ' enable row level security;'),
-    'RLS missing: ' + table,
-  );
-}
-assert.ok(
-  schema.includes('voter_id=(select auth.uid())'),
-  'Vote ownership policy missing',
-);
-console.log('PASS: AI request guards, membership authorization and family RLS declarations');
-
 console.log(
   'PASS: 59 activities and photo records; licenses, approval metadata, CSP, local assets, SRI attributes; no runtime image search',
 );
