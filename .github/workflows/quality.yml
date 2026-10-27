@@ -22,10 +22,10 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run format:check
       - run: npm run check
       - run: npm run verify:sri
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm test
         env:
           TEST_BROWSER: ${{ matrix.browser }}
