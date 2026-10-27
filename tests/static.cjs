@@ -51,6 +51,28 @@ for (const p of fs.readdirSync('.').filter((p) => p.endsWith('.html'))) {
   }
 }
 assert.ok(!fs.readFileSync('app.js', 'utf8').includes('w/api.php'));
+
+const frontendFiles = [
+  'app.js',
+  'ai.js',
+  'familien-login-inline-1.js',
+  'gemeinsamer-plan-inline-1.js',
+  'scripts/photo-review.js',
+  'supabase/public-config.js',
+];
+for (const file of frontendFiles) {
+  const source = fs.readFileSync(file, 'utf8');
+  assert.ok(!/sb_secret_|service_role|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}/.test(source), file + ': possible privileged credential');
+  assert.ok(!/\beval\s*\(|\bnew\s+Function\s*\(/.test(source), file + ': dynamic code execution');
+}
+const review = fs.readFileSync('scripts/photo-review.js', 'utf8');
+assert.ok(review.includes('textContent'), 'Photo review must use safe text rendering');
+assert.ok(review.includes('noopener noreferrer'), 'External photo links must be isolated');
+const workflow = fs.readFileSync('.github/workflows/quality.yml', 'utf8');
+assert.ok(workflow.includes('pull_request:'), 'Quality workflow must check pull requests');
+assert.ok(workflow.includes('verify:sri'), 'Quality workflow must verify SRI');
+console.log('PASS: frontend credential and dynamic-execution guards; review link isolation; CI security gates');
+
 console.log(
   'PASS: 59 activities and photo records; licenses, approval metadata, CSP, local assets, SRI attributes; no runtime image search',
 );
