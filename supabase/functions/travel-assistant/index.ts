@@ -98,10 +98,17 @@ Deno.serve(async (req) => {
       'priority',
     ]);
     const items = Array.isArray(body.activities)
-      ? body.activities.slice(0, 65).filter((a) => a && typeof a === 'object' && !Array.isArray(a)).map((a) =>
+      ? body.activities
+          .slice(0, 65)
+          .filter((a) => a && typeof a === 'object' && !Array.isArray(a))
+          .map((a) =>
           Object.fromEntries(
             Object.entries(a)
-              .filter(([k, v]) => allowed.has(k) && (typeof v === 'string' || (typeof v === 'number' && Number.isFinite(v))))
+              .filter(
+                ([k, v]) =>
+                  allowed.has(k) &&
+                  (typeof v === 'string' || (typeof v === 'number' && Number.isFinite(v))),
+              )
               .map(([k, v]) => [k, typeof v === 'string' ? v.slice(0, 350) : v]),
           ),
         )
