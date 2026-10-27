@@ -315,14 +315,20 @@ function dateTitle(s) {
   }).format(new Date(s + 'T12:00:00'));
 }
 const SPECIAL_DAYS = {
-  '2027-07-14': { label: 'Nationalfeiertag', icon: '🇫🇷', type: 'national' },
-  '2027-07-16': { label: 'Emilias 7. Geburtstag', icon: '🎂', type: 'birthday' },
+  '2027-07-14': { label: 'Nationalfeiertag', type: 'national' },
+  '2027-07-16': { label: 'Emilias 7. Geburtstag', type: 'birthday' },
+};
+const EVENT_ICONS = {
+  national:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V3m0 1c5-2 7 2 12 0v10c-5 2-7-2-12 0"/></svg>',
+  birthday:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v7H4zM3 21h18M8 12V9m4 3V8m4 4V9M4 15c2 0 2 1 4 1s2-1 4-1 2 1 4 1 2-1 4-1"/><path d="M8 6h.01M12 5h.01M16 6h.01" stroke-width="2"/></svg>',
 };
 function renderDates() {
   $('#dateStrip').innerHTML = DAYS.map((d) => {
     const dt = new Date(d + 'T12:00:00');
     const special = SPECIAL_DAYS[d];
-    return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'aria-label="' + escapeHTML(dateTitle(d) + ': ' + special.label) + '"' : ''}><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${special.icon}</span><span class="date-event-label">${escapeHTML(special.label)}</span>` : ''}</button>`;
+    return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'aria-label="' + escapeHTML(dateTitle(d) + ': ' + special.label) + '" title="' + escapeHTML(special.label) + '"' : ''}><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${EVENT_ICONS[special.type]}</span>` : ''}</button>`;
   }).join('');
 }
 const AGREED_ITINERARY = {
