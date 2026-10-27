@@ -13,7 +13,7 @@
       content="Unser Frankreich-Abenteuer: Amboise, Île de Ré und Le PAL. Reiseideen und flexibler Ferienkalender."
     />
     <title>Sommer 2027 – Unser Frankreich-Abenteuer</title>
-    <link rel="stylesheet" href="style.css?v=20261027-calendar" />
+    <link rel="stylesheet" href="style.css?v=20261027-planner" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -661,7 +661,21 @@
       crossorigin="anonymous"
       defer
     ></script>
-    <script src="app.js?v=20261027-calendar" defer></script>
+    <script src="app.js?v=20261027-planner" defer></script>
+    <dialog
+      id="plannerPicker"
+      class="slot-dialog planner-picker"
+      aria-labelledby="plannerPickerTitle"
+    >
+      <h2 id="plannerPickerTitle">Aktivität hinzufügen</h2>
+      <label for="plannerSearch">Aktivität suchen</label>
+      <input id="plannerSearch" type="search" placeholder="Ort oder Aktivität" autocomplete="off" />
+      <div id="plannerChoices" class="planner-choices"></div>
+      <div class="actions">
+        <button type="button" class="pill outline" id="plannerCreate">+ Neue Aktivität</button
+        ><button type="button" class="pill outline" id="plannerClose">Schliessen</button>
+      </div>
+    </dialog>
     <dialog id="moveDialog" class="slot-dialog" aria-labelledby="moveDialogTitle">
       <div class="move-form">
         <p class="eyebrow">AKTIVITÄT VERSCHIEBEN</p>
