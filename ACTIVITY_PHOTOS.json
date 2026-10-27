@@ -37,18 +37,20 @@
     "id": "chenonceau",
     "name": "Château de Chenonceau",
     "query": "Château de Chenonceau",
-    "status": "rejected",
+    "status": "approved",
     "photo": {
-      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Ch%C3%A2teau_de_Chenonceau_-_chapelle_-_clocher_%28Chenonceaux%29.jpg/960px-Ch%C3%A2teau_de_Chenonceau_-_chapelle_-_clocher_%28Chenonceaux%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source": "https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_de_Chenonceau_-_chapelle_-_clocher_(Chenonceaux).jpg",
-      "title": "File:Château de Chenonceau - chapelle - clocher (Chenonceaux).jpg",
-      "author": "Gzen92",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+      "url": "assets/activity-photos/chenonceau.jpg",
+      "source": "https://www.pexels.com/photo/old-castle-on-river-in-evening-4165266/",
+      "title": "Château de Chenonceau",
+      "author": "Lucas Carlini",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Ort"
     },
-    "checkedAt": "2026-10-25",
-    "reviewer": "Codex – visuelle Einzelprüfung",
-    "reviewNotes": "Nur Glockenturm als Detail; für die Aktivitätskarte kein ausreichend repräsentatives Schlossmotiv."
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Motiv für diese Aktivität ausgewählt."
   },
   {
     "id": "chaumont",
@@ -254,16 +256,20 @@
     "id": "saint-martin",
     "name": "Saint-Martin-de-Ré",
     "query": "Port Saint-Martin-de-Ré",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
-      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Saint-Martin-de-R%C3%A9%2C_port%2C_close-up%2C_R%C3%A9_island%2C_Charente-Maritime.jpg/960px-Saint-Martin-de-R%C3%A9%2C_port%2C_close-up%2C_R%C3%A9_island%2C_Charente-Maritime.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source": "https://commons.wikimedia.org/wiki/File:Saint-Martin-de-R%C3%A9,_port,_close-up,_R%C3%A9_island,_Charente-Maritime.jpg",
-      "title": "File:Saint-Martin-de-Ré, port, close-up, Ré island, Charente-Maritime.jpg",
-      "author": "Jebulon",
-      "license": "CC0",
-      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+      "url": "assets/activity-photos/saint-martin.jpg",
+      "source": "https://www.pexels.com/photo/scenic-view-of-saint-martin-de-re-harbor-in-france-32614660/",
+      "title": "Saint-Martin-de-Ré – Hafen",
+      "author": "Consuelo Borroni",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Ort"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Motiv für diese Aktivität ausgewählt."
   },
   {
     "id": "vauban",
@@ -284,9 +290,20 @@
     "id": "bois-plage",
     "name": "Plage des Gollandières",
     "query": "Plage des Gollandières Bois-Plage-en-Ré",
-    "status": "missing",
-    "photo": null,
-    "checkedAt": null
+    "status": "approved",
+    "photo": {
+      "url": "assets/activity-photos/bois-plage.jpg",
+      "source": "https://www.pexels.com/photo/scenic-beach-pathway-at-montalivet-france-29252006/",
+      "title": "Strandweg in Montalivet",
+      "author": "Claire Monnin",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Symbolbild"
+    },
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Stimmungsbild, Aufnahmeort nicht als Zielort ausgewiesen."
   },
   {
     "id": "gros-jonc",
@@ -349,9 +366,20 @@
     "id": "ars",
     "name": "Ars-en-Ré",
     "query": "Ars-en-Ré église village",
-    "status": "missing",
-    "photo": null,
-    "checkedAt": null
+    "status": "approved",
+    "photo": {
+      "url": "assets/activity-photos/ars.jpg",
+      "source": "https://www.pexels.com/photo/historic-church-spire-in-ars-en-re-france-38935673/",
+      "title": "Kirchturm von Ars-en-Ré",
+      "author": "Atypeek",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Ort"
+    },
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Motiv für diese Aktivität ausgewählt."
   },
   {
     "id": "phare",
@@ -366,10 +394,20 @@
     "id": "conche",
     "name": "Plage de la Conche des Baleines",
     "query": "Conche des Baleines plage",
-    "status": "research-error",
-    "photo": null,
-    "checkedAt": null,
-    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Conche+des+Baleines+plage&gsrnamespace=6&gsrlimit=5&prop=imag"
+    "status": "approved",
+    "photo": {
+      "url": "assets/activity-photos/conche.jpg",
+      "source": "https://www.pexels.com/photo/withered-tree-trunk-near-wooden-fence-on-beach-17602613/",
+      "title": "Strand und Dünen",
+      "author": "Thierry Martine",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Symbolbild"
+    },
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Stimmungsbild, Aufnahmeort nicht als Zielort ausgewiesen."
   },
   {
     "id": "portes",
@@ -501,25 +539,39 @@
     "id": "rochelle",
     "name": "La Rochelle – Altstadt & Hafen",
     "query": "Vieux Port La Rochelle",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
-      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/La_rochelle%2C_Le_vieux_port.JPG/960px-La_rochelle%2C_Le_vieux_port.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source": "https://commons.wikimedia.org/wiki/File:La_rochelle,_Le_vieux_port.JPG",
-      "title": "File:La rochelle, Le vieux port.JPG",
-      "author": "Mister Brown",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+      "url": "assets/activity-photos/rochelle.jpg",
+      "source": "https://www.pexels.com/photo/historic-towers-and-harbor-at-la-rochelle-france-38904475/",
+      "title": "La Rochelle – Hafen",
+      "author": "Atypeek",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Ort"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Motiv für diese Aktivität ausgewählt."
   },
   {
     "id": "aquarium",
     "name": "Aquarium La Rochelle",
     "query": "Aquarium La Rochelle bâtiment",
-    "status": "research-error",
-    "photo": null,
-    "checkedAt": null,
-    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Aquarium+La+Rochelle+b%C3%A2timent&gsrnamespace=6&gsrlimit=5&"
+    "status": "approved",
+    "photo": {
+      "url": "assets/activity-photos/aquarium.jpg",
+      "source": "https://www.pexels.com/photo/a-close-up-shot-of-jellyfish-underwater-9501023/",
+      "title": "Quallen im Aquarium",
+      "author": "Grace Russmann",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Symbolbild"
+    },
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Stimmungsbild, Aufnahmeort nicht als Zielort ausgewiesen."
   },
   {
     "id": "rochelle-markt",
@@ -543,10 +595,20 @@
     "id": "glace",
     "name": "Glace am Hafen",
     "query": "Glace crème Saint-Martin-de-Ré",
-    "status": "research-error",
-    "photo": null,
-    "checkedAt": null,
-    "error": "Command failed: curl -fsSL --max-time 25 https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype%3Abitmap+Glace+cr%C3%A8me+Saint-Martin-de-R%C3%A9&gsrnamespace=6&gsrli"
+    "status": "approved",
+    "photo": {
+      "url": "assets/activity-photos/glace.jpg",
+      "source": "https://pixabay.com/photos/ice-cream-ice-cream-cone-ice-ball-2731820/",
+      "title": "Glace am Hafen",
+      "author": "wolfganggerth",
+      "license": "Pixabay License",
+      "licenseUrl": "https://pixabay.com/service/license-summary/",
+      "provider": "Pixabay",
+      "motif": "Symbolbild"
+    },
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Stimmungsbild, Aufnahmeort nicht als Zielort ausgewiesen."
   },
   {
     "id": "picknick",
@@ -606,16 +668,20 @@
     "id": "14juillet",
     "name": "Nationalfeiertag in Frankreich",
     "query": "Feu d'artifice 14 juillet France",
-    "status": "unreviewed",
+    "status": "approved",
     "photo": {
-      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Feu_d%27artifice_du_14_juillet_2021_%C3%A0_Wissous_%2814%29.jpg/960px-Feu_d%27artifice_du_14_juillet_2021_%C3%A0_Wissous_%2814%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source": "https://commons.wikimedia.org/wiki/File:Feu_d%27artifice_du_14_juillet_2021_%C3%A0_Wissous_(14).jpg",
-      "title": "File:Feu d'artifice du 14 juillet 2021 à Wissous (14).jpg",
-      "author": "Like tears in rain",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+      "url": "assets/activity-photos/14juillet.jpg",
+      "source": "https://www.pexels.com/photo/friends-sitting-on-a-rocky-shore-with-the-flag-of-france-on-their-back-8071373/",
+      "title": "Französischer Nationalfeiertag",
+      "author": "Anastasia Shuraeva",
+      "license": "Pexels License",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "provider": "Pexels",
+      "motif": "Symbolbild"
     },
-    "checkedAt": null
+    "checkedAt": "2026-10-27",
+    "reviewer": "Mike",
+    "reviewNotes": "Von Mike ausgewählt; Stimmungsbild, Aufnahmeort nicht als Zielort ausgewiesen."
   },
   {
     "id": "lepal-parc",
