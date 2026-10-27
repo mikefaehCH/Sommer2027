@@ -277,6 +277,7 @@ a {
   padding-bottom: 15px;
 }
 .datebtn {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--white);
@@ -297,31 +298,28 @@ a {
   background: var(--sea);
   color: white;
 }
-.datebtn.special-national {
-  border-color: #c86d72;
-  background: #fff0f0;
-}
-.datebtn.special-birthday {
-  border-color: #b679b3;
-  background: #fff0fa;
-}
-.datebtn.special-national.active,
-.datebtn.special-birthday.active {
-  background: var(--sea);
-  color: white;
-}
+/* Discreet event marks keep every date the same size. */
 .date-event {
-  display: block;
-  font-size: 21px;
-  margin-top: 5px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  color: #a9615a;
+  transform: rotate(12deg);
+  pointer-events: none;
 }
-.date-event-label {
+.special-birthday .date-event {
+  color: #a1728e;
+  transform: rotate(-12deg);
+}
+.date-event svg {
   display: block;
-  font-size: 9px;
-  line-height: 1.2;
-  font-weight: 700;
-  max-width: 90px;
-  margin-top: 3px;
+  width: 100%;
+  height: 100%;
+}
+.datebtn.active .date-event {
+  color: #fff;
 }
 .slot {
   display: grid;
