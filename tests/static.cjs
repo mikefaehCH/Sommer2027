@@ -62,10 +62,22 @@ for (const check of [
 ]) {
   assert.ok(edge.includes(check), 'AI Edge Function security guard missing: ' + check);
 }
-assert.ok(!edge.includes('service_role'), 'AI Edge Function must not use a privileged service role');
+assert.ok(
+  !edge.includes('service_role'),
+  'AI Edge Function must not use a privileged service role',
+);
 const schema = fs.readFileSync('supabase/schema.sql', 'utf8');
-for (const table of ['family_members', 'family_plans', 'activity_votes', 'change_log', 'guest_links']) {
-  assert.ok(schema.includes('alter table public.' + table + ' enable row level security;'), 'RLS missing: ' + table);
+for (const table of [
+  'family_members',
+  'family_plans',
+  'activity_votes',
+  'change_log',
+  'guest_links',
+]) {
+  assert.ok(
+    schema.includes('alter table public.' + table + ' enable row level security;'),
+    'RLS missing: ' + table,
+  );
 }
 assert.ok(schema.includes('voter_id=(select auth.uid())'), 'Vote ownership policy missing');
 console.log('PASS: AI request guards, membership authorization and family RLS declarations');
