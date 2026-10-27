@@ -1,7 +1,10 @@
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
 
-const edge = fs.readFileSync('supabase/functions/travel-assistant/index.ts', 'utf8');
+const edge = fs.readFileSync(
+  'supabase/functions/travel-assistant/index.ts',
+  'utf8',
+);
 const guards = [
   "auth.getUser(",
   ".from('family_members')",
