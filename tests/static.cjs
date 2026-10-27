@@ -60,7 +60,10 @@ for (const check of [
   "JSON.parse(raw)",
   "Number.isFinite(v)",
 ]) {
-  assert.ok(edge.includes(check), 'AI Edge Function security guard missing: ' + check);
+  assert.ok(
+    edge.includes(check),
+    'AI Edge Function security guard missing: ' + check,
+  );
 }
 assert.ok(
   !edge.includes('service_role'),
@@ -79,7 +82,10 @@ for (const table of [
     'RLS missing: ' + table,
   );
 }
-assert.ok(schema.includes('voter_id=(select auth.uid())'), 'Vote ownership policy missing');
+assert.ok(
+  schema.includes('voter_id=(select auth.uid())'),
+  'Vote ownership policy missing',
+);
 console.log('PASS: AI request guards, membership authorization and family RLS declarations');
 
 console.log(
