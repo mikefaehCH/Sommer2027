@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "format:check": "prettier --check \"**/*.{html,css,js,ts,json,cjs}\"",
-    "check": "node tests/static.cjs",
+    "check": "node tests/static.cjs && node tests/security.cjs",
     "verify:sri": "node scripts/verify-sri.cjs",
     "test": "node tests/service-worker.cjs && node tests/regression.cjs"
   },
