@@ -22,7 +22,13 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Install browser and system dependencies
+        timeout-minutes: 7
+        run: |
+          timeout 180s npx playwright install --with-deps ${{ matrix.browser }} || {
+            echo 'Browser installation failed or timed out; retrying once.'
+            timeout 180s npx playwright install --with-deps ${{ matrix.browser }}
+          }
       - run: npm run format:check
       - run: npm run check
       - run: npm run verify:sri
