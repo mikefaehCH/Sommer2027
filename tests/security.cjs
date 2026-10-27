@@ -24,3 +24,24 @@ for (const table of tables) {
 assert.ok(schema.includes('voter_id=(select auth.uid())'));
 
 console.log('PASS: AI input guards and RLS declarations');
+
+const frontendFiles = [
+  'app.js',
+  'ai.js',
+  'familien-login-inline-1.js',
+  'gemeinsamer-plan-inline-1.js',
+  'scripts/photo-review.js',
+  'supabase/public-config.js',
+];
+for (const file of frontendFiles) {
+  const source = fs.readFileSync(file, 'utf8');
+  assert.ok(!/sb_secret_|service_role|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}/.test(source));
+  assert.ok(!/\beval\s*\(|\bnew\s+Function\s*\(/.test(source));
+}
+const review = fs.readFileSync('scripts/photo-review.js', 'utf8');
+assert.ok(review.includes('textContent'));
+assert.ok(review.includes('noopener noreferrer'));
+const workflow = fs.readFileSync('.github/workflows/quality.yml', 'utf8');
+assert.ok(workflow.includes('pull_request:'));
+assert.ok(workflow.includes('verify:sri'));
+console.log('PASS: frontend credential, dynamic execution and photo review security guards');
