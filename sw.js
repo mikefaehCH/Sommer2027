@@ -1,4 +1,4 @@
-const CACHE = 'sommer2027-v19';
+const CACHE = 'sommer2027-v20';
 const CORE = [
   './',
   './index.html',
@@ -6,6 +6,9 @@ const CORE = [
   './data.js',
   './app.js',
   './manifest.webmanifest',
+  './icons/apple-touch-icon.png',
+  './icons/icon-192.png',
+  './icons/ile-de-re.svg',
   './ile-de-re-guide.html',
   './ile-de-re-restaurants.html',
   './ai.html',
