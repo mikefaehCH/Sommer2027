@@ -328,7 +328,7 @@ function renderDates() {
   $('#dateStrip').innerHTML = DAYS.map((d) => {
     const dt = new Date(d + 'T12:00:00');
     const special = SPECIAL_DAYS[d];
-    return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'aria-label="' + escapeHTML(dateTitle(d) + ': ' + special.label) + '" title="' + escapeHTML(special.label) + '"' : ''}><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${EVENT_ICONS[special.type]}</span>` : ''}</button>`;
+    return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'title="' + escapeHTML(special.label) + '"' : ''}>${special ? '<span class="sr-only">' + escapeHTML(special.label) + ': </span>' : ''}<small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${EVENT_ICONS[special.type]}</span>` : ''}</button>`;
   }).join('');
 }
 const AGREED_ITINERARY = {
@@ -369,7 +369,7 @@ const AGREED_ITINERARY = {
     Abend: 'Abend frei',
   },
   '2027-07-16': {
-    Morgen: '🎂 Emilias 7. Geburtstag: Aquarium La Rochelle',
+    Morgen: 'Emilias 7. Geburtstag: Aquarium La Rochelle',
     Mittag: 'Geburtstagsmittagessen; Maja optional',
     Nachmittag: 'Schatzsuche und Glacé in Saint-Martin-de-Ré',
     Abend: 'Gemütlicher Geburtstagsabend',
@@ -532,17 +532,8 @@ function showCommonsPhoto(id, photo) {
     if (node.dataset.photoId !== id) return;
     node.replaceChildren();
     if (!photo) {
-      const t = document.createElement('span');
-      t.textContent = 'Foto nicht verfügbar';
-      const l = document.createElement('a');
-      l.href =
-        'https://commons.wikimedia.org/w/index.php?search=' +
-        encodeURIComponent(getActivity(id)?.name || '') +
-        '&title=Special:MediaSearch&type=image';
-      l.target = '_blank';
-      l.rel = 'noopener noreferrer';
-      l.textContent = 'Fotos ansehen';
-      node.append(t, l);
+      // Ohne geprüftes Foto keine leere Bildfläche: Karte bleibt kompakt.
+      node.remove();
       return;
     }
     const img = document.createElement('img');
@@ -551,10 +542,7 @@ function showCommonsPhoto(id, photo) {
     img.decoding = 'async';
     img.alt = (photo.provider || 'Wikimedia') + '-Foto: ' + photo.title;
     img.src = photo.url;
-    img.onerror = () => {
-      img.remove();
-      node.classList.remove('has-photo');
-    };
+    img.onerror = () => node.remove();
     const credit = document.createElement('a');
     credit.className = 'photo-commons-credit';
     credit.href = photo.source;
@@ -592,10 +580,14 @@ fetch('ACTIVITY_PHOTOS.json')
         )
         .map((entry) => [entry.id, entry.photo]),
     );
-    observeActivityPhotos();
+    renderDiscover();
     renderSlots();
   })
   .catch(() => observeActivityPhotos());
+/* Entdecken: zuerst eine Auswahl, der Rest auf Wunsch. Filterwechsel setzt die Auswahl zurück. */
+const DISCOVER_STEP = 12;
+let discoverLimit = DISCOVER_STEP,
+  discoverKey = '';
 function renderDiscover() {
   const q = $('#search').value.toLocaleLowerCase('de');
   const category = $('#categoryFilter').value;
@@ -609,6 +601,11 @@ function renderDiscover() {
       [a.name, a.area, a.description, a.category].join(' ').toLocaleLowerCase('de').includes(q),
   );
   $('#resultCount').textContent = `${matches.length} Ideen`;
+  const key = [q, category, fav, region].join('|');
+  if (key !== discoverKey) {
+    discoverKey = key;
+    discoverLimit = DISCOVER_STEP;
+  }
   matches.sort((a, b) => {
     if (!cloudMode) return 0;
     const score = (id) =>
@@ -617,12 +614,28 @@ function renderDiscover() {
         .reduce((n, v) => n + (v.vote === 'yes' ? 2 : v.vote === 'maybe' ? 1 : 0), 0);
     return score(b.id) - score(a.id);
   });
-  $('#activityGrid').innerHTML = matches
+  const shown = matches.slice(0, discoverLimit);
+  $('#activityGrid').innerHTML = shown
     .map(
       (a) =>
-        `<article class="activity"><div class="activity-photo-placeholder" data-photo-id="${escapeHTML(a.id)}" aria-label="Aktivitätsfoto"><span>${escapeHTML(a.category)}</span><small>Foto nicht verfügbar</small></div><span class="tag">${escapeHTML(REGIONS[a.region])} · ${escapeHTML(a.priority)}</span><h3>${escapeHTML(a.name)}</h3><div class="location">${escapeHTML(a.area)} · ${escapeHTML(a.category)}</div><p>${escapeHTML(a.description)}</p>${PHOTO_REFERENCES[a.id] ? `<div class="photo-reference"><span>Ortsfoto: ${escapeHTML(PHOTO_REFERENCES[a.id].provider)}</span><a href="${escapeHTML(PHOTO_REFERENCES[a.id].source)}" target="_blank" rel="noopener noreferrer">Foto ansehen ↗</a></div>` : ''}${voteControls(a)}<div class="cardactions"><button class="smallbtn" data-add="${a.id}">+ Planen</button><button class="fav ${state.favorites.includes(a.id) ? 'on' : ''}" data-fav="${a.id}" aria-pressed="${state.favorites.includes(a.id)}" aria-label="Favorit markieren">♡ ${state.favorites.includes(a.id) ? 'Gemerkt' : 'Merken'}</button><a href="${escapeHTML(a.source || 'https://www.iledere.com/')}" target="_blank" rel="noopener noreferrer">Quelle ↗</a><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.name + ' ' + a.area + ' France')}" target="_blank" rel="noopener noreferrer">Karte ↗</a></div></article>`,
+        `<article class="activity${activityPhotos[a.id] ? '' : ' no-photo'}" data-region="${escapeHTML(a.region)}">${activityPhotos[a.id] ? `<div class="activity-photo-placeholder" data-photo-id="${escapeHTML(a.id)}"></div>` : ''}<span class="tag">${escapeHTML(REGIONS[a.region])} · ${escapeHTML(a.priority)}</span><h3>${escapeHTML(a.name)}</h3><div class="location">${escapeHTML(a.area)} · ${escapeHTML(a.category)}</div><p>${escapeHTML(a.description)}</p>${PHOTO_REFERENCES[a.id] ? `<div class="photo-reference"><span>Ortsfoto: ${escapeHTML(PHOTO_REFERENCES[a.id].provider)}</span><a href="${escapeHTML(PHOTO_REFERENCES[a.id].source)}" target="_blank" rel="noopener noreferrer">Foto ansehen ↗</a></div>` : ''}${voteControls(a)}<div class="cardactions"><button class="smallbtn" data-add="${a.id}">+ Planen</button><button class="fav ${state.favorites.includes(a.id) ? 'on' : ''}" data-fav="${a.id}" aria-pressed="${state.favorites.includes(a.id)}"><span aria-hidden="true">♡</span> ${state.favorites.includes(a.id) ? 'Gemerkt' : 'Merken'}</button><a href="${escapeHTML(a.source || 'https://www.iledere.com/')}" target="_blank" rel="noopener noreferrer">Quelle ↗</a><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.name + ' ' + a.area + ' France')}" target="_blank" rel="noopener noreferrer">Karte ↗</a></div></article>`,
     )
     .join('');
+  let more = $('#moreIdeas');
+  if (!more) {
+    more = document.createElement('button');
+    more.type = 'button';
+    more.id = 'moreIdeas';
+    more.className = 'pill outline more-ideas';
+    more.addEventListener('click', () => {
+      discoverLimit += DISCOVER_STEP * 2;
+      renderDiscover();
+    });
+    $('#activityGrid').after(more);
+  }
+  const rest = matches.length - shown.length;
+  more.hidden = rest <= 0;
+  more.textContent = `Weitere ${Math.min(rest, DISCOVER_STEP * 2)} von ${rest} Ideen anzeigen`;
   observeActivityPhotos();
 }
 function renderAll() {

@@ -21,6 +21,8 @@
       crossorigin="anonymous"
     />
     <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png" />
     <link rel="stylesheet" href="index-page.css" />
   </head>
   <body>
@@ -31,7 +33,7 @@
           <a href="#reise">Unsere Reise</a><a href="#plan">Unser Plan</a
           ><a href="#entdecken">Entdecken</a><a href="#karte">Karte</a><a href="#bildwelt">Fotos</a
           ><a href="#unterkuenfte">Unterkünfte</a><a href="#infos">Reisehelfer</a
-          ><a href="ai.html">KI-Assistent ✨</a
+          ><a href="ai.html">KI-Assistent</a
           ><a
             href="scripts/photo-review.html"
             class="photo-review-nav"
@@ -45,7 +47,7 @@
           id="menuToggle"
           aria-expanded="false"
           aria-controls="menu"
-          aria-label="Navigationsmenü öffnen"
+          aria-label="Menü öffnen"
         >
           Menü ☰
         </button>
@@ -235,7 +237,7 @@
             </p>
           </article>
           <article class="trip-birthday">
-            <span>16. Juli · 🎂 Emilias 7. Geburtstag</span
+            <span>16. Juli · Emilias 7. Geburtstag</span
             ><strong>Aquarium La Rochelle &amp; Schatzsuche</strong>
             <p>
               Vormittags Aquarium, Geburtstagsmittagessen, später Schatzsuche, Karussell und
@@ -341,7 +343,7 @@
             </button>
           </div>
           <div class="mapwrap">
-            <div id="map" aria-label="Karte der Reiseziele"></div>
+            <div id="map" role="region" aria-label="Karte der Reiseziele"></div>
             <div class="mapfallback" id="mapFallback" hidden>
               Die Karte benötigt eine Internetverbindung.
               <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener"
@@ -358,12 +360,7 @@
           <p class="lead">Ein paar Eindrücke von den Orten, die auf uns warten.</p>
           <div class="photo-library">
             <article class="photo-choice">
-              <button
-                type="button"
-                class="photo-open"
-                data-photo-detail="0"
-                aria-label="Mehr über Strand Île de Ré erfahren"
-              >
+              <button type="button" class="photo-open" data-photo-detail="0">
                 <img
                   src="https://images.unsplash.com/photo-1630358087682-88993c5b33d2?auto=format&fit=crop&w=850&q=80"
                   alt="Strand Île de Ré"
@@ -380,17 +377,11 @@
                 href="https://unsplash.com/photos/83fmx2LAgpg"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Bildquelle für Strand Île de Ré auf Unsplash öffnen"
                 >Foto: Bernd Dittrich · Unsplash</a
               >
             </article>
             <article class="photo-choice">
-              <button
-                type="button"
-                class="photo-open"
-                data-photo-detail="1"
-                aria-label="Mehr über Château d’Amboise erfahren"
-              >
+              <button type="button" class="photo-open" data-photo-detail="1">
                 <img
                   src="https://images.unsplash.com/photo-1624627922267-e3f096904292?auto=format&fit=crop&w=850&q=80"
                   alt="Château d’Amboise"
@@ -407,17 +398,11 @@
                 href="https://unsplash.com/photos/dB648jGakEA"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Bildquelle für Château d’Amboise auf Unsplash öffnen"
                 >Foto: Stefan K · Unsplash</a
               >
             </article>
             <article class="photo-choice">
-              <button
-                type="button"
-                class="photo-open"
-                data-photo-detail="2"
-                aria-label="Mehr über Strand Île de Ré erfahren"
-              >
+              <button type="button" class="photo-open" data-photo-detail="2">
                 <img
                   src="https://images.unsplash.com/photo-1596737982005-c9000c991014?auto=format&fit=crop&w=850&q=80"
                   alt="Strand Île de Ré"
@@ -434,17 +419,11 @@
                 href="https://unsplash.com/photos/rP7vPVE5e48"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Bildquelle für Strand Île de Ré auf Unsplash öffnen"
                 >Foto: Damien Dufour · Unsplash</a
               >
             </article>
             <article class="photo-choice">
-              <button
-                type="button"
-                class="photo-open"
-                data-photo-detail="3"
-                aria-label="Mehr über Clos Lucé erfahren"
-              >
+              <button type="button" class="photo-open" data-photo-detail="3">
                 <img
                   src="https://images.unsplash.com/photo-1713359256737-156978b04c77?auto=format&fit=crop&w=850&q=80"
                   alt="Clos Lucé"
@@ -461,17 +440,11 @@
                 href="https://unsplash.com/photos/Gbqy4gzFiJU"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Bildquelle für Clos Lucé auf Unsplash öffnen"
                 >Foto: Hongbin · Unsplash</a
               >
             </article>
             <article class="photo-choice">
-              <button
-                type="button"
-                class="photo-open"
-                data-photo-detail="4"
-                aria-label="Mehr über Hafen La Rochelle erfahren"
-              >
+              <button type="button" class="photo-open" data-photo-detail="4">
                 <img
                   src="https://images.unsplash.com/photo-1744709561288-74517c00d17c?auto=format&fit=crop&w=850&q=80"
                   alt="Hafen La Rochelle"
@@ -488,17 +461,11 @@
                 href="https://unsplash.com/photos/smMhJmpcWIs"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Bildquelle für Hafen La Rochelle auf Unsplash öffnen"
                 >Foto: Carnet de Voyage d'Alex · Unsplash</a
               >
             </article>
             <article class="photo-choice">
-              <button
-                type="button"
-                class="photo-open"
-                data-photo-detail="5"
-                aria-label="Mehr über Château Royal d’Amboise erfahren"
-              >
+              <button type="button" class="photo-open" data-photo-detail="5">
                 <img
                   src="https://images.unsplash.com/photo-1646345533510-5d23b6b730d9?auto=format&fit=crop&w=850&q=80"
                   alt="Château Royal d’Amboise"
@@ -515,7 +482,6 @@
                 href="https://unsplash.com/photos/n14FOz-olkI"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Bildquelle für Château Royal d’Amboise auf Unsplash öffnen"
                 >Foto: Matthieu Oger · Unsplash</a
               >
             </article>
@@ -703,10 +669,15 @@
         <p id="slotDialogDate" class="muted"></p>
         <p>Wann passt die Aktivität am besten?</p>
         <div class="slot-options">
-          <button type="button" data-slot-choice="Morgen">☀ Morgen</button
-          ><button type="button" data-slot-choice="Mittag">◐ Mittag</button
-          ><button type="button" data-slot-choice="Nachmittag">☼ Nachmittag</button
-          ><button type="button" data-slot-choice="Abend">☾ Abend</button>
+          <button type="button" data-slot-choice="Morgen">
+            <span aria-hidden="true">☀</span> Morgen</button
+          ><button type="button" data-slot-choice="Mittag">
+            <span aria-hidden="true">◐</span> Mittag</button
+          ><button type="button" data-slot-choice="Nachmittag">
+            <span aria-hidden="true">☼</span> Nachmittag</button
+          ><button type="button" data-slot-choice="Abend">
+            <span aria-hidden="true">☾</span> Abend
+          </button>
         </div>
       </form>
     </dialog>

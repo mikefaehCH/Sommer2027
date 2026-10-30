@@ -1,5 +1,8 @@
 const { chromium } = require('playwright');
 (async () => {
+  const SW_CACHE = require('fs')
+    .readFileSync('sw.js', 'utf8')
+    .match(/const CACHE = '([^']+)'/)[1];
   const fs = require('fs'),
     path = require('path');
   const server = require('http').createServer((req, res) => {
@@ -96,8 +99,16 @@ const { chromium } = require('playwright');
   await page.locator('[data-date="2027-07-07"]').click();
   if (!(await page.evaluate(() => !!window.L && !!window.supabase)))
     throw Error('Pinned libraries failed to load');
+  // Entdecken zeigt zuerst 12 Ideen; «Weitere … anzeigen» lädt den Rest nach.
+  if ((await page.locator('#resultCount').textContent()) !== '59 Ideen')
+    throw Error('result count');
+  if ((await page.locator('.activity').count()) !== 12) throw Error('initial activity count');
+  while (await page.locator('#moreIdeas').isVisible()) await page.locator('#moreIdeas').click();
   const count = await page.locator('.activity').count();
   if (count !== 59) throw Error('activity count ' + count);
+  // Ideen ohne geprüftes Foto zeigen keine leere Bildfläche
+  if (await page.locator('.activity.no-photo .activity-photo-placeholder').count())
+    throw Error('empty photo placeholder');
   await page.locator('#search').fill('Chenonceau');
   if ((await page.locator('.activity').count()) !== 1) throw Error('search');
   await page.locator('#search').fill('');
@@ -178,14 +189,14 @@ const { chromium } = require('playwright');
   await page.goto(origin);
   await page.evaluate(() => navigator.serviceWorker.ready);
   await until(() => !!navigator.serviceWorker.controller);
-  const cacheState = await page.evaluate(async () => {
+  const cacheState = await page.evaluate(async (swCache) => {
     const names = await caches.keys();
-    const cache = await caches.open('sommer2027-v23');
+    const cache = await caches.open(swCache);
     return { names, urls: (await cache.keys()).map((r) => r.url) };
-  });
+  }, SW_CACHE);
   if (
     cacheState.names.includes('sommer2027-v17') ||
-    !cacheState.names.includes('sommer2027-v23') ||
+    !cacheState.names.includes(SW_CACHE) ||
     !cacheState.names.includes('unrelated-test-cache')
   )
     throw Error('SW upgrade/cache isolation');
@@ -200,10 +211,10 @@ const { chromium } = require('playwright');
     await fetch('/supabase/private-probe');
     await fetch('/private-probe', { headers: { Authorization: 'Bearer local-test-only' } });
   });
-  const leaked = await page.evaluate(async () => {
-    const c = await caches.open('sommer2027-v23');
+  const leaked = await page.evaluate(async (swCache) => {
+    const c = await caches.open(swCache);
     return (await c.keys()).some((r) => r.url.includes('private-probe'));
-  });
+  }, SW_CACHE);
   if (leaked) throw Error('Private request cached');
   if (process.env.TEST_BROWSER !== 'webkit') await page.unroute('https://**/*');
   const webkit = process.env.TEST_BROWSER === 'webkit';
@@ -228,7 +239,8 @@ const { chromium } = require('playwright');
   const fallback = await page.goto(origin + '/index.html');
   if (!fallback?.fromServiceWorker()) throw Error('Fallback did not come from service worker');
   await page.locator('.activity').first().waitFor();
-  if ((await page.locator('.activity').count()) !== 59) throw Error('Offline activity data');
+  if ((await page.locator('#resultCount').textContent()) !== '59 Ideen')
+    throw Error('Offline activity data');
   await page.goto(origin + '/ile-de-re-restaurants.html');
   await page.locator('#place').selectOption('La Flotte');
   if ((await page.locator('.food-card:visible').count()) === 0)
