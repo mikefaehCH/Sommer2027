@@ -1,4 +1,8 @@
-const CACHE = 'sommer2027-v23';
+const CACHE = 'sommer2027-v24';
+// Fotos von Unsplash/Wikimedia: beim Ansehen gespeichert, bleiben über Updates erhalten (max. PHOTO_MAX).
+const PHOTOS = 'sommer2027-fotos';
+const PHOTO_MAX = 120;
+const PHOTO_HOSTS = ['images.unsplash.com', 'thumb.wikimedia.org', 'upload.wikimedia.org'];
 const CORE = [
   './',
   './index.html',
@@ -33,6 +37,9 @@ const CORE = [
   './gemeinsamer-plan.html',
   './gemeinsamer-plan-page.css',
   './gemeinsamer-plan-inline-1.js',
+  './assets/icons/icon.svg',
+  './assets/icons/apple-touch-icon.png',
+  './assets/icons/icon-192.png',
 ];
 self.addEventListener('install', (event) =>
   event.waitUntil(
@@ -49,16 +56,38 @@ self.addEventListener('activate', (event) =>
       .then((keys) =>
         Promise.all(
           keys
-            .filter((key) => key.startsWith('sommer2027-') && key !== CACHE)
+            .filter((key) => key.startsWith('sommer2027-') && key !== CACHE && key !== PHOTOS)
             .map((key) => caches.delete(key)),
         ),
       )
       .then(() => self.clients.claim()),
   ),
 );
+async function trimPhotos(cache) {
+  const keys = await cache.keys();
+  for (const key of keys.slice(0, Math.max(0, keys.length - PHOTO_MAX))) await cache.delete(key);
+}
 self.addEventListener('fetch', (event) => {
   const request = event.request,
     url = new URL(request.url);
+  // Externe Fotos: zuerst Cache, sonst Netz – damit Bilder auch offline erscheinen.
+  if (request.method === 'GET' && PHOTO_HOSTS.includes(url.hostname)) {
+    event.respondWith(
+      caches.open(PHOTOS).then((cache) =>
+        cache.match(request).then(
+          (hit) =>
+            hit ||
+            fetch(request).then((response) => {
+              if (response.ok || response.type === 'opaque') {
+                event.waitUntil(cache.put(request, response.clone()).then(() => trimPhotos(cache)));
+              }
+              return response;
+            }),
+        ),
+      ),
+    );
+    return;
+  }
   if (
     request.method !== 'GET' ||
     url.origin !== self.location.origin ||

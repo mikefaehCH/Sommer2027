@@ -6,8 +6,8 @@
   --ink: #263a3c;
   --sea: #315d65;
   --sage: #82927a;
-  --rust: #ba765b;
-  --muted: #6c7975;
+  --rust: #965a3e;
+  --muted: #5c6965;
   --line: #e5dfd3;
 }
 * {
@@ -1172,7 +1172,7 @@ footer .shell {
 }
 .activity .cardactions button,
 .activity .cardactions a {
-  min-height: 38px;
+  min-height: 44px;
 }
 
 .move-form {
@@ -1524,4 +1524,158 @@ textarea:focus-visible {
 }
 .planner-choices small {
   color: var(--muted);
+}
+
+/* ===== v24: Top-Niveau mobil – kompakte Ideen, Touch-Ziele ≥ 44 px ===== */
+/* Ideen ohne geprüftes Foto: keine leere Bildfläche, dafür eine ruhige Farbkante je Region */
+.activity.no-photo {
+  border-top: 4px solid var(--sea);
+  padding-top: 18px;
+}
+.activity.no-photo[data-region='re'] {
+  border-top-color: #4f8a95;
+}
+.activity.no-photo[data-region='pal'] {
+  border-top-color: var(--rust);
+}
+.activity.no-photo[data-region='amboise'] {
+  border-top-color: var(--sage);
+}
+.activity p {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.more-ideas {
+  display: flex;
+  margin: 22px auto 0;
+  min-height: 48px;
+}
+.more-ideas[hidden] {
+  display: none;
+}
+/* Touch-Ziele: Bedienelemente mindestens 44 px hoch */
+.pill,
+.smallbtn,
+.fav,
+.map-tab,
+.textlink,
+.plan-add,
+.ghost,
+.logo,
+.suggestionrow button,
+.activity .cardactions a,
+.photo-reference a,
+.guide-back,
+.food-back,
+.topbar a,
+.food-card a,
+.slotbuttons button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.activity .cardactions {
+  align-items: center;
+  gap: 6px 10px;
+}
+.activity .cardactions a {
+  padding: 0 4px;
+  font-weight: 700;
+  color: var(--sea);
+}
+/* Bildnachweise sind Text-Links: mindestens 24 px (WCAG 2.5.8) */
+.photo-commons-credit,
+.photo-credit {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+}
+.trip-birthday a,
+.hero-credit {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+}
+.trip-birthday a {
+  min-height: 44px;
+}
+select {
+  min-height: 44px;
+}
+@media (max-width: 680px) {
+  /* Tag für Tag: Datum links, Inhalt rechts – halb so lang, gleich viel Information */
+  .trip-days {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--white);
+    overflow: hidden;
+  }
+  .trip-days article {
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    column-gap: 12px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    padding: 14px 16px;
+  }
+  .trip-days article:last-child {
+    border-bottom: 0;
+  }
+  .trip-days article > span {
+    grid-row: 1 / span 3;
+    margin: 2px 0 0;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .trip-days article > strong {
+    font-size: 16px;
+  }
+  .trip-days article p {
+    margin-top: 4px;
+  }
+  .trip-days article a {
+    margin-top: 2px;
+  }
+  .trip-days .trip-national,
+  .trip-days .trip-birthday {
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    box-shadow: inset 4px 0 0 #c86d72;
+  }
+  .trip-days .trip-birthday {
+    box-shadow: inset 4px 0 0 #b679b3;
+  }
+  /* Galerie: wischen statt scrollen */
+  .photo-library {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    margin-inline: -20px;
+    padding: 0 20px 8px;
+    scrollbar-width: none;
+  }
+  .photo-library::-webkit-scrollbar {
+    display: none;
+  }
+  .photo-library > * {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
+}
+.logo {
+  gap: 0.28em;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
