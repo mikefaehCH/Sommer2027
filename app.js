@@ -315,102 +315,128 @@ function dateTitle(s) {
   }).format(new Date(s + 'T12:00:00'));
 }
 const SPECIAL_DAYS = {
-  '2027-07-14': { label: 'Nationalfeiertag', icon: '🇫🇷', type: 'national' },
-  '2027-07-16': { label: 'Emilias 7. Geburtstag', icon: '🎂', type: 'birthday' },
+  '2027-07-14': { label: 'Nationalfeiertag', type: 'national' },
+  '2027-07-16': { label: 'Emilias 7. Geburtstag', type: 'birthday' },
+};
+const EVENT_ICONS = {
+  national:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V3m0 1c5-2 7 2 12 0v10c-5 2-7-2-12 0"/></svg>',
+  birthday:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v7H4zM3 21h18M8 12V9m4 3V8m4 4V9M4 15c2 0 2 1 4 1s2-1 4-1 2 1 4 1 2-1 4-1"/><path d="M8 6h.01M12 5h.01M16 6h.01" stroke-width="2"/></svg>',
 };
 function renderDates() {
   $('#dateStrip').innerHTML = DAYS.map((d) => {
     const dt = new Date(d + 'T12:00:00');
     const special = SPECIAL_DAYS[d];
-    return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'aria-label="' + escapeHTML(dateTitle(d) + ': ' + special.label) + '"' : ''}><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${special.icon}</span><span class="date-event-label">${escapeHTML(special.label)}</span>` : ''}</button>`;
+    return `<button class="datebtn ${d === selected ? 'active' : ''} ${special ? 'special-' + special.type : ''}" data-date="${d}" aria-pressed="${d === selected}" ${special ? 'aria-label="' + escapeHTML(dateTitle(d) + ': ' + special.label) + '" title="' + escapeHTML(special.label) + '"' : ''}><small>${new Intl.DateTimeFormat('de-CH', { weekday: 'short' }).format(dt)}</small><strong>${dt.getDate()}</strong><small>Juli</small>${special ? `<span class="date-event" aria-hidden="true">${EVENT_ICONS[special.type]}</span>` : ''}</button>`;
   }).join('');
 }
 const AGREED_ITINERARY = {
-  "2027-07-10": {
-    "Morgen": "Direktfahrt Amboise → Île de Ré",
-    "Mittag": "Mittagspause unterwegs",
-    "Nachmittag": "Ankunft und Unterkunft beziehen",
-    "Abend": "Hafen La Flotte und Abendessen"
+  '2027-07-10': {
+    Morgen: 'Direktfahrt Amboise → Île de Ré',
+    Mittag: 'Mittagspause unterwegs',
+    Nachmittag: 'Ankunft und Unterkunft beziehen',
+    Abend: 'Hafen La Flotte und Abendessen',
   },
-  "2027-07-11": {
-    "Morgen": "Markt von La Flotte und Hafen",
-    "Mittag": "Mittagessen spontan",
-    "Nachmittag": "Strandnachmittag",
-    "Abend": "Freier Abend"
+  '2027-07-11': {
+    Morgen: 'Markt von La Flotte und Hafen',
+    Mittag: 'Mittagessen spontan',
+    Nachmittag: 'Strandnachmittag',
+    Abend: 'Freier Abend',
   },
-  "2027-07-12": {
-    "Morgen": "Spaziergang durch die Salzgärten bei Loix",
-    "Mittag": "Mittagessen in einer Brasserie",
-    "Nachmittag": "Optional Strand oder Erholung",
-    "Abend": "Abend frei"
+  '2027-07-12': {
+    Morgen: 'Spaziergang durch die Salzgärten bei Loix',
+    Mittag: 'Mittagessen in einer Brasserie',
+    Nachmittag: 'Optional Strand oder Erholung',
+    Abend: 'Abend frei',
   },
-  "2027-07-13": {
-    "Morgen": "La Rochelle: Alter Hafen",
-    "Mittag": "Französisches Mittagessen",
-    "Nachmittag": "Altstadt La Rochelle; Aquarium heute optional",
-    "Abend": "Abend frei"
+  '2027-07-13': {
+    Morgen: 'La Rochelle: Alter Hafen',
+    Mittag: 'Französisches Mittagessen',
+    Nachmittag: 'Altstadt La Rochelle; Aquarium heute optional',
+    Abend: 'Abend frei',
   },
-  "2027-07-14": {
-    "Morgen": "Entspannter Strandtag am Nationalfeiertag 🇫🇷",
-    "Mittag": "Picknick oder Strandrestaurant",
-    "Nachmittag": "Strand und freie Zeit",
-    "Abend": "Abend nahe Unterkunft; Feuerwerk optional"
+  '2027-07-14': {
+    Morgen: 'Entspannter Strandtag am Nationalfeiertag 🇫🇷',
+    Mittag: 'Picknick oder Strandrestaurant',
+    Nachmittag: 'Strand und freie Zeit',
+    Abend: 'Abend nahe Unterkunft; Feuerwerk optional',
   },
-  "2027-07-15": {
-    "Morgen": "Ars-en-Ré und Dorfspaziergang",
-    "Mittag": "Mittagessen im Restaurant",
-    "Nachmittag": "Strand Plage de la Conche; Leuchtturm optional",
-    "Abend": "Abend frei"
+  '2027-07-15': {
+    Morgen: 'Ars-en-Ré und Dorfspaziergang',
+    Mittag: 'Mittagessen im Restaurant',
+    Nachmittag: 'Strand Plage de la Conche; Leuchtturm optional',
+    Abend: 'Abend frei',
   },
-  "2027-07-16": {
-    "Morgen": "🎂 Emilias 7. Geburtstag: Aquarium La Rochelle",
-    "Mittag": "Geburtstagsmittagessen; Maja optional",
-    "Nachmittag": "Schatzsuche und Glacé in Saint-Martin-de-Ré",
-    "Abend": "Gemütlicher Geburtstagsabend"
+  '2027-07-16': {
+    Morgen: '🎂 Emilias 7. Geburtstag: Aquarium La Rochelle',
+    Mittag: 'Geburtstagsmittagessen; Maja optional',
+    Nachmittag: 'Schatzsuche und Glacé in Saint-Martin-de-Ré',
+    Abend: 'Gemütlicher Geburtstagsabend',
   },
-  "2027-07-17": {
-    "Morgen": "Letzter Inselmorgen, packen und auschecken",
-    "Mittag": "Fahrt Richtung Le PAL, Pause unterwegs",
-    "Nachmittag": "Ankunft Safari-Hotel am späten Nachmittag",
-    "Abend": "Safari-Hotel und Abendessen"
+  '2027-07-17': {
+    Morgen: 'Letzter Inselmorgen, packen und auschecken',
+    Mittag: 'Fahrt Richtung Le PAL, Pause unterwegs',
+    Nachmittag: 'Ankunft Safari-Hotel am späten Nachmittag',
+    Abend: 'Safari-Hotel und Abendessen',
   },
-  "2027-07-18": {
-    "Morgen": "Le PAL: Tiere und Safari",
-    "Mittag": "Mittagessen im Park",
-    "Nachmittag": "Attraktionen und Tiererlebnisse",
-    "Abend": "Abend im Safari-Hotel"
+  '2027-07-18': {
+    Morgen: 'Le PAL: Tiere und Safari',
+    Mittag: 'Mittagessen im Park',
+    Nachmittag: 'Attraktionen und Tiererlebnisse',
+    Abend: 'Abend im Safari-Hotel',
   },
-  "2027-07-19": {
-    "Morgen": "Le PAL: Lieblingsattraktionen",
-    "Mittag": "Mittagessen im Park",
-    "Nachmittag": "Fahrgeschäfte, Shows und Tiere",
-    "Abend": "Abend im Safari-Hotel"
+  '2027-07-19': {
+    Morgen: 'Le PAL: Lieblingsattraktionen',
+    Mittag: 'Mittagessen im Park',
+    Nachmittag: 'Fahrgeschäfte, Shows und Tiere',
+    Abend: 'Abend im Safari-Hotel',
   },
-  "2027-07-20": {
-    "Morgen": "Frühstück und Auschecken",
-    "Mittag": "Heimfahrt Richtung Baden",
-    "Nachmittag": "Fahrt / Ankunft zuhause",
-    "Abend": "Wieder daheim"
+  '2027-07-20': {
+    Morgen: 'Frühstück und Auschecken',
+    Mittag: 'Heimfahrt Richtung Baden',
+    Nachmittag: 'Fahrt / Ankunft zuhause',
+    Abend: 'Wieder daheim',
   },
-  "2027-07-07": {
-    "Morgen": "Autofahrt Baden → Amboise, Abfahrt ca. 07:00",
-    "Mittag": "Mittagspause unterwegs",
-    "Nachmittag": "Ankunft und Unterkunft beziehen",
-    "Abend": "Abendessen spontan in Amboise"
+  '2027-07-07': {
+    Morgen: 'Autofahrt Baden → Amboise, Abfahrt ca. 07:00',
+    Mittag: 'Mittagspause unterwegs',
+    Nachmittag: 'Ankunft und Unterkunft beziehen',
+    Abend: 'Abendessen spontan in Amboise',
   },
-  "2027-07-08": {
-    "Morgen": "Château du Clos Lucé – Leonardo da Vinci",
-    "Mittag": "Restaurant in der Altstadt von Amboise",
-    "Nachmittag": "Château Royal d’Amboise",
-    "Abend": "Freier Abend"
+  '2027-07-08': {
+    Morgen: 'Château du Clos Lucé – Leonardo da Vinci',
+    Mittag: 'Restaurant in der Altstadt von Amboise',
+    Nachmittag: 'Château Royal d’Amboise',
+    Abend: 'Freier Abend',
   },
-  "2027-07-09": {
-    "Morgen": "Château de Chenonceau",
-    "Mittag": "Crêpes im Le Médicis",
-    "Nachmittag": "Freizeit / optional Bootsfahrt",
-    "Abend": "Abendessen spontan"
-  }
+  '2027-07-09': {
+    Morgen: 'Château de Chenonceau',
+    Mittag: 'Crêpes im Le Médicis',
+    Nachmittag: 'Freizeit / optional Bootsfahrt',
+    Abend: 'Abendessen spontan',
+  },
 };
+const ITINERARY_LINKS = {
+  '2027-07-08': { Morgen: ['clos-luce'], Nachmittag: ['chateau-amboise'] },
+  '2027-07-09': { Morgen: ['chenonceau'] },
+  '2027-07-10': { Abend: ['la-flotte'] },
+  '2027-07-11': { Morgen: ['flotte-markt', 'la-flotte'] },
+  '2027-07-12': { Morgen: ['salz'] },
+  '2027-07-13': { Morgen: ['rochelle'], Nachmittag: ['rochelle'] },
+  '2027-07-14': { Morgen: ['14juillet'] },
+  '2027-07-15': { Morgen: ['ars'], Nachmittag: ['conche'] },
+  '2027-07-16': { Morgen: ['aquarium'], Nachmittag: ['saint-martin', 'glace'] },
+  '2027-07-17': { Nachmittag: ['lodges'], Abend: ['lodges'] },
+  '2027-07-18': { Morgen: ['lepal-zoo'], Nachmittag: ['lepal-parc'] },
+  '2027-07-19': { Morgen: ['lepal-parc'] },
+};
+function plannerActivity(id, draft = false) {
+  const a = getActivity(id);
+  if (!a) return '';
+  const photo = activityPhotos[id];
+  return `<div class="plan-activity">${photo ? `<img class="plan-photo" src="${escapeHTML(photo.url)}" alt="" loading="lazy">` : ''}<button type="button" class="plan-activity-link" data-planner-show="${escapeHTML(id)}">${escapeHTML(a.name)} <span aria-hidden="true">↗</span></button>${draft ? '<small>Vorschlag</small>' : ''}</div>`;
+}
 function renderSlots() {
   $('#dayTitle').textContent = dateTitle(selected);
   $('#planRegion').textContent =
@@ -428,11 +454,11 @@ function renderSlots() {
         ? entries
             .map((id, i) => {
               const a = getActivity(id);
-              return `<div class="slotentry"><div><strong>${escapeHTML(a?.name || 'Unbekannte Aktivität')}</strong><small>${escapeHTML(a?.area || 'Eigene Idee')}</small></div><div class="slotbuttons"><button data-move="${escapeHTML(id)}" data-slot="${slot}" title="Verschieben">↕</button><button data-remove="${escapeHTML(id)}" data-slot="${slot}" aria-label="${escapeHTML(a?.name || 'Eintrag')} entfernen">✕</button></div></div>`;
+              return `<div class="slotentry"><div>${a ? plannerActivity(id) : `<strong>Unbekannte Aktivität</strong>`}<small>${escapeHTML(a?.area || 'Eigene Idee')}</small></div><div class="slotbuttons"><button data-move="${escapeHTML(id)}" data-slot="${slot}" title="Verschieben">↕</button><button data-remove="${escapeHTML(id)}" data-slot="${slot}" aria-label="${escapeHTML(a?.name || 'Eintrag')} entfernen">✕</button></div></div>`;
             })
             .join('')
-        : `<div class="slotentry"><div><strong>${escapeHTML(AGREED_ITINERARY[selected]?.[slot] || "Zeit für spontane Ideen")}</strong><small>Gemeinsam geplanter Reiseentwurf · nicht gespeichert</small></div><button data-empty="${slot}" aria-label="Eigene Idee für ${slot} hinzufügen">＋</button></div>`
-    }</div></div>`;
+        : `<div class="slotentry"><div><strong>${escapeHTML(AGREED_ITINERARY[selected]?.[slot] || 'Zeit für spontane Ideen')}</strong><small>Reiseentwurf · nicht gespeichert</small>${(ITINERARY_LINKS[selected]?.[slot] || []).map((id) => plannerActivity(id, true)).join('')}</div></div>`
+    }<button type="button" class="plan-add" data-empty="${slot}">+ Aktivität hinzufügen</button></div></div>`;
   }).join('');
 }
 function renderSuggestions() {
@@ -567,6 +593,7 @@ fetch('ACTIVITY_PHOTOS.json')
         .map((entry) => [entry.id, entry.photo]),
     );
     observeActivityPhotos();
+    renderSlots();
   })
   .catch(() => observeActivityPhotos());
 function renderDiscover() {
@@ -732,7 +759,7 @@ function importFile(file) {
     })
     .catch(() => toast('Datei konnte nicht gelesen werden'));
 }
-function custom() {
+function custom(targetSlot) {
   const name = prompt('Wie heisst deine eigene Idee?');
   if (!name || !name.trim()) return;
   const clean = name.trim().slice(0, 100);
@@ -748,7 +775,9 @@ function custom() {
       priority: 'Optional',
       source: '',
     });
-    const slot = SLOTS.find((x) => state.days[selected][x].length === 0) || 'Nachmittag';
+    const slot = SLOTS.includes(targetSlot)
+      ? targetSlot
+      : SLOTS.find((x) => state.days[selected][x].length === 0) || 'Nachmittag';
     state.days[selected][slot].push(id);
   });
 }
@@ -846,8 +875,48 @@ document.addEventListener('click', (e) => {
     location.hash = 'entdecken';
     renderDiscover();
   } else if (t.dataset.empty) {
-    location.hash = 'entdecken';
+    openPlannerPicker(t.dataset.empty);
   }
+});
+let pickerSlot = null;
+function openPlannerPicker(slot) {
+  if (!SLOTS.includes(slot)) return;
+  pickerSlot = slot;
+  $('#plannerPickerTitle').textContent = slot + ' · Aktivität hinzufügen';
+  $('#plannerSearch').value = '';
+  renderPlannerChoices();
+  $('#plannerPicker').showModal();
+}
+function renderPlannerChoices() {
+  const query = $('#plannerSearch').value.trim().toLocaleLowerCase('de');
+  const choices = allActivities().filter((a) =>
+    (a.name + ' ' + (a.area || '')).toLocaleLowerCase('de').includes(query),
+  );
+  $('#plannerChoices').innerHTML =
+    choices
+      .map(
+        (a) =>
+          `<button type="button" data-picker-add="${escapeHTML(a.id)}"><strong>${escapeHTML(a.name)}</strong><small>${escapeHTML(a.area || 'Eigene Idee')}</small></button>`,
+      )
+      .join('') || '<p>Keine passende Aktivität gefunden.</p>';
+}
+$('#plannerSearch').addEventListener('input', renderPlannerChoices);
+$('#plannerChoices').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-picker-add]');
+  if (!button || !pickerSlot || !getActivity(button.dataset.pickerAdd)) return;
+  const slot = pickerSlot,
+    id = button.dataset.pickerAdd;
+  $('#plannerPicker').close();
+  if (change(() => state.days[selected][slot].push(id))) toast('Im Kalender eingetragen');
+});
+$('#plannerCreate').addEventListener('click', () => {
+  const slot = pickerSlot;
+  $('#plannerPicker').close();
+  custom(slot);
+});
+$('#plannerClose').addEventListener('click', () => $('#plannerPicker').close());
+$('#plannerPicker').addEventListener('close', () => {
+  pickerSlot = null;
 });
 $('#regionFilter').addEventListener('change', (e) => {
   region = e.target.value;
@@ -857,7 +926,7 @@ $('#regionFilter').addEventListener('change', (e) => {
   $('#' + id).addEventListener(id === 'search' ? 'input' : 'change', renderDiscover),
 );
 $('#undo').addEventListener('click', undo);
-$('#custom').addEventListener('click', custom);
+$('#custom').addEventListener('click', () => custom());
 $('#export').addEventListener('click', download);
 $('#import').addEventListener('click', () => $('#importInput').click());
 $('#importInput').addEventListener('change', (e) => {
@@ -923,13 +992,13 @@ $('#slotDialog').addEventListener('close', () => {
 });
 
 document.addEventListener('click', (e) => {
-  const b = e.target.closest('[data-map-add],[data-map-show]');
+  const b = e.target.closest('[data-map-add],[data-map-show],[data-planner-show]');
   if (!b) return;
   if (b.dataset.mapAdd) {
     add(b.dataset.mapAdd);
     return;
   }
-  const a = getActivity(b.dataset.mapShow);
+  const a = getActivity(b.dataset.mapShow || b.dataset.plannerShow);
   if (!a) return;
   region = a.region;
   $('#regionFilter').value = region;

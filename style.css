@@ -277,6 +277,7 @@ a {
   padding-bottom: 15px;
 }
 .datebtn {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--white);
@@ -297,11 +298,29 @@ a {
   background: var(--sea);
   color: white;
 }
-.datebtn.special-national { border-color: #c86d72; background: #fff0f0; }
-.datebtn.special-birthday { border-color: #b679b3; background: #fff0fa; }
-.datebtn.special-national.active, .datebtn.special-birthday.active { background: var(--sea); color: white; }
-.date-event { display: block; font-size: 21px; margin-top: 5px; }
-.date-event-label { display: block; font-size: 9px; line-height: 1.2; font-weight: 700; max-width: 90px; margin-top: 3px; }
+/* Discreet event marks keep every date the same size. */
+.date-event {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  color: #a9615a;
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+.special-birthday .date-event {
+  color: #a1728e;
+  transform: rotate(-12deg);
+}
+.date-event svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.datebtn.active .date-event {
+  color: #fff;
+}
 .slot {
   display: grid;
   grid-template-columns: 100px 1fr;
@@ -1407,11 +1426,102 @@ textarea:focus-visible {
 }
 
 /* Read-only itinerary, separate from private family calendar state. */
-.trip-days { display:grid; grid-template-columns:repeat(auto-fit,minmax(235px,1fr)); gap:14px; margin-top:28px; }
-.trip-days article { border:1px solid var(--line); background:var(--white); border-radius:15px; padding:19px; }
-.trip-days article > span { display:block; font-size:12px; font-weight:700; letter-spacing:.025em; color:var(--rust); margin-bottom:9px; }
-.trip-days article > strong { display:block; font-size:17px; line-height:1.3; }
-.trip-days article p { color:var(--muted); line-height:1.6; font-size:13px; margin:9px 0 0; }
-.trip-days article a { display:inline-block; margin-top:12px; font-weight:700; }
-.trip-days .trip-national { border:2px solid #c86d72; background:#fff8f7; }
-.trip-days .trip-birthday { border:2px solid #b679b3; background:#fff6fd; }
+.trip-days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+.trip-days article {
+  border: 1px solid var(--line);
+  background: var(--white);
+  border-radius: 15px;
+  padding: 19px;
+}
+.trip-days article > span {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  color: var(--rust);
+  margin-bottom: 9px;
+}
+.trip-days article > strong {
+  display: block;
+  font-size: 17px;
+  line-height: 1.3;
+}
+.trip-days article p {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 13px;
+  margin: 9px 0 0;
+}
+.trip-days article a {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 700;
+}
+.trip-days .trip-national {
+  border: 2px solid #c86d72;
+  background: #fff8f7;
+}
+.trip-days .trip-birthday {
+  border: 2px solid #b679b3;
+  background: #fff6fd;
+}
+
+.plan-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+}
+.plan-photo {
+  width: 50px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+.slotentry .plan-activity-link {
+  text-align: left;
+  font-weight: 700;
+  color: var(--sea);
+}
+.plan-add {
+  border: 0;
+  background: transparent;
+  color: var(--sea);
+  padding: 9px 2px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+.planner-picker {
+  width: min(560px, 92vw);
+}
+.planner-picker input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+.planner-choices {
+  max-height: 45vh;
+  overflow: auto;
+  display: grid;
+  gap: 4px;
+}
+.planner-choices button {
+  display: grid;
+  text-align: left;
+  gap: 3px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+}
+.planner-choices small {
+  color: var(--muted);
+}

@@ -15,10 +15,19 @@ assert.equal(photos.length, 59);
 assert.deepEqual(photos.map((p) => p.id).sort(), activities.map((a) => a.id).sort());
 for (const e of photos) {
   if (e.photo) {
-    assert.match(e.photo.license, /^(CC BY(?:-SA)? \d\.\d|CC0(?: 1\.0)?|Public domain)$/i);
+    if (e.photo.provider === 'Pexels' || e.photo.provider === 'Pixabay') {
+      const domain = e.photo.provider === 'Pexels' ? 'www.pexels.com' : 'pixabay.com';
+      assert.equal(new URL(e.photo.source).hostname, domain);
+      assert.equal(e.photo.license, e.photo.provider + ' License');
+      assert.ok(/^assets\/activity-photos\/[a-z0-9-]+\.jpg$/.test(e.photo.url));
+      assert.ok(fs.existsSync(e.photo.url));
+    } else {
+      assert.match(e.photo.license, /^(CC BY(?:-SA)? \d\.\d|CC0(?: 1\.0)?|Public domain)$/i);
+    }
     for (const k of ['title', 'author', 'source', 'url']) assert.ok(e.photo[k]);
     assert.ok(!/[<>]/.test(e.photo.author));
-    if (e.photo.provider !== undefined) assert.equal(e.photo.provider, 'Unsplash');
+    if (e.photo.provider !== undefined)
+      assert.ok(['Unsplash', 'Pexels', 'Pixabay'].includes(e.photo.provider));
     if (e.photo.motif !== undefined) assert.ok(['Ort', 'Symbolbild'].includes(e.photo.motif));
   }
   if (e.status === 'approved') assert.ok(e.checkedAt && e.reviewer && e.reviewNotes);

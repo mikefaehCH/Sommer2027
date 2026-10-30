@@ -1,4 +1,4 @@
-const CACHE = 'sommer2027-v20';
+const CACHE = 'sommer2027-v24';
 const CORE = [
   './',
   './index.html',
@@ -16,6 +16,15 @@ const CORE = [
   './ai.js',
   './familien-login.html',
   './ACTIVITY_PHOTOS.json',
+  './assets/activity-photos/saint-martin.jpg',
+  './assets/activity-photos/glace.jpg',
+  './assets/activity-photos/rochelle.jpg',
+  './assets/activity-photos/conche.jpg',
+  './assets/activity-photos/aquarium.jpg',
+  './assets/activity-photos/ars.jpg',
+  './assets/activity-photos/chenonceau.jpg',
+  './assets/activity-photos/14juillet.jpg',
+  './assets/activity-photos/bois-plage.jpg',
   './index-page.css',
   './index-inline-1.js',
   './index-inline-2.js',
