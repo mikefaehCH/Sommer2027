@@ -180,12 +180,12 @@ const { chromium } = require('playwright');
   await until(() => !!navigator.serviceWorker.controller);
   const cacheState = await page.evaluate(async () => {
     const names = await caches.keys();
-    const cache = await caches.open('sommer2027-v23');
+    const cache = await caches.open('sommer2027-v24');
     return { names, urls: (await cache.keys()).map((r) => r.url) };
   });
   if (
     cacheState.names.includes('sommer2027-v17') ||
-    !cacheState.names.includes('sommer2027-v23') ||
+    !cacheState.names.includes('sommer2027-v24') ||
     !cacheState.names.includes('unrelated-test-cache')
   )
     throw Error('SW upgrade/cache isolation');
@@ -201,7 +201,7 @@ const { chromium } = require('playwright');
     await fetch('/private-probe', { headers: { Authorization: 'Bearer local-test-only' } });
   });
   const leaked = await page.evaluate(async () => {
-    const c = await caches.open('sommer2027-v23');
+    const c = await caches.open('sommer2027-v24');
     return (await c.keys()).some((r) => r.url.includes('private-probe'));
   });
   if (leaked) throw Error('Private request cached');
@@ -248,7 +248,7 @@ const { chromium } = require('playwright');
     throw Error('CSP negative test');
   if (errors.length) throw Error(JSON.stringify(errors));
   console.log(
-    `PASS: 59 activities, search, favorites, add, move, remove, undo, persistence, map with 36 island markers and popup, gallery, restaurant filter, import/export roundtrip, invalid import, custom idea, signed-out login/AI, 5 subpages; no unexpected JS page errors or CSP violations; negative CSP tests passed; SW v17→v23, unrelated cache preservation, private cache exclusion and cache fallback passed (${process.env.TEST_BROWSER === 'webkit' ? 'origin stopped; offline emulation remains blocked' : 'offline emulation'})`,
+    `PASS: 59 activities, search, favorites, add, move, remove, undo, persistence, map with 36 island markers and popup, gallery, restaurant filter, import/export roundtrip, invalid import, custom idea, signed-out login/AI, 5 subpages; no unexpected JS page errors or CSP violations; negative CSP tests passed; SW v17→v24, unrelated cache preservation, private cache exclusion and cache fallback passed (${process.env.TEST_BROWSER === 'webkit' ? 'origin stopped; offline emulation remains blocked' : 'offline emulation'})`,
   );
   await browser.close();
   server.close();
