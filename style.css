@@ -6,8 +6,8 @@
   --ink: #263a3c;
   --sea: #315d65;
   --sage: #82927a;
-  --rust: #ba765b;
-  --muted: #6c7975;
+  --rust: #965a3e;
+  --muted: #5c6965;
   --line: #e5dfd3;
 }
 * {
@@ -277,6 +277,7 @@ a {
   padding-bottom: 15px;
 }
 .datebtn {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--white);
@@ -297,31 +298,28 @@ a {
   background: var(--sea);
   color: white;
 }
-.datebtn.special-national {
-  border-color: #c86d72;
-  background: #fff0f0;
-}
-.datebtn.special-birthday {
-  border-color: #b679b3;
-  background: #fff0fa;
-}
-.datebtn.special-national.active,
-.datebtn.special-birthday.active {
-  background: var(--sea);
-  color: white;
-}
+/* Discreet event marks keep every date the same size. */
 .date-event {
-  display: block;
-  font-size: 21px;
-  margin-top: 5px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  color: #a9615a;
+  transform: rotate(12deg);
+  pointer-events: none;
 }
-.date-event-label {
+.special-birthday .date-event {
+  color: #a1728e;
+  transform: rotate(-12deg);
+}
+.date-event svg {
   display: block;
-  font-size: 9px;
-  line-height: 1.2;
-  font-weight: 700;
-  max-width: 90px;
-  margin-top: 3px;
+  width: 100%;
+  height: 100%;
+}
+.datebtn.active .date-event {
+  color: #fff;
 }
 .slot {
   display: grid;
@@ -1174,7 +1172,7 @@ footer .shell {
 }
 .activity .cardactions button,
 .activity .cardactions a {
-  min-height: 38px;
+  min-height: 44px;
 }
 
 .move-form {
@@ -1471,4 +1469,213 @@ textarea:focus-visible {
 .trip-days .trip-birthday {
   border: 2px solid #b679b3;
   background: #fff6fd;
+}
+
+.plan-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+}
+.plan-photo {
+  width: 50px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+.slotentry .plan-activity-link {
+  text-align: left;
+  font-weight: 700;
+  color: var(--sea);
+}
+.plan-add {
+  border: 0;
+  background: transparent;
+  color: var(--sea);
+  padding: 9px 2px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+.planner-picker {
+  width: min(560px, 92vw);
+}
+.planner-picker input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+.planner-choices {
+  max-height: 45vh;
+  overflow: auto;
+  display: grid;
+  gap: 4px;
+}
+.planner-choices button {
+  display: grid;
+  text-align: left;
+  gap: 3px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+}
+.planner-choices small {
+  color: var(--muted);
+}
+
+/* ===== v24: Top-Niveau mobil – kompakte Ideen, Touch-Ziele ≥ 44 px ===== */
+/* Ideen ohne geprüftes Foto: keine leere Bildfläche, dafür eine ruhige Farbkante je Region */
+.activity.no-photo {
+  border-top: 4px solid var(--sea);
+  padding-top: 18px;
+}
+.activity.no-photo[data-region='re'] {
+  border-top-color: #4f8a95;
+}
+.activity.no-photo[data-region='pal'] {
+  border-top-color: var(--rust);
+}
+.activity.no-photo[data-region='amboise'] {
+  border-top-color: var(--sage);
+}
+.activity p {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.more-ideas {
+  display: flex;
+  margin: 22px auto 0;
+  min-height: 48px;
+}
+.more-ideas[hidden] {
+  display: none;
+}
+/* Touch-Ziele: Bedienelemente mindestens 44 px hoch */
+.pill,
+.smallbtn,
+.fav,
+.map-tab,
+.textlink,
+.plan-add,
+.ghost,
+.logo,
+.suggestionrow button,
+.activity .cardactions a,
+.photo-reference a,
+.guide-back,
+.food-back,
+.topbar a,
+.food-card a,
+.slotbuttons button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.activity .cardactions {
+  align-items: center;
+  gap: 6px 10px;
+}
+.activity .cardactions a {
+  padding: 0 4px;
+  font-weight: 700;
+  color: var(--sea);
+}
+/* Bildnachweise sind Text-Links: mindestens 24 px (WCAG 2.5.8) */
+.photo-commons-credit,
+.photo-credit {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+}
+.trip-birthday a,
+.hero-credit {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+}
+.trip-birthday a {
+  min-height: 44px;
+}
+select {
+  min-height: 44px;
+}
+@media (max-width: 680px) {
+  /* Tag für Tag: Datum links, Inhalt rechts – halb so lang, gleich viel Information */
+  .trip-days {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--white);
+    overflow: hidden;
+  }
+  .trip-days article {
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    column-gap: 12px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    padding: 14px 16px;
+  }
+  .trip-days article:last-child {
+    border-bottom: 0;
+  }
+  .trip-days article > span {
+    grid-row: 1 / span 3;
+    margin: 2px 0 0;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .trip-days article > strong {
+    font-size: 16px;
+  }
+  .trip-days article p {
+    margin-top: 4px;
+  }
+  .trip-days article a {
+    margin-top: 2px;
+  }
+  .trip-days .trip-national,
+  .trip-days .trip-birthday {
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    box-shadow: inset 4px 0 0 #c86d72;
+  }
+  .trip-days .trip-birthday {
+    box-shadow: inset 4px 0 0 #b679b3;
+  }
+  /* Galerie: wischen statt scrollen */
+  .photo-library {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    margin-inline: -20px;
+    padding: 0 20px 8px;
+    scrollbar-width: none;
+  }
+  .photo-library::-webkit-scrollbar {
+    display: none;
+  }
+  .photo-library > * {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
+}
+.logo {
+  gap: 0.28em;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

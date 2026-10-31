@@ -10,7 +10,8 @@ unterstützt weder den Bildkatalog noch alle App-Funktionen.
 
 ## Bestehende Funktionen
 
-- Suche, Regionen, Kategorien und Favoriten; Quellenlinks je Reiseidee.
+- Suche, Regionen, Kategorien und Favoriten; Quellenlinks je Reiseidee. «Entdecken» zeigt
+  zuerst 12 Ideen, weitere auf Wunsch; Ideen ohne geprüftes Foto erscheinen als kompakte Karte.
 - Ferienkalender vom 7.–20. Juli 2027: Einplanen, Verschieben, Entfernen, eigene Ideen,
   Rückgängig sowie JSON-Import und -Export.
 - Ohne Anmeldung: lokale Speicherung auf dem jeweiligen Gerät.
@@ -65,8 +66,10 @@ im Safari-Browser statt in der App enden. Für den Login vorerst Safari verwende
 
 ## Offline und Grenzen
 
-Der Service Worker v18 hält öffentliche App-Dateien lokal bereit. Externe Bibliotheken,
-Fotos, Schriften und Kartenkacheln sind nicht Teil dieses Caches. Login, gemeinsamer Plan
+Der Service Worker hält öffentliche App-Dateien und App-Symbole lokal bereit. Fotos von
+Unsplash und Wikimedia werden beim ersten Ansehen in einem eigenen Cache (`sommer2027-fotos`,
+max. 120 Bilder) gespeichert und erscheinen danach auch offline. Externe Bibliotheken,
+Schriften und Kartenkacheln sind nicht Teil des Caches. Login, gemeinsamer Plan
 und KI benötigen Internet. Private Supabase-Antworten und authentifizierte Requests
 werden nicht im Service-Worker-Cache gespeichert. Es gibt keine vollständige
 Offline-Synchronisation, keinen Gäste-Leselink und keine automatischen Live-Updates.
