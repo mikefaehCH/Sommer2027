@@ -13,7 +13,7 @@
 Run `npm ci`, `npx playwright install chromium webkit`, `npm run format:check`,
 `npm run check`, `npm run verify:sri` and `npm test`.
 CI tests Chromium and WebKit with desktop, mobile and iPhone SE viewports.
-With PR #15, Pages calls this same workflow; keep all check steps in `quality.yml`.
+Pages ruft seit PR #15 denselben Prüfworkflow auf; alle Prüfschritte bleiben in `quality.yml`.
 Quick checks run before browser installation, which retains its ten-minute timeout.
 These are emulations, not tests on physical iPhones.
 
@@ -21,9 +21,9 @@ These are emulations, not tests on physical iPhones.
 
 1. Confirm that all required PR checks passed on the exact head commit.
 2. Merge only reviewed changes that preserve travel and photo approval data.
-3. After PR #15 is merged, confirm the Pages workflow's quality gate passed before
-   its deploy job. Until then, manually confirm the full six-job quality matrix;
-   the current Pages workflow does not enforce it.
+3. Vor dem Deployment müssen alle sechs Prüfjobs der Quality-Matrix erfolgreich sein.
+   Der Pages-Workflow erzwingt dies über `quality-gate` und `needs: quality-gate`
+   am Deploy-Job.
 4. Verify the live website and photo-review page without altering family data.
 5. If a release fails, revert the relevant merge commit in a new PR, rerun checks
    and deploy the verified rollback. Do not rewrite main history.
