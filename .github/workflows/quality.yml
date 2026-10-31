@@ -23,12 +23,12 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: Install browser and system dependencies
-        timeout-minutes: 10
-        run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run format:check
       - run: npm run check
       - run: npm run verify:sri
+      - name: Install browser and system dependencies
+        timeout-minutes: 10
+        run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm test
         env:
           TEST_BROWSER: ${{ matrix.browser }}
