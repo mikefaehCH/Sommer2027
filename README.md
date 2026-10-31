@@ -1,5 +1,13 @@
 # Sommer 2027 – Unser Frankreich-Abenteuer
 
+## Wiederverwendbare Startvorlage
+
+Unter [`starter/`](starter/README.md) liegt eine eigenständige Reisevorlage mit zentraler
+Konfiguration, Orten, Karte, Favoriten, lokaler Planung, JSON-Backup und Offline-Grundlage.
+Zwei fiktive Beispielreisen prüfen die Wiederverwendung. Die bestehende Sommer-Webseite
+und ihre Daten bleiben unverändert. Neue Projekte entstehen über
+`node starter/scripts/create.mjs city /neuer/ordner eindeutige-projekt-id`.
+
 Statische Reisewebsite für Amboise, Île de Ré und Le PAL mit 59 kuratierten Aktivitäten.
 
 ## Lokal starten
