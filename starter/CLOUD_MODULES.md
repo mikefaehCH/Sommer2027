@@ -1,7 +1,7 @@
 # Login und gemeinsame Planung – vorbereitete Module
 
-Status: getestete Adapter mit Backend-Vertrag, **noch nicht in der Oberfläche aktiviert**.
-Es wurden weder eine Datenbank noch OAuth-Provider eingerichtet. Keine bestehende
+Status: getestete Adapter und lokal geprüfte Datenbankmigration, **noch nicht in der Oberfläche aktiviert**.
+Es wurden weder eine Supabase-Instanz noch OAuth-Provider eingerichtet. Keine bestehende
 Sommer2027-/Camino-Instanz und keine Mitgliedschaft werden verändert.
 Der lokale Reisebegleiter funktioniert weiterhin ohne Login.
 
@@ -111,9 +111,10 @@ Backend-Pflichten:
   Eine betroffene Zeile wird via `.select(...).maybeSingle()` zurückgegeben.
 - Keine Views/privilegierten öffentlichen Funktionen, die diese Regeln umgehen.
 
-Dies ist ein Vertrag und keine ausgeführte Migration. Vor einer Umsetzung Schema und
-Supabase-Advisors der gewählten Testinstanz prüfen, eine reguläre Migration erzeugen und
-mit Testidentitäten testen. Keinen bestehenden Backend-Vertrag still umbiegen.
+Die Migration und lokale PostgreSQL-Tests zu diesem Vertrag liegen unter
+[`backend/`](backend/README.md). Die Migration wurde nicht auf eine Supabase-Instanz angewendet.
+Vor einer Aktivierung Schema und Supabase-Advisors der gewählten Testinstanz prüfen und
+die Data API mit Testidentitäten testen. Keinen bestehenden Backend-Vertrag still umbiegen.
 
 ## Fehler und Verhalten der Oberfläche
 

@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, writeFile, access } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { resolve, relative, isAbsolute } from 'node:path';
+import { resolve, relative, isAbsolute, basename } from 'node:path';
 import { trips } from '../config.js';
 
 const [example, destination, projectId] = process.argv.slice(2);
@@ -15,8 +15,8 @@ if (!rel || (!rel.startsWith('..') && !isAbsolute(rel))) throw new Error('Ziel d
 try { await access(target); throw new Error('Ziel existiert bereits; es wird nichts überschrieben'); }
 catch (error) { if (error.code !== 'ENOENT') throw error; }
 await mkdir(target, { recursive: true });
-const files = ['index.html', 'app.js', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'manifest.webmanifest', 'sw.js', 'modules', 'trips', 'vendor', 'package.json', 'tests', 'scripts', 'README.md', 'CLOUD_MODULES.md'];
-for (const file of files) await cp(resolve(source, file), resolve(target, file), { recursive: true, force: false, errorOnExist: true });
+const files = ['index.html', 'app.js', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'manifest.webmanifest', 'sw.js', 'modules', 'trips', 'vendor', 'package.json', 'tests', 'scripts', 'README.md', 'CLOUD_MODULES.md', 'backend'];
+for (const file of files) await cp(resolve(source, file), resolve(target, file), { recursive: true, force: false, errorOnExist: true, filter: path => basename(path) !== '.temp' });
 const config = `import example from './trips/${example}.js';\nexport const trips = { ${example}: { ...example, id: ${JSON.stringify(projectId)} } };\nexport const defaultTrip = '${example}';\n`;
 await writeFile(resolve(target, 'config.js'), config);
 const manifest = JSON.parse(await readFile(resolve(target, 'manifest.webmanifest'), 'utf8'));

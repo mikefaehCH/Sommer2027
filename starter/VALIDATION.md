@@ -50,3 +50,23 @@ Aufbauend auf Vorlagen-Commit `e7ee6ac0c0addfa2ccee5200017b4fcdeabcb947` (PR #31
 - Backend-Vertrag und Integration stehen in `CLOUD_MODULES.md`; der Generator liefert die Anleitung mit.
 - Keine Aussage über produktive RLS- oder Provider-Konfiguration. Diese müssen vor Aktivierung
   in einer isolierten Umgebung und auf echten Geräten separat geprüft werden.
+
+## Ergänzung: Datenbankmigration und ausgeführte RLS-Tests
+
+Aufbauend auf Adapter-Commit `9ed7f4010af063809ff1686255732e95fffc4404` (PR #32):
+
+- Reguläre Migrationsdatei durch Supabase CLI 2.122.0 erzeugt; neue Tabellen und privater
+  Invoker-Trigger im separaten `backend/`-Verzeichnis. Keine vorhandene Tabelle verändert.
+- Migration in flüchtigem PGlite 0.5.14 ausgeführt: **52 direkte SQL-Prüfungen erfolgreich**,
+  darunter RLS ohne Frontend-Filter, breite Default-GRANTs, Nichtmitglied, Viewer, Editor,
+  anonymes Konto, Rechteentzug, Selbstfreischaltung, Revisionen und ungültige Nutzdaten.
+- Die bisherigen 22 Vorlagen-/Adaptertests sowie der Test mit echtem Supabase-SDK bleiben grün.
+- PGlite prüft die PostgreSQL-Regeln, aber keine GoTrue-/PostgREST-Endpunkte oder JWT-Signaturen.
+  Die Auth-Helfer im Test sind explizite Fixtures. Gleichzeitige Transaktionen und ein
+  gehosteter Supabase-Advisor-Lauf sind noch nicht geprüft.
+- Vorhandene Supabase-Projekte nur aufgelistet: keine separate Testinstanz erkannt,
+  keine produktive Migration, keine Änderung von Konten oder Mitgliedschaften.
+- Die CLI hat die Datei erzeugt; Docker/psql und damit `db pull --local` stehen hier nicht
+  zur Verfügung. Keine Supabase-Migrationshistorie wurde geändert oder als ausgeführt markiert.
+- Nächster Schritt: unabhängiges Review; anschliessend separate Supabase-Testinstanz für
+  tatsächliche API-/Provider-Abnahme festlegen. Keine automatische Erstellung mit Kostenfolge.
