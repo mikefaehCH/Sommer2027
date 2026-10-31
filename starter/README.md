@@ -63,7 +63,9 @@ Leaflet-Lizenz und unveränderte Bibliotheksdateien liegen unter `vendor/leaflet
 - Modulschalter blenden Funktionen aus; sie sind keine Sicherheits- oder Zugriffskontrollen.
 - `offline: false` registriert keinen neuen Worker. Einen zuvor installierten Worker beim Umstellen separat entfernen.
 
-Login, gemeinsame Planung, Push, Reisekasse, GPX und Briefings sind noch keine aktivierbaren Module.
+Login und gemeinsame Planung sind als getestete Adapter vorbereitet; Integration und Backend-Vertrag
+stehen in [`CLOUD_MODULES.md`](CLOUD_MODULES.md). Sie werden noch nicht in der Oberfläche geladen.
+Push, Reisekasse, GPX und Briefings sind weiterhin keine aktivierbaren Module.
 Es wird kein Supabase-Projekt eingerichtet und kein gemeinsamer Datenzugriff verändert.
 
 ## Prüfung
