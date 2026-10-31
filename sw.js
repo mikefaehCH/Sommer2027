@@ -1,4 +1,4 @@
-const CACHE = 'sommer2027-v24';
+const CACHE = 'sommer2027-v25';
 // Fotos von Unsplash/Wikimedia: beim Ansehen gespeichert, bleiben über Updates erhalten (max. PHOTO_MAX).
 const PHOTOS = 'sommer2027-fotos';
 const PHOTO_MAX = 120;
