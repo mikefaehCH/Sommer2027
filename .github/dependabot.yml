@@ -5,6 +5,11 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # WebKit-CSP-Regression: microsoft/playwright#43416 / #43497.
+    # Nur nachweislich betroffene Versionen auslassen; neue Patches weiter vorschlagen.
+    ignore:
+      - dependency-name: playwright
+        versions: ["1.64.0", "1.64.1"]
     groups:
       development-dependencies:
         dependency-type: development
