@@ -13,13 +13,17 @@
 Run `npm ci`, `npx playwright install chromium webkit`, `npm run format:check`,
 `npm run check`, `npm run verify:sri` and `npm test`.
 CI tests Chromium and WebKit with desktop, mobile and iPhone SE viewports.
+With PR #15, Pages calls this same workflow; keep all check steps in `quality.yml`.
+Quick checks run before browser installation, which retains its ten-minute timeout.
 These are emulations, not tests on physical iPhones.
 
 ## Release and rollback
 
 1. Confirm that all required PR checks passed on the exact head commit.
 2. Merge only reviewed changes that preserve travel and photo approval data.
-3. Confirm the Pages workflow's quality gate passed before its deploy job.
+3. After PR #15 is merged, confirm the Pages workflow's quality gate passed before
+   its deploy job. Until then, manually confirm the full six-job quality matrix;
+   the current Pages workflow does not enforce it.
 4. Verify the live website and photo-review page without altering family data.
 5. If a release fails, revert the relevant merge commit in a new PR, rerun checks
    and deploy the verified rollback. Do not rewrite main history.
@@ -35,6 +39,11 @@ The Edge Function currently has no durable per-user rate limit or enforced cost 
 Do not claim it is abuse-resistant until these controls are implemented and tested.
 The browser tests use deterministic mocked resources; they do not verify the live
 Supabase deployment or physical iPhone behavior.
+
+Dependabot (PR #16) covers npm and GitHub Actions only. CDN dependencies and their
+SRI hashes remain manual updates: verify exact bytes, integrity metadata and policy
+together. Static source guards can flag patterns but cannot prove a repository is
+free of secrets or that a deployed service is secure.
 
 ## Troubleshooting
 
