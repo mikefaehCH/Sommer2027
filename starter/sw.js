@@ -1,6 +1,6 @@
 /* Only this deployment's explicitly public app shell; no authenticated responses. */
 const PREFIX = 'travel-shell:' + self.registration.scope + ':';
-const CACHE = PREFIX + 'v1';
+const CACHE = PREFIX + 'v2';
 const ASSETS = [
   './',
   './index.html',

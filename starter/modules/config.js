@@ -1,4 +1,7 @@
-const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+// Gemeinsame Quelle für Generator, Oberfläche und Admin-Wizard.
+export const MODULES = Object.freeze(['places', 'map', 'favorites', 'planning', 'offline']);
+export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const slug = SLUG;
 const date = /^\d{4}-\d{2}-\d{2}$/;
 export function validateTrip(trip) {
   const fail = (message) => {
@@ -18,7 +21,7 @@ export function validateTrip(trip) {
   }
   if (trip.start > trip.end || (Date.parse(trip.end) - Date.parse(trip.start)) / 86400000 > 366)
     fail('Zeitraum ungültig');
-  const allowed = ['places', 'map', 'favorites', 'planning', 'offline'];
+  const allowed = MODULES;
   if (
     !trip.modules ||
     Object.keys(trip.modules).some((key) => !allowed.includes(key)) ||

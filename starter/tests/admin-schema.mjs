@@ -26,3 +26,34 @@ test('HTML injection stays plain text and unknown fields are rejected', () => {
   assert.equal(site.title, '<img src=x onerror=alert(1)>');
   assert.throws(() => validateSite({ ...site, token: 'private' }));
 });
+test('wizard schema uses the starter module list and trip categories', async () => {
+  const { MODULES } = await import('../modules/config.js');
+  const { MODULES: wizardModules, CATEGORIES } = await import('../admin/site-schema.js');
+  const { trips } = await import('../config.js');
+  assert.equal(wizardModules, MODULES);
+  assert.deepEqual(Object.keys(makeSite().modules), [...MODULES]);
+  assert.deepEqual([...CATEGORIES].sort(), Object.keys(trips).sort());
+});
+test('boundaries, versions and malformed values are rejected', () => {
+  const base = makeSite();
+  assert.equal(validateSite({ ...base, id: 'a'.repeat(64) }).id.length, 64);
+  assert.equal(validateSite({ ...base, title: 'T'.repeat(100) }).title.length, 100);
+  assert.equal(validateSite({ ...base, description: 'D'.repeat(500) }).description.length, 500);
+  for (const change of [
+    { version: 2 },
+    { id: 'a'.repeat(65) },
+    { id: 'Gross' },
+    { id: '-start' },
+    { title: 'T'.repeat(101) },
+    { description: 'D'.repeat(501) },
+    { description: 42 },
+    { modules: { ...base.modules, planning: true, places: false, map: false } },
+    { modules: { ...base.modules, offline: 'yes' } },
+    { modules: { ...base.modules, chat: true } },
+    { modules: [] },
+  ]) {
+    assert.throws(() => validateSite({ ...base, ...change }), JSON.stringify(change));
+  }
+  assert.throws(() => validateSite(JSON.parse(JSON.stringify(base).replace('{', '{"__proto__":{"x":1},'))));
+  assert.throws(() => validateSite(null));
+});
