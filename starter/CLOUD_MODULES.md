@@ -63,6 +63,10 @@ E-Mail-Template und Bestätigungsablauf passend zu PKCE prüfen; ein Template mi
 `token_hash` braucht zusätzlich eine geprüfte `verifyOtp`-Callback-Implementierung.
 Für diese Variante enthält der Adapter noch keinen Token-Hash-Handler.
 
+`INITIAL_SESSION`, wiederholtes `SIGNED_IN` und `TOKEN_REFRESHED` für dasselbe Konto
+verwerfen keinen geladenen Entwurf. Konto-Wechsel, Abmelden und explizit gestartete
+An-/Abmeldevorgänge invalidieren bisherige Zugriffe synchron.
+
 Der Sitzungsschlüssel trennt Backend, Website-Basis und Projekt-UUID. Abmelden verwendet
 `scope: local`; andere Geräte werden nicht global abgemeldet. Die Pfade auf GitHub Pages
 teilen sich dennoch eine Browser-Origin. Ein eigener Domainname pro privater App ist die
@@ -70,7 +74,10 @@ stärkere Isolierung; Speicherpräfixe schützen nicht gegen Skripte derselben O
 
 Google, Apple und Microsoft sind Codeoptionen, keine bestätigten produktiven Logins.
 `providers: []` aktiviert keinen OAuth-Provider. E-Mail wird nur durch einen expliziten
-Aufruf angefordert, mit `shouldCreateUser: false` und neutraler Erfolgsmeldung.
+Aufruf angefordert, mit `shouldCreateUser: false` und neutraler Antwort auch bei
+`otp_disabled` (unbekanntes Konto). Rate-Limit- und Netzwerkfehler bleiben Fehler.
+Die direkt aufrufbare Auth-API kann Konten weiterhin unterscheidbar beantworten;
+die neutrale Oberfläche ist kein serverseitiger Schutz vor Konto-Ermittlung.
 Eingeladene Konten und deren Projektmitgliedschaft müssen separat provisioniert werden.
 OAuth kann je nach Supabase-Einstellung Konten anlegen; daraus entsteht keine Projektfreigabe.
 

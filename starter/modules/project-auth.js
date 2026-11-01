@@ -59,6 +59,7 @@ export function createProjectAuth({
     },
   });
   let generation = 0;
+  let sessionIdentity;
   let disposed = false;
   const listeners = new Set();
   function invalidate() {
@@ -73,7 +74,14 @@ export function createProjectAuth({
   }
   const {
     data: { subscription },
-  } = client.auth.onAuthStateChange(invalidate);
+  } = client.auth.onAuthStateChange((event, session) => {
+    const identity = session?.user?.id || null;
+    // Bootstrap and refresh for the same account do not discard an editor's draft.
+    // Logout still ends the session even when the same account signs in again.
+    if (event === 'SIGNED_OUT' || (sessionIdentity !== undefined && identity !== sessionIdentity))
+      invalidate();
+    sessionIdentity = identity;
+  });
   function active() {
     if (disposed) throw new AccessError('disposed', 'Login-Modul ist beendet');
   }
@@ -84,6 +92,10 @@ export function createProjectAuth({
     if (error && error.name !== 'AuthSessionMissingError')
       throw new AccessError('auth_failed', 'Anmeldestatus konnte nicht geprüft werden', error);
     const user = error ? null : data?.user;
+    const identity = user?.id || null;
+    if (sessionIdentity === undefined) sessionIdentity = identity;
+    else if (sessionIdentity !== identity)
+      throw new AccessError('session_changed', 'Anmeldung hat sich geändert. Bitte neu laden.');
     // Anonymous Supabase users also have the authenticated database role.
     return user && !user.is_anonymous ? user : null;
   }
@@ -158,9 +170,9 @@ export function createProjectAuth({
       email,
       options: { emailRedirectTo: redirectTo, shouldCreateUser: false },
     });
-    if (error)
+    if (error && error.code !== 'otp_disabled')
       throw new AccessError('email_failed', 'Anmeldelink konnte nicht angefordert werden', error);
-    // Do not reveal whether an account exists.
+    // Neutral UI response for unknown accounts; direct Auth API responses remain observable.
     return 'Wenn das Konto freigeschaltet ist, erhältst du einen Anmeldelink.';
   }
   async function signOut() {

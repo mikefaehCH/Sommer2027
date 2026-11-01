@@ -33,13 +33,16 @@ function harness({
     afterRead: null,
     afterWrite: null,
     anonymous: false,
+    afterUser: null,
+    emailError: null,
   };
   const client = {
     auth: {
-      getUser: async () => ({
-        data: { user: user ? { ...user, is_anonymous: control.anonymous } : null },
-        error: control.authError,
-      }),
+      getUser: async () => {
+        const result = { data: { user: user ? { ...user, is_anonymous: control.anonymous } : null }, error: control.authError };
+        control.afterUser?.();
+        return result;
+      },
       onAuthStateChange: (callback) => {
         listener = callback;
         return {
@@ -52,7 +55,7 @@ function harness({
       },
       signInWithOtp: async (args) => {
         calls.push({ type: 'email', args });
-        return { error: null };
+        return { error: control.emailError };
       },
       signOut: async (args) => {
         calls.push({ type: 'signout', args });
@@ -141,10 +144,51 @@ function harness({
   const plan = createSharedPlan({ auth, trip: city });
   const changeUser = (id) => {
     user = id ? { id } : null;
-    listener('SIGNED_IN');
+    listener('SIGNED_IN', user ? { user } : null);
   };
-  return { auth, plan, client, options, calls, members, rows, control, changeUser };
+  const emit = (event) => listener(event, user ? { user } : null);
+  return { auth, plan, client, options, calls, members, rows, control, changeUser, emit };
 }
+
+test('Auth: initial session and same-user refresh preserve loaded plans', async () => {
+  const h = harness();
+  h.control.afterUser = () => h.emit('INITIAL_SESSION');
+  const loaded = await h.plan.load();
+  h.control.afterUser = null;
+  let changes = 0;
+  h.auth.onChange(() => changes++);
+  h.emit('SIGNED_IN');
+  h.emit('TOKEN_REFRESHED');
+  h.emit('USER_UPDATED');
+  const saved = await h.plan.save(loaded, [entry()]);
+  assert.equal(saved.revision, 1);
+  assert.equal(changes, 0);
+});
+
+test('Auth: a switch during the first user verification rejects the old identity', async () => {
+  const h = harness();
+  h.control.afterUser = () => h.changeUser('bob');
+  await assert.rejects(h.plan.load(), code('session_changed'));
+});
+
+test('Auth: sign-out then same-user sign-in invalidates the old snapshot', async () => {
+  const h = harness();
+  const loaded = await h.plan.load();
+  h.emit('SIGNED_OUT');
+  h.emit('SIGNED_IN');
+  await assert.rejects(h.plan.save(loaded, []), code('stale_session'));
+});
+
+test('Auth: unknown email is neutral while rate-limit and network errors remain errors', async () => {
+  const h = harness();
+  const success = await h.auth.sendMagicLink('person@example.test');
+  h.control.emailError = { code: 'otp_disabled', message: 'Signups not allowed for otp' };
+  assert.equal(await h.auth.sendMagicLink('unknown@example.test'), success);
+  for (const error of [{ code: 'over_email_send_rate_limit' }, { name: 'NetworkError' }]) {
+    h.control.emailError = error;
+    await assert.rejects(h.auth.sendMagicLink('person@example.test'), code('email_failed'));
+  }
+});
 
 test('Auth: PKCE, fester Callback und isolierter Sitzungsschlüssel', () => {
   const a = harness();
