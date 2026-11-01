@@ -68,6 +68,20 @@ stehen in [`CLOUD_MODULES.md`](CLOUD_MODULES.md). Sie werden noch nicht in der O
 Push, Reisekasse, GPX und Briefings sind weiterhin keine aktivierbaren Module.
 Es wird kein Supabase-Projekt eingerichtet und kein gemeinsamer Datenzugriff verändert.
 
+## Admin-Wizard (Prototyp)
+
+`admin/index.html` stellt eine Website im Browser zusammen und exportiert eine geprüfte `site.json`
+(`version`, `category`, `id`, `title`, `description`, `color`, `modules`). Die Seite arbeitet nur lokal:
+kein Login, keine Netzwerkanfragen (CSP `default-src 'none'`), keine Speicherung, keine Veröffentlichung.
+
+- Kategorien entsprechen den Vorlagen des Generators (`city`, `walking`); Modulliste und ID-Regel stammen
+  aus `modules/config.js`, damit Wizard, Oberfläche und Generator dieselben Regeln verwenden.
+- Zusätzlich blockiert der Wizard Karte und Planung ohne Orte.
+- `site.json` ist bewusst eine Teilkonfiguration: Sprache, Zeitraum und Orte fehlen noch, und
+  `scripts/create.mjs` liest die Datei noch nicht ein. Die Anbindung folgt in einem separaten Schritt.
+- Weil GitHub Pages das ganze Repository veröffentlicht, ist die Seite unter `…/starter/admin/` öffentlich
+  erreichbar (nicht verlinkt, `noindex`). Sie enthält keine Daten und sendet nichts.
+
 ## Prüfung
 
 `npm test` prüft beide Reisen, Schemafehler, Speicherfehler, Datenisolation, Import/Export,
