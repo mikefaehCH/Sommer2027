@@ -246,7 +246,10 @@ const playwright = require('playwright');
       cwd: generated,
       stdio: 'pipe',
     });
-    require('node:child_process').execFileSync('npm', ['test'], { cwd: generated, stdio: 'pipe' });
+    require('node:child_process').execFileSync('npm', ['test'], {
+      cwd: generated,
+      stdio: 'inherit',
+    });
     await page.goto(origin + '/generated/');
     await page.locator('#title').filter({ hasText: site.title }).waitFor();
     assert.equal(await page.title(), site.title);

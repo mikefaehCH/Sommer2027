@@ -4,7 +4,12 @@ import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { execFileSync } from 'node:child_process';
+import { execFileSync as execute } from 'node:child_process';
+// Nested node --test must run normally, not inherit the parent runner context.
+const childEnvironment = { ...process.env };
+delete childEnvironment.NODE_TEST_CONTEXT;
+const execFileSync = (command, args, options = {}) =>
+  execute(command, args, { ...options, env: childEnvironment });
 import {
   generateProject,
   TEMPLATE_FILES,
@@ -64,6 +69,13 @@ test('ZIP is repeatable, extracts with CRC checks, installs, tests and regenerat
     assert.equal(
       await readFile(join(dir, 'again/site.json'), 'utf8'),
       await readFile(join(dir, 'website/site.json'), 'utf8'),
+    );
+    await writeFile(
+      join(dir, 'website/tests/must-fail.mjs'),
+      "throw Error('negative-test-sentinel');\n",
+    );
+    assert.throws(() =>
+      execFileSync('npm', ['test'], { cwd: join(dir, 'website'), stdio: 'pipe' }),
     );
     // Every generated import/asset needed by subsequent generation is retained.
     for (const path of TEMPLATE_FILES) await readFile(join(dir, 'again', path));
