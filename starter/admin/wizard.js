@@ -1,5 +1,6 @@
 import { makeSite, MODULES } from './site-schema.js';
 const form = document.querySelector('#wizard');
+form.elements.namedItem('description').value = 'Meine neue Website';
 const message = document.querySelector('#message');
 const preview = document.querySelector('#preview');
 const download = document.querySelector('#download');
