@@ -6,8 +6,17 @@ const download = document.querySelector('#download');
 let valid = null;
 function config() {
   const values = new FormData(form);
-  const modules = Object.fromEntries(['places','map','favorites','planning','offline'].map(name => [name, values.has(name)]));
-  return makeSite({ category: values.get('category'), id: values.get('id'), title: values.get('title'), description: values.get('description'), color: values.get('color'), modules });
+  const modules = Object.fromEntries(
+    ['places', 'map', 'favorites', 'planning', 'offline'].map((name) => [name, values.has(name)]),
+  );
+  return makeSite({
+    category: values.get('category'),
+    id: values.get('id'),
+    title: values.get('title'),
+    description: values.get('description'),
+    color: values.get('color'),
+    modules,
+  });
 }
 function refresh() {
   valid = null;
@@ -28,7 +37,7 @@ function refresh() {
 }
 form.addEventListener('input', refresh);
 form.addEventListener('change', refresh);
-form.addEventListener('submit', event => {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
   try {
     valid = config();
