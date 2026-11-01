@@ -89,3 +89,20 @@ Offline-Dateiliste und Generator. Im übergeordneten Repository ergänzt `tests/
 die bestehende Chromium-/WebKit-Matrix um Suche, Planung, Modulschalter, Persistenz und Überlauf.
 Chromium prüft zusätzlich tatsächliches Offline-Laden und die Cache-Isolation.
 Browseremulation ersetzt keine Abnahme auf einem echten iPhone oder Android-Gerät.
+
+## Website aus dem Wizard generieren
+
+Der Wizard unter `admin/` erfasst nun Beginn und Ende als Pflichtfelder. Bestehende Exporte
+ohne diese Angaben müssen ergänzt werden; es werden keine Termine erfunden.
+
+```sh
+node starter/scripts/create.mjs /pfad/site.json /absoluter/neuer/ordner
+```
+
+Wizard und CLI verwenden dieselbe Validierung. Die Ausgabe enthält die normalisierte
+`site.json`, daraus abgeleitete Laufzeitkonfiguration und Metadaten, leere Orte,
+lokale Assets, Offline-Dateiliste, Lockfile und Tests. `npm ci --ignore-scripts` und
+`npm test` funktionieren ohne zusätzliche Laufzeitpakete. Regenerierung erfolgt in
+einen neuen Ordner; bestehende Ziele werden niemals überschrieben.
+
+Noch offen: Orte im Wizard erfassen, ZIP-Export und GitHub-Veröffentlichung.
