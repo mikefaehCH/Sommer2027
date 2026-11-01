@@ -1,4 +1,4 @@
-import { makeSite } from './site-schema.js';
+import { makeSite, MODULES } from './site-schema.js';
 const form = document.querySelector('#wizard');
 const message = document.querySelector('#message');
 const preview = document.querySelector('#preview');
@@ -7,7 +7,7 @@ let valid = null;
 function config() {
   const values = new FormData(form);
   const modules = Object.fromEntries(
-    ['places', 'map', 'favorites', 'planning', 'offline'].map((name) => [name, values.has(name)]),
+    MODULES.map((name) => [name, values.has(name)]),
   );
   return makeSite({
     category: values.get('category'),

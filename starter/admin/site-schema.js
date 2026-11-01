@@ -1,5 +1,6 @@
 // Versioned, deliberately limited configuration for the local starter wizard.
-export const CATEGORIES = Object.freeze(['travel-city', 'travel-walking']);
+export const CATEGORIES = Object.freeze(['city', 'walking']);
+export const MODULES = Object.freeze(['places', 'map', 'favorites', 'planning', 'offline']);
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HEX = /^#[0-9a-fA-F]{6}$/;
 export function validateSite(input) {
@@ -12,12 +13,12 @@ export function validateSite(input) {
     throw Error('Ungültige Projekt-ID');
   if (typeof title !== 'string' || !title.trim() || title.length > 100)
     throw Error('Ungültiger Titel');
-  if (typeof description !== 'string' || description.length > 500)
+  if (typeof description !== 'string' || (!description.trim() || description.length > 500))
     throw Error('Ungültige Beschreibung');
   if (typeof color !== 'string' || !HEX.test(color)) throw Error('Ungültige Akzentfarbe');
   if (!modules || typeof modules !== 'object' || Array.isArray(modules))
     throw Error('Module fehlen');
-  const allowed = ['places', 'map', 'favorites', 'planning', 'offline'];
+  const allowed = MODULES;
   if (
     Object.keys(modules).some((key) => !allowed.includes(key)) ||
     allowed.some((key) => typeof modules[key] !== 'boolean')
@@ -39,10 +40,10 @@ export function validateSite(input) {
   });
 }
 export function makeSite({
-  category = 'travel-city',
+  category = 'city',
   id = 'meine-website',
   title = 'Meine Website',
-  description = '',
+  description = 'Meine neue Website',
   color = '#965a3e',
   modules = {},
 } = {}) {

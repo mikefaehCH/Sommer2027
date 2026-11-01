@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { makeSite, validateSite } from '../admin/site-schema.js';
 test('wizard creates a deterministic site.json schema', () => {
-  const site = makeSite({ id: 'test-site', title: '  Testseite  ', category: 'travel-walking' });
+  const site = makeSite({ id: 'test-site', title: '  Testseite  ', category: 'walking' });
   assert.equal(site.title, 'Testseite');
   assert.equal(validateSite(JSON.parse(JSON.stringify(site))).id, 'test-site');
   assert.equal(site.modules.offline, true);
@@ -13,6 +13,7 @@ test('invalid categories, keys and module dependencies are rejected', () => {
     { category: 'admin' },
     { id: '../evil' },
     { title: ' ' },
+    { description: '' },
     { color: 'red' },
     { modules: { ...base.modules, map: true, places: false } },
     { extra: 'secret' },
