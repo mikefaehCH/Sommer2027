@@ -180,10 +180,12 @@ const playwright = require('playwright');
     await page.locator('input[name="places"]').uncheck();
     await page.locator('#wizard button[type="submit"]').click();
     assert.equal(await page.locator('#download').isDisabled(), true);
+    assert.equal(await page.locator('#create').isDisabled(), true);
     assert.equal(await page.locator('#message').textContent(), 'Karte benötigt Orte');
     await page.locator('input[name="map"]').uncheck();
     await page.locator('#wizard button[type="submit"]').click();
     assert.equal(await page.locator('#download').isDisabled(), true);
+    assert.equal(await page.locator('#create').isDisabled(), true);
     assert.equal(await page.locator('#message').textContent(), 'Planung benötigt Orte');
     await page.locator('input[name="map"]').check();
     await page.locator('input[name="places"]').check();
@@ -197,13 +199,54 @@ const playwright = require('playwright');
     assert.equal(site.id, 'meine-website');
     assert.equal(site.modules.places, true);
     assert.equal(site.start, '2027-06-01');
-    const input = path.join(generatedRoot, 'site.json');
-    fs.writeFileSync(input, JSON.stringify(site));
-    require('node:child_process').execFileSync(process.execPath, [
-      path.join(root, 'scripts/create.mjs'),
-      input,
+    // Failed template requests must not leave a successful or disabled export.
+    await context.route('**/vendor/leaflet/LICENSE', (route) =>
+      route.fulfill({ status: 503, body: 'unavailable' }),
+    );
+    await page.locator('#create').click();
+    await page
+      .locator('#message')
+      .filter({ hasText: 'Website konnte nicht erstellt werden' })
+      .waitFor();
+    assert.equal(await page.locator('#create').isEnabled(), true);
+    await context.unroute('**/vendor/leaflet/LICENSE');
+    // Editing while templates load invalidates the pending export.
+    let releaseTemplate, templateReached;
+    const reached = new Promise((resolve) => {
+      templateReached = resolve;
+    });
+    await context.route('**/vendor/leaflet/LICENSE', async (route) => {
+      await new Promise((resolve) => {
+        releaseTemplate = resolve;
+        templateReached();
+      });
+      await route.continue();
+    });
+    await page.locator('#create').click();
+    await reached;
+    await page.locator('[name=title]').fill('Geänderter Entwurf');
+    releaseTemplate();
+    await page.locator('#message').filter({ hasText: 'Konfiguration geändert' }).waitFor();
+    assert.equal(await page.locator('#create').isDisabled(), true);
+    await context.unroute('**/vendor/leaflet/LICENSE');
+    await page.locator('[name=title]').fill(site.title);
+    await page.locator('#wizard button[type="submit"]').click();
+    const zipPromise = page.waitForEvent('download');
+    await page.locator('#create').click();
+    const zipDownload = await zipPromise;
+    assert.equal(zipDownload.suggestedFilename(), site.id + '.zip');
+    const zipPath = await zipDownload.path();
+    require('node:child_process').execFileSync('python3', [
+      '-c',
+      'import zipfile,sys\nz=zipfile.ZipFile(sys.argv[1]); assert z.testzip() is None; z.extractall(sys.argv[2])',
+      zipPath,
       generated,
     ]);
+    require('node:child_process').execFileSync('npm', ['ci', '--ignore-scripts'], {
+      cwd: generated,
+      stdio: 'pipe',
+    });
+    require('node:child_process').execFileSync('npm', ['test'], { cwd: generated, stdio: 'pipe' });
     await page.goto(origin + '/generated/');
     await page.locator('#title').filter({ hasText: site.title }).waitFor();
     assert.equal(await page.title(), site.title);
