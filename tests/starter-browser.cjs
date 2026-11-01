@@ -6,12 +6,18 @@ const playwright = require('playwright');
 
 (async () => {
   const root = path.resolve('starter');
+  const generatedRoot = fs.mkdtempSync(
+    path.join(require('node:os').tmpdir(), 'generated-browser-'),
+  );
+  const generated = path.join(generatedRoot, 'website');
   const server = http.createServer((request, response) => {
     const url = new URL(request.url, 'http://localhost');
     let pathname = url.pathname.replace(/^\/(one|two)\//, '/');
     if (pathname.endsWith('/')) pathname += 'index.html';
-    const file = path.resolve(root, '.' + pathname);
-    if (!file.startsWith(root + path.sep)) {
+    const servingRoot = pathname.startsWith('/generated/') ? generated : root;
+    if (servingRoot === generated) pathname = pathname.slice('/generated'.length);
+    const file = path.resolve(servingRoot, '.' + pathname);
+    if (!file.startsWith(servingRoot + path.sep)) {
       response.writeHead(403).end();
       return;
     }
@@ -161,6 +167,9 @@ const playwright = require('playwright');
     // The admin wizard must be exercised in every Chromium/WebKit viewport.
     await page.goto(origin + '/admin/');
     await page.locator('#wizard').waitFor();
+    await page.locator('[name=category] option[value=travel]').waitFor({ state: 'attached' });
+    await page.locator('[name=start]').fill('2027-06-01');
+    await page.locator('[name=end]').fill('2027-06-03');
     assert.equal(
       await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
       true,
@@ -172,22 +181,176 @@ const playwright = require('playwright');
     await page.locator('input[name="places"]').uncheck();
     await page.locator('#wizard button[type="submit"]').click();
     assert.equal(await page.locator('#download').isDisabled(), true);
+    assert.equal(await page.locator('#create').isDisabled(), true);
     assert.equal(await page.locator('#message').textContent(), 'Karte benötigt Orte');
     await page.locator('input[name="map"]').uncheck();
     await page.locator('#wizard button[type="submit"]').click();
     assert.equal(await page.locator('#download').isDisabled(), true);
+    assert.equal(await page.locator('#create').isDisabled(), true);
     assert.equal(await page.locator('#message').textContent(), 'Planung benötigt Orte');
     await page.locator('input[name="map"]').check();
     await page.locator('input[name="places"]').check();
+    await page.locator('#add-place').click();
+    for (const [field, value] of Object.entries({
+      name: 'Testort <img src=x>',
+      category: 'Test',
+      description: 'Synthetischer Ort für die Browserprüfung',
+      lat: '47.37',
+      lon: '8.54',
+    }))
+      await page.locator('#places-editor [data-field=' + field + ']').fill(value);
+
     await page.locator('#wizard button[type="submit"]').click();
     assert.equal(await page.locator('#download').isEnabled(), true);
     const wizardDownloadPromise = page.waitForEvent('download');
     await page.locator('#download').click();
     const wizardDownload = await wizardDownloadPromise;
     const site = JSON.parse(fs.readFileSync(await wizardDownload.path(), 'utf8'));
-    assert.equal(site.category, 'city');
+    assert.equal(site.version, 2);
+    assert.equal(site.category, 'travel');
+    assert.equal(site.preset, 'city');
     assert.equal(site.id, 'meine-website');
     assert.equal(site.modules.places, true);
+    assert.equal(site.content.start, '2027-06-01');
+    assert.equal(site.content.places[0].name, 'Testort <img src=x>');
+    // Failed template requests must not leave a successful or disabled export.
+    await context.route('**/vendor/leaflet/LICENSE', (route) =>
+      route.fulfill({ status: 503, body: 'unavailable' }),
+    );
+    await page.locator('#create').click();
+    await page
+      .locator('#message')
+      .filter({ hasText: 'Website konnte nicht erstellt werden' })
+      .waitFor();
+    assert.equal(await page.locator('#create').isEnabled(), true);
+    await context.unroute('**/vendor/leaflet/LICENSE');
+    // Editing while templates load invalidates the pending export.
+    let releaseTemplate, templateReached;
+    const reached = new Promise((resolve) => {
+      templateReached = resolve;
+    });
+    await context.route('**/vendor/leaflet/LICENSE', async (route) => {
+      await new Promise((resolve) => {
+        releaseTemplate = resolve;
+        templateReached();
+      });
+      await route.continue();
+    });
+    await page.locator('#create').click();
+    await reached;
+    await page.locator('[name=title]').fill('Geänderter Entwurf');
+    releaseTemplate();
+    await page.locator('#message').filter({ hasText: 'Konfiguration geändert' }).waitFor();
+    assert.equal(await page.locator('#create').isDisabled(), true);
+    await context.unroute('**/vendor/leaflet/LICENSE');
+    await page.locator('[name=title]').fill(site.title);
+    await page.locator('#wizard button[type="submit"]').click();
+    const zipPromise = page.waitForEvent('download');
+    await page.locator('#create').click();
+    const zipDownload = await zipPromise;
+    assert.equal(zipDownload.suggestedFilename(), site.id + '.zip');
+    const zipPath = await zipDownload.path();
+    require('node:child_process').execFileSync('python3', [
+      '-c',
+      'import zipfile,sys\nz=zipfile.ZipFile(sys.argv[1]); assert z.testzip() is None; z.extractall(sys.argv[2])',
+      zipPath,
+      generated,
+    ]);
+    require('node:child_process').execFileSync('npm', ['ci', '--ignore-scripts'], {
+      cwd: generated,
+      stdio: 'pipe',
+    });
+    require('node:child_process').execFileSync('npm', ['test'], {
+      cwd: generated,
+      stdio: 'inherit',
+    });
+    await page.goto(origin + '/generated/');
+    await page.locator('#title').filter({ hasText: site.title }).waitFor();
+    assert.equal(await page.title(), site.title);
+    assert.equal(await page.locator('#place-list article').count(), 1);
+    assert.equal(await page.locator('#place-list img').count(), 0);
+    await page
+      .locator('#place-list')
+      .getByRole('button', { name: 'Einplanen', exact: true })
+      .click();
+    assert.equal(await page.locator('.plan-row').count(), 1);
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      true,
+    );
+    // General pages need no travel dates and render only supplied sections.
+    await page.goto(origin + '/admin/');
+    await page.locator('[name=category] option[value=general]').waitFor({ state: 'attached' });
+    await page.locator('[name=category]').selectOption('general');
+    assert.equal(await page.locator('[name=start]').isDisabled(), true);
+    await page.locator('#add-section').click();
+    await page.locator('#sections-editor [data-field=heading]').fill('Testabschnitt');
+    await page
+      .locator('#sections-editor [data-field=text]')
+      .fill('Nur Text <script>alert(1)</script>');
+    await page.locator('#wizard button[type="submit"]').click();
+    const generalPromise = page.waitForEvent('download');
+    await page.locator('#create').click();
+    const generalDownload = await generalPromise;
+    fs.rmSync(generated, { recursive: true, force: true });
+    require('node:child_process').execFileSync('python3', [
+      '-c',
+      'import zipfile,sys\nz=zipfile.ZipFile(sys.argv[1]); assert z.testzip() is None; z.extractall(sys.argv[2])',
+      await generalDownload.path(),
+      generated,
+    ]);
+    require('node:child_process').execFileSync('npm', ['ci', '--ignore-scripts'], {
+      cwd: generated,
+      stdio: 'pipe',
+    });
+    require('node:child_process').execFileSync('npm', ['test'], {
+      cwd: generated,
+      stdio: 'inherit',
+    });
+    await page.goto(origin + '/generated/');
+    await page.locator('#sections h2').filter({ hasText: 'Testabschnitt' }).waitFor();
+    assert.equal(
+      await page.locator('#sections p').textContent(),
+      'Nur Text <script>alert(1)</script>',
+    );
+    assert.equal(await page.locator('#sections script').count(), 0);
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      true,
+    );
+    // Version 1 import has a visible migration notice and exports canonical v2.
+    await page.goto(origin + '/admin/');
+    await page.locator('[name=category] option[value=travel]').waitFor({ state: 'attached' });
+    const legacy = {
+      version: 1,
+      category: 'walking',
+      id: site.id,
+      title: site.title,
+      description: site.description,
+      color: site.color,
+      modules: site.modules,
+      start: site.content.start,
+      end: site.content.end,
+    };
+    await page.locator('#site-import').setInputFiles({
+      name: 'legacy.json',
+      mimeType: 'application/json',
+      buffer: Buffer.from(JSON.stringify(legacy)),
+    });
+    await page
+      .locator('#message')
+      .filter({ hasText: 'Version 1 nach Version 2 migriert' })
+      .waitFor();
+    assert.equal(await page.locator('[name=category]').inputValue(), 'travel');
+    assert.equal(await page.locator('[name=preset]').inputValue(), 'walking');
+    await page.locator('#wizard button[type="submit"]').click();
+    const migratedPromise = page.waitForEvent('download');
+    await page.locator('#download').click();
+    const migratedDownload = await migratedPromise;
+    const migrated = JSON.parse(fs.readFileSync(await migratedDownload.path(), 'utf8'));
+    assert.equal(migrated.version, 2);
+    assert.equal(migrated.preset, 'walking');
+    assert.deepEqual(migrated.content.places, []);
     assert.deepEqual(errors, []);
     console.log(
       'PASS: starter: both trips, map, search, favorites, plan, persistence, export/import, module switch, path isolation, mobile layout' +
@@ -196,6 +359,7 @@ const playwright = require('playwright');
   } finally {
     if (browser) await browser.close();
     await new Promise((resolve) => server.close(resolve));
+    fs.rmSync(generatedRoot, { recursive: true, force: true });
   }
 })().catch((error) => {
   console.error(error);
