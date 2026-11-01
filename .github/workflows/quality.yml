@@ -23,6 +23,8 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Diagnose Prettier browser test
+        run: node -e "const p=require('prettier');const fs=require('fs');(async()=>{const f='tests/starter-browser.cjs';const opts=await p.resolveConfig(f);const out=await p.format(fs.readFileSync(f,'utf8'),{...opts,filepath:f});console.log('FORMATTED_TEST_BASE64='+Buffer.from(out).toString('base64'))})()"
       - run: npm run format:check
       - run: npm run check
       - run: npm run verify:sri
