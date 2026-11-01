@@ -161,7 +161,10 @@ const playwright = require('playwright');
     // The admin wizard must be exercised in every Chromium/WebKit viewport.
     await page.goto(origin + '/admin/');
     await page.locator('#wizard').waitFor();
-    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      true,
+    );
     assert.equal(await page.locator('fieldset label').count(), 5);
     for (const target of await page.locator('fieldset label').all()) {
       assert.equal(await target.evaluate((el) => el.getBoundingClientRect().height >= 44), true);
