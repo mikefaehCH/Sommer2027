@@ -66,6 +66,7 @@ test('Generator liefert eigenständiges Projekt und überschreibt kein Ziel', as
       const config = await readFile(resolve(target, 'config.js'), 'utf8');
       assert.ok(config.includes('test-' + example));
       await access(resolve(target, 'vendor/leaflet/leaflet.js'));
+      assert.equal(await readFile(resolve(target, 'CLOUD_MODULES.md'), 'utf8'), await readFile(resolve(source, 'CLOUD_MODULES.md'), 'utf8'));
       assert.throws(() => execFileSync(process.execPath, [resolve(source, 'scripts/create.mjs'), example, target, 'test-again'], { stdio: 'pipe' }));
     }
   } finally { await rm(directory, { recursive: true, force: true }); }
