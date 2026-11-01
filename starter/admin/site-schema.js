@@ -13,7 +13,7 @@ export function validateSite(input) {
     throw Error('Ungültige Projekt-ID');
   if (typeof title !== 'string' || !title.trim() || title.length > 100)
     throw Error('Ungültiger Titel');
-  if (typeof description !== 'string' || (!description.trim() || description.length > 500))
+  if (typeof description !== 'string' || !description.trim() || description.length > 500)
     throw Error('Ungültige Beschreibung');
   if (typeof color !== 'string' || !HEX.test(color)) throw Error('Ungültige Akzentfarbe');
   if (!modules || typeof modules !== 'object' || Array.isArray(modules))

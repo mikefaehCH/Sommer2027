@@ -6,9 +6,7 @@ const download = document.querySelector('#download');
 let valid = null;
 function config() {
   const values = new FormData(form);
-  const modules = Object.fromEntries(
-    MODULES.map((name) => [name, values.has(name)]),
-  );
+  const modules = Object.fromEntries(MODULES.map((name) => [name, values.has(name)]));
   return makeSite({
     category: values.get('category'),
     id: values.get('id'),
