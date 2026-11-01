@@ -89,3 +89,48 @@ Offline-Dateiliste und Generator. Im übergeordneten Repository ergänzt `tests/
 die bestehende Chromium-/WebKit-Matrix um Suche, Planung, Modulschalter, Persistenz und Überlauf.
 Chromium prüft zusätzlich tatsächliches Offline-Laden und die Cache-Isolation.
 Browseremulation ersetzt keine Abnahme auf einem echten iPhone oder Android-Gerät.
+
+## Website aus dem Wizard generieren
+
+Der Wizard unter `admin/` erfasst nun Beginn und Ende als Pflichtfelder. Bestehende Exporte
+ohne diese Angaben müssen ergänzt werden; es werden keine Termine erfunden.
+
+```sh
+node starter/scripts/create.mjs /pfad/site.json /absoluter/neuer/ordner
+```
+
+Wizard und CLI verwenden dieselbe Validierung. Die Ausgabe enthält die normalisierte
+`site.json`, daraus abgeleitete Laufzeitkonfiguration und Metadaten, leere Orte,
+lokale Assets, Offline-Dateiliste, Lockfile und Tests. `npm ci --ignore-scripts` und
+`npm test` funktionieren ohne zusätzliche Laufzeitpakete. Regenerierung erfolgt in
+einen neuen Ordner; bestehende Ziele werden niemals überschrieben.
+
+Noch offen: Orte im Wizard erfassen und GitHub-Veröffentlichung.
+
+## Website als ZIP
+
+1. `admin/` über HTTPS oder localhost öffnen und alle Pflichtfelder ausfüllen.
+2. «Konfiguration prüfen» wählen, danach «Website erstellen».
+3. Das ZIP entpacken. Im Projektordner `npm ci --ignore-scripts` und `npm test`
+   ausführen und die Website über einen statischen HTTP-Server öffnen.
+
+CLI und Wizard verwenden `modules/site-generator.js` und dieselbe feste Dateiliste.
+Das ZIP enthält lokale Assets und Lizenzen, site.json, Runtime-Konfiguration,
+Generator/Wizard für spätere Neuerstellung, Lockfile und Projekttests. Es enthält
+keine Beispielorte, Secrets, private Projektkonfiguration oder Git-Metadaten.
+Die ZIP-Dateien sind sortiert, unkomprimiert und haben einen festen Zeitstempel;
+identische Konfiguration und Vorlagendateien ergeben dieselben Bytes.
+
+Nur die feste Vorlagenliste wird vom selben Webserver geladen, ohne Cookies und
+ohne Weiterleitungen. Scheitert ein Abruf oder ändert sich die Konfiguration während
+der Erstellung, wird kein ZIP ausgegeben. Pfadvalidierung, Grössenlimits und CRC32
+schützen die Archivstruktur; CRC32 ist kein kryptografischer Herkunftsnachweis.
+
+`starter/tests/zip.mjs` prüft CLI-/Browser-Parität, Reproduzierbarkeit, Entpacken,
+Installation, Tests, erneute Generierung und unsichere Pfade. Die bestehende
+sechsfache Browsermatrix lädt das ZIP tatsächlich im Wizard herunter, entpackt es,
+installiert und prüft das Projekt und öffnet es lokal bei 375, 390 und 1280 px.
+Python 3 wird nur vom Abnahmetest zum unabhängigen Entpacken verwendet.
+
+GitHub-Anmeldung, automatische Repository-Erstellung und Veröffentlichung sind
+weiterhin nicht Teil dieses Exports. Die Orteingabe im Wizard steht noch aus.

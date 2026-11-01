@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex,nofollow" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'"
     />
     <title>Website-Wizard – lokale Vorschau</title>
     <link rel="stylesheet" href="./wizard.css" />
@@ -14,11 +14,11 @@
   <body>
     <main>
       <header>
-        <p class="eyebrow">Website-Baukasten · Prototyp</p>
+        <p class="eyebrow">Website-Baukasten</p>
         <h1>Neue Website konfigurieren</h1>
         <p>
           Lokaler Entwurf ohne Login, Cloud-Speicherung oder Veröffentlichung. Exportiert eine
-          geprüfte site.json.
+          geprüfte site.json und erstellt deine Website als ZIP.
         </p>
       </header>
       <form id="wizard">
@@ -41,6 +41,8 @@
           >Beschreibung<textarea name="description" maxlength="500" rows="3" required></textarea>
         </label>
         <label>Akzentfarbe<input name="color" type="color" value="#965a3e" /></label>
+        <label>Beginn (für Website-Generierung)<input name="start" type="date" required /></label>
+        <label>Ende (für Website-Generierung)<input name="end" type="date" required /></label>
         <fieldset>
           <legend>Module</legend>
           <label><input type="checkbox" name="places" checked /> Orte</label
@@ -52,6 +54,7 @@
         <div class="actions">
           <button type="submit">Konfiguration prüfen</button
           ><button type="button" id="download" disabled>site.json herunterladen</button>
+          <button type="button" id="create" disabled>Website erstellen</button>
         </div>
         <p id="message" role="status" aria-live="polite"></p>
       </form>
@@ -63,8 +66,8 @@
         </div>
       </section>
       <p class="note">
-        Hinweis: Diese erste Version generiert noch kein Repository und aktiviert weder OAuth noch
-        Supabase. Sie dient zur sicheren Vorbereitung des einheitlichen site.json-Schemas.
+        Die Website enthält zunächst keine Orte. ZIP-Erstellung erfolgt auf deinem Gerät;
+        Vorlagendateien werden vom selben Webserver geladen. Kein Login und keine Veröffentlichung.
       </p>
     </main>
     <script type="module" src="./wizard.js"></script>
