@@ -65,6 +65,7 @@ fieldset {
   gap: 12px;
 }
 fieldset label {
+  min-height: 44px;
   display: flex;
   align-items: center;
   gap: 8px;
