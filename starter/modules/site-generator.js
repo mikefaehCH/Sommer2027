@@ -1,8 +1,14 @@
 import { validateSite } from '../admin/site-schema.js';
 import { validateTrip } from './config.js';
+import { CATEGORY_FILES, CATEGORY_REGISTRY } from '../categories/registry.js';
 
 // Feste öffentliche Vorlage. Konfigurationswerte dürfen niemals Dateipfade bestimmen.
 export const TEMPLATE_FILES = Object.freeze([
+  ...CATEGORY_FILES,
+  'templates/dated-places/index.html',
+  'templates/dated-places/app.js',
+  'templates/sections/index.html',
+  'templates/sections/app.js',
   'index.html',
   'app.js',
   'style.css',
@@ -14,6 +20,7 @@ export const TEMPLATE_FILES = Object.freeze([
   'sw.js',
   'package.json',
   'modules/config.js',
+  'modules/travel-view.js',
   'modules/state.js',
   'modules/places.js',
   'modules/map.js',
@@ -24,11 +31,13 @@ export const TEMPLATE_FILES = Object.freeze([
   'admin/site-schema.js',
   'admin/index.html',
   'admin/wizard.js',
+  'admin/bootstrap.js',
   'admin/wizard.css',
   'scripts/create.mjs',
   'tests/project-modules.mjs',
   'README.md',
   'CLOUD_MODULES.md',
+  'docs/neue-kategorie.md',
   'vendor/leaflet/leaflet.js',
   'vendor/leaflet/leaflet.css',
   'vendor/leaflet/LICENSE',
@@ -66,12 +75,17 @@ export function generateProject(input, templates) {
   }
   const text = (path) => decoder.decode(output.get(path));
   const put = (path, content) => output.set(path, encode(content));
-  const trip = validateTrip({ ...site, locale: 'de-CH', places: [] });
+  const definition = CATEGORY_REGISTRY.find((item) => item.id === site.category);
+  const isTravel = definition.contract === 'dated-places';
+  const trip = isTravel ? validateTrip({ ...site, ...site.content }) : null;
   put('site.json', json(site));
   put(
     'config.js',
-    `export const trips = { ${site.category}: ${JSON.stringify(trip)} };\nexport const defaultTrip = '${site.category}';\n`,
+    isTravel
+      ? `export const site = ${JSON.stringify(site)};\nexport const trips = { ${JSON.stringify(site.preset)}: ${JSON.stringify(trip)} };\nexport const defaultTrip = ${JSON.stringify(site.preset)};\n`
+      : `export const site = ${JSON.stringify(site)};\nexport const trips = {};\nexport const defaultTrip = '';\n`,
   );
+  put('app.js', text('templates/' + definition.contract + '/app.js'));
   const manifest = JSON.parse(text('manifest.webmanifest'));
   Object.assign(manifest, {
     name: site.title,
@@ -81,7 +95,8 @@ export function generateProject(input, templates) {
   put('manifest.webmanifest', json(manifest));
   put(
     'index.html',
-    text('index.html')
+    text('templates/' + definition.contract + '/index.html')
+      .replace(/<html lang="[^"]*">/, () => '<html lang="' + site.locale + '">')
       .replace(
         /(<meta\s+name="theme-color"\s+content=")[^"]*("\s*\/>)/,
         (_, a, b) => a + site.color + b,
@@ -99,7 +114,7 @@ export function generateProject(input, templates) {
   );
   put(
     'tests/generated.mjs',
-    `import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport { trips, defaultTrip } from '../config.js';\nimport { validateTrip } from '../modules/config.js';\ntest('generated configuration', () => { assert.equal(validateTrip(trips[defaultTrip]).id, ${JSON.stringify(site.id)}); assert.deepEqual(trips[defaultTrip].places, []); });\n`,
+    `import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport { site, trips, defaultTrip } from '../config.js';\nimport { validateSite } from '../admin/site-schema.js';\nimport { validateTrip } from '../modules/config.js';\ntest('generated configuration', () => { assert.equal(validateSite(site).id, ${JSON.stringify(site.id)}); ${isTravel ? 'assert.deepEqual(validateTrip(trips[defaultTrip]).places, site.content.places);' : 'assert.deepEqual(trips, {});'} });\n`,
   );
   const pkg = {
     name: 'web-kit-site',

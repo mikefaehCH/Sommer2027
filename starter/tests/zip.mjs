@@ -111,3 +111,69 @@ test('browser loader rejects failed files and uses only the fixed template paths
     loadBrowserTemplates(new URL('https://example.test/'), async () => ({ ok: false })),
   );
 });
+
+test('general ZIP and category switches regenerate from canonical data without leaking travel dates', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'web-kit-categories-'));
+  try {
+    const general = makeSite({
+      category: 'general',
+      title: 'Infoseite',
+      content: { sections: [{ heading: 'Inhalt', text: 'Nur Text <img src=x>' }] },
+    });
+    const output = generateProject(general, await load());
+    const html = new TextDecoder().decode(output.get('index.html'));
+    assert.ok(!html.includes('id="dates"'));
+    await writeFile(join(dir, 'general.zip'), createZip(output));
+    execFileSync('python3', [
+      '-c',
+      'import zipfile,sys\nz=zipfile.ZipFile(sys.argv[1]); assert z.testzip() is None; z.extractall(sys.argv[2])',
+      join(dir, 'general.zip'),
+      join(dir, 'general'),
+    ]);
+    execFileSync('npm', ['ci', '--ignore-scripts'], { cwd: join(dir, 'general'), stdio: 'pipe' });
+    execFileSync('npm', ['test'], { cwd: join(dir, 'general'), stdio: 'pipe' });
+    const categoryFile = join(dir, 'general/categories/travel/category.json');
+    const category = JSON.parse(await readFile(categoryFile, 'utf8'));
+    category.presets.push({ id: 'family-trip', label: 'Familienreise' });
+    await writeFile(categoryFile, JSON.stringify(category));
+    const next = makeSite({
+      category: 'travel',
+      start: '2027-06-01',
+      end: '2027-06-03',
+      content: {
+        start: '2027-06-01',
+        end: '2027-06-03',
+        places: [
+          {
+            id: 'test',
+            name: 'Test',
+            category: 'Test',
+            description: 'Synthetischer Test',
+            coordinates: [0, 0],
+          },
+        ],
+      },
+    });
+    await writeFile(join(dir, 'next.json'), JSON.stringify({ ...next, preset: 'family-trip' }));
+    execFileSync(process.execPath, [
+      join(dir, 'general/scripts/create.mjs'),
+      join(dir, 'next.json'),
+      join(dir, 'travel'),
+    ]);
+    assert.ok((await readFile(join(dir, 'travel/index.html'), 'utf8')).includes('id="dates"'));
+    execFileSync('npm', ['test'], { cwd: join(dir, 'travel'), stdio: 'pipe' });
+    await writeFile(join(dir, 'next.json'), JSON.stringify(general));
+    execFileSync(process.execPath, [
+      join(dir, 'travel/scripts/create.mjs'),
+      join(dir, 'next.json'),
+      join(dir, 'general-again'),
+    ]);
+    assert.equal(
+      await readFile(join(dir, 'general-again/site.json'), 'utf8'),
+      await readFile(join(dir, 'general/site.json'), 'utf8'),
+    );
+    execFileSync('npm', ['test'], { cwd: join(dir, 'general-again'), stdio: 'pipe' });
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});

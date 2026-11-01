@@ -55,6 +55,9 @@ try {
 await mkdir(target);
 const files = [
   'admin',
+  'categories',
+  'templates',
+  'docs',
   'index.html',
   'app.js',
   'style.css',

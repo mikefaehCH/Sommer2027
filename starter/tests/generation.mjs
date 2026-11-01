@@ -30,7 +30,7 @@ test('site.json produces repeatable runnable projects without example data', asy
       execFileSync('npm', ['test'], { cwd: join(dir, name), stdio: 'pipe' });
       const module = await import(new URL('file://' + join(dir, name, 'config.js')));
       assert.deepEqual(module.trips.city.places, []);
-      assert.equal(module.trips.city.start, config.start);
+      assert.equal(module.trips.city.start, config.content.start);
       assert.equal(module.trips.city.title, config.title);
     }
     await writeFile(
@@ -63,7 +63,7 @@ test('site.json produces repeatable runnable projects without example data', asy
         stdio: 'pipe',
       }),
     );
-    await writeFile(input, JSON.stringify({ ...makeSite(), start: undefined, end: undefined }));
+    await writeFile(input, JSON.stringify({ ...makeSite(), content: { places: [] } }));
     assert.throws(() =>
       execFileSync(process.execPath, [generator.pathname, input, join(dir, 'missing-dates')], {
         stdio: 'pipe',
@@ -80,6 +80,6 @@ test('date validation rejects impossible, partial, reversed and excessive ranges
     { start: '2027-06-02', end: '2027-06-01' },
     { start: '2027-01-01', end: '2029-01-01' },
   ]) {
-    assert.throws(() => validateSite({ ...makeSite(), ...dates }));
+    assert.throws(() => validateSite({ ...makeSite(), content: { ...dates, places: [] } }));
   }
 });

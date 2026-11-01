@@ -105,7 +105,7 @@ lokale Assets, Offline-Dateiliste, Lockfile und Tests. `npm ci --ignore-scripts`
 `npm test` funktionieren ohne zusätzliche Laufzeitpakete. Regenerierung erfolgt in
 einen neuen Ordner; bestehende Ziele werden niemals überschrieben.
 
-Noch offen: Orte im Wizard erfassen und GitHub-Veröffentlichung.
+Noch offen: weitere Vorlagen und GitHub-Veröffentlichung.
 
 ## Website als ZIP
 
@@ -133,4 +133,16 @@ installiert und prüft das Projekt und öffnet es lokal bei 375, 390 und 1280 px
 Python 3 wird nur vom Abnahmetest zum unabhängigen Entpacken verwendet.
 
 GitHub-Anmeldung, automatische Repository-Erstellung und Veröffentlichung sind
-weiterhin nicht Teil dieses Exports. Die Orteingabe im Wizard steht noch aus.
+weiterhin nicht Teil dieses Exports. Weitere Vorlagen und die GitHub-Anbindung stehen noch aus.
+
+## Kategorien und Inhalte (Schema 2)
+
+Der Wizard bietet nun `travel` (Vorlagen `city`, `walking`) und `general`
+(Vorlage `info-page`) aus dem Kategorienverzeichnis an. Reisen erfassen Zeitraum
+und Orte inklusive eigener Koordinaten. Allgemeine Seiten erfassen Überschriften
+und Textabschnitte ohne Reisedatum. `site.json` kann importiert und erneut exportiert
+werden; alte Version-1-Dateien werden mit sichtbarem Hinweis migriert.
+Details, kanonisches Beispiel und Erweiterungsanleitung: [docs/neue-kategorie.md](docs/neue-kategorie.md).
+
+Die bisherigen city/walking-Demos und produktiven Websites werden nicht migriert.
+Sprache/Datumsformat werden erhalten, die Bedienoberfläche bleibt vorerst Deutsch.
