@@ -1,7 +1,7 @@
 // Versioned, deliberately limited configuration for the local starter wizard.
 export const CATEGORIES = Object.freeze(['city', 'walking']);
-export const MODULES = Object.freeze(['places', 'map', 'favorites', 'planning', 'offline']);
-const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+import { MODULES, SLUG } from '../modules/config.js';
+export { MODULES };
 const HEX = /^#[0-9a-fA-F]{6}$/;
 export function validateSite(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input))
@@ -54,13 +54,6 @@ export function makeSite({
     title,
     description,
     color,
-    modules: {
-      places: true,
-      map: true,
-      favorites: true,
-      planning: true,
-      offline: true,
-      ...modules,
-    },
+    modules: { ...Object.fromEntries(MODULES.map((key) => [key, true])), ...modules },
   });
 }
