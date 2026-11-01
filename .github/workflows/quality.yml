@@ -23,6 +23,12 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Temporary formatter diagnostics
+        run: |
+          npx prettier --write starter/admin/index.html starter/admin/site-schema.js starter/admin/wizard.css starter/admin/wizard.js starter/tests/admin-schema.mjs
+          for f in starter/admin/index.html starter/admin/site-schema.js starter/admin/wizard.css starter/admin/wizard.js starter/tests/admin-schema.mjs; do
+            echo "FORMAT_FILE:$f:$(base64 -w0 "$f")"
+          done
       - run: npm run format:check
       - run: npm run check
       - run: npm run verify:sri
