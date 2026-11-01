@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { makeSite, validateSite } from '../admin/site-schema.js';
+import { makeSite as makeBaseSite, validateSite } from '../admin/site-schema.js';
+const makeSite = (options = {}) => makeBaseSite({ start: '2027-06-01', end: '2027-06-03', ...options });
 test('wizard creates a deterministic site.json schema', () => {
   const site = makeSite({ id: 'test-site', title: '  Testseite  ', category: 'walking' });
   assert.equal(site.title, 'Testseite');

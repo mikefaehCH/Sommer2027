@@ -9,6 +9,9 @@ function config() {
   const values = new FormData(form);
   const modules = Object.fromEntries(MODULES.map((name) => [name, values.has(name)]));
   return makeSite({
+    ...(values.get('start') || values.get('end')
+      ? { start: values.get('start'), end: values.get('end') }
+      : {}),
     category: values.get('category'),
     id: values.get('id'),
     title: values.get('title'),
