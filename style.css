@@ -349,13 +349,13 @@ a {
   min-height: 62px;
 }
 .slotentry strong {
-  font-size: 13px;
+  font-size: 15px;
 }
 .slotentry small {
   display: block;
   color: var(--muted);
   margin-top: 4px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .slotentry button {
   border: 0;
@@ -386,13 +386,13 @@ a {
   justify-content: space-between;
 }
 .suggestionrow strong {
-  font-size: 13px;
+  font-size: 15px;
 }
 .suggestionrow small {
   display: block;
   color: var(--muted);
   margin-top: 5px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .suggestionrow button,
 .smallbtn {
@@ -1678,14 +1678,4 @@ select {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-/* Planner readability: keep recommendations compact and the schedule dominant. */
-.planner > *, .slot > * { min-width: 0; }
-.planner .slotentry strong, .planner .suggestionrow strong { font-size: 15px; line-height: 1.45; }
-.planner .slotentry small, .planner .suggestionrow small { font-size: 13px; line-height: 1.45; }
-.planner .slotname { font-size: 13px; }
-.planner .suggestionrow { padding: 14px 0; }
-@media (max-width: 900px) {
-  .planner { grid-template-columns: minmax(0, 1fr); }
 }
