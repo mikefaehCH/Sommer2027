@@ -91,7 +91,7 @@ test('Service Worker löscht nur eigene Caches und ignoriert private/fremde Requ
   vm.runInNewContext(await readFile(resolve(source, 'sw.js'), 'utf8'), context);
   listeners.get('activate')({ waitUntil: promise => { activation = promise; } });
   await activation;
-  assert.deepEqual(deleted, ['travel-shell:' + scope + ':v0', 'travel-shell:' + scope + ':v1']);
+  assert.deepEqual(deleted, ['travel-shell:' + scope + ':v0', 'travel-shell:' + scope + ':v1', 'travel-shell:' + scope + ':v2']);
   for (const request of [new Request(scope + 'api/private'), new Request(scope + 'app.js', { headers: { authorization: 'Bearer test' } }), new Request('https://example.test/site-b/app.js'), new Request(scope + 'app.js', { method: 'POST' }), new Request('https://other.test/app.js')]) {
     let intercepted = false;
     listeners.get('fetch')({ request, respondWith: () => { intercepted = true; } });

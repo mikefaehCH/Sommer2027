@@ -204,3 +204,14 @@ footer {
     height: 310px;
   }
 }
+
+.info-page header,
+.info-page main {
+  max-width: 960px;
+  margin-inline: auto;
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
+.info-page section p {
+  white-space: pre-wrap;
+}

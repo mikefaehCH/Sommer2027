@@ -2,7 +2,26 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createProjectAuth } from '../modules/project-auth.js';
 import { createSharedPlan } from '../modules/shared-plan.js';
-import city from '../trips/city.js';
+// Ausschliesslich synthetische Testkonfiguration; keine Runtime-Beispielreise nötig.
+const city = {
+  id: 'test-trip',
+  title: 'Test',
+  description: 'Nur Tests',
+  locale: 'de-CH',
+  color: '#28594f',
+  start: '2028-05-12',
+  end: '2028-05-14',
+  modules: { places: true, map: false, favorites: true, planning: true, offline: false },
+  places: [
+    {
+      id: 'museum',
+      name: 'Testort',
+      category: 'Test',
+      description: 'Nur Tests',
+      coordinates: [0, 0],
+    },
+  ],
+};
 
 const PROJECT_A = '11111111-1111-4111-8111-111111111111';
 const PROJECT_B = '22222222-2222-4222-8222-222222222222';
@@ -39,7 +58,10 @@ function harness({
   const client = {
     auth: {
       getUser: async () => {
-        const result = { data: { user: user ? { ...user, is_anonymous: control.anonymous } : null }, error: control.authError };
+        const result = {
+          data: { user: user ? { ...user, is_anonymous: control.anonymous } : null },
+          error: control.authError,
+        };
         control.afterUser?.();
         return result;
       },
