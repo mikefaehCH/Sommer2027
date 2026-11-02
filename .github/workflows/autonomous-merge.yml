@@ -30,7 +30,7 @@ jobs:
               (.body // "" | test("(?m)^Autonomy-Release: true$"))
             ' pr.json >/dev/null || continue
             # Reviews may arrive after CI, so both event paths recheck a successful PR run on this exact HEAD.
-            successful=$(gh api "repos/$GH_REPO/actions/workflows/quality.yml/runs?head_sha=$RUN_SHA&event=pull_request&per_page=50" --jq '[.workflow_runs[] | select(.conclusion=="success" and .head_sha=="'$RUN_SHA'")] | length')
+            successful=$(gh api "repos/$GH_REPO/actions/workflows/quality.yml/runs?head_sha=$RUN_SHA&event=pull_request&per_page=50" | jq --arg sha "$RUN_SHA" '[.workflow_runs[] | select(.conclusion=="success" and .head_sha==$sha)] | length')
             if [[ "$successful" -lt 1 ]]; then
               echo "No successful PR quality run for exact HEAD $RUN_SHA"
               continue
