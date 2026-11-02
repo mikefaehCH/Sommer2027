@@ -5,6 +5,17 @@ Projekt: https://kgtowblwixgfdnbgcjeq.supabase.co
 ## 1. Datenbank anlegen
 Im Supabase Dashboard **SQL Editor → New query** öffnen, den Inhalt von `supabase/schema.sql` einfügen und **Run** wählen. Das Skript ist für ein neues Projekt gedacht und sollte nicht unbesehen mehrfach ausgeführt werden.
 
+Neuinstallationen erhalten über `schema.sql` auch die minimalen Funktionsrechte:
+`anon`/`authenticated` dürfen die Audit-Triggerfunktionen nicht direkt ausführen;
+`anon` darf auch die Rollenprüfungsfunktionen nicht ausführen. `authenticated`
+behält EXECUTE auf den RLS-Helfern, sonst brechen die Familien-Policies ab.
+`service_role` behält die benötigten Rechte. Trigger schreiben weiterhin die Historie.
+
+Bestehende Installationen: Die Migration `supabase/migrations/20261101120000_restrict_family_function_execute.sql` separat prüfen und zunächst isoliert testen.
+Nicht `schema.sql` über eine bestehende Installation ausführen. Produktivmigration
+nur nach Mikes Freigabe; `npm run check` prüft die Rechte und Trigger isoliert,
+beweist aber keine gehostete Auth-/PostgREST-Konfiguration.
+
 ## 2. Google-Anmeldung
 Unter **Authentication → Providers → Google** den Google Provider aktivieren. Dafür sind OAuth Client ID und Secret aus der Google Cloud Console erforderlich. In Google Cloud die Supabase Callback-URL aus den Provider-Einstellungen als erlaubte Redirect-URI eintragen. Unter **Authentication → URL Configuration** die Site URL `https://mikefaehch.github.io/Sommer2027/` und als Redirect URL `https://mikefaehch.github.io/Sommer2027/**` konfigurieren.
 
