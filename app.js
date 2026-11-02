@@ -316,7 +316,7 @@ function dateTitle(s) {
 }
 const SPECIAL_DAYS = {
   '2027-07-14': { label: 'Nationalfeiertag', type: 'national' },
-  '2027-07-16': { label: 'Emilias 7. Geburtstag', type: 'birthday' },
+  '2027-07-16': { label: 'Aquarium & Schatzsuche', type: 'birthday' },
 };
 const EVENT_ICONS = {
   national:
@@ -369,10 +369,10 @@ const AGREED_ITINERARY = {
     Abend: 'Abend frei',
   },
   '2027-07-16': {
-    Morgen: 'Emilias 7. Geburtstag: Aquarium La Rochelle',
-    Mittag: 'Geburtstagsmittagessen; Maja optional',
+    Morgen: 'Aquarium & Schatzsuche: Aquarium La Rochelle',
+    Mittag: 'Mittagessen; optionaler Ausflug',
     Nachmittag: 'Schatzsuche und Glacé in Saint-Martin-de-Ré',
-    Abend: 'Gemütlicher Geburtstagsabend',
+    Abend: 'Gemütlicher Ferienabend',
   },
   '2027-07-17': {
     Morgen: 'Letzter Inselmorgen, packen und auschecken',
@@ -394,12 +394,12 @@ const AGREED_ITINERARY = {
   },
   '2027-07-20': {
     Morgen: 'Frühstück und Auschecken',
-    Mittag: 'Heimfahrt Richtung Baden',
+    Mittag: 'Heimfahrt nach Hause',
     Nachmittag: 'Fahrt / Ankunft zuhause',
     Abend: 'Wieder daheim',
   },
   '2027-07-07': {
-    Morgen: 'Autofahrt Baden → Amboise, Abfahrt ca. 07:00',
+    Morgen: 'Autofahrt ab zu Hause → Amboise, Abfahrt ca. 07:00',
     Mittag: 'Mittagspause unterwegs',
     Nachmittag: 'Ankunft und Unterkunft beziehen',
     Abend: 'Abendessen spontan in Amboise',

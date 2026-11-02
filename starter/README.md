@@ -63,8 +63,24 @@ Leaflet-Lizenz und unveränderte Bibliotheksdateien liegen unter `vendor/leaflet
 - Modulschalter blenden Funktionen aus; sie sind keine Sicherheits- oder Zugriffskontrollen.
 - `offline: false` registriert keinen neuen Worker. Einen zuvor installierten Worker beim Umstellen separat entfernen.
 
-Login, gemeinsame Planung, Push, Reisekasse, GPX und Briefings sind noch keine aktivierbaren Module.
+Login und gemeinsame Planung sind als getestete Adapter vorbereitet; Integration und Backend-Vertrag
+stehen in [`CLOUD_MODULES.md`](CLOUD_MODULES.md). Sie werden noch nicht in der Oberfläche geladen.
+Push, Reisekasse, GPX und Briefings sind weiterhin keine aktivierbaren Module.
 Es wird kein Supabase-Projekt eingerichtet und kein gemeinsamer Datenzugriff verändert.
+
+## Admin-Wizard (Prototyp)
+
+`admin/index.html` stellt eine Website im Browser zusammen und exportiert eine geprüfte `site.json`
+(`version`, `category`, `id`, `title`, `description`, `color`, `modules`). Die Seite arbeitet nur lokal:
+kein Login, keine Netzwerkanfragen (CSP `default-src 'none'`), keine Speicherung, keine Veröffentlichung.
+
+- Kategorien entsprechen den Vorlagen des Generators (`city`, `walking`); Modulliste und ID-Regel stammen
+  aus `modules/config.js`, damit Wizard, Oberfläche und Generator dieselben Regeln verwenden.
+- Zusätzlich blockiert der Wizard Karte und Planung ohne Orte.
+- `site.json` ist bewusst eine Teilkonfiguration: Sprache, Zeitraum und Orte fehlen noch, und
+  `scripts/create.mjs` liest die Datei noch nicht ein. Die Anbindung folgt in einem separaten Schritt.
+- Weil GitHub Pages das ganze Repository veröffentlicht, ist die Seite unter `…/starter/admin/` öffentlich
+  erreichbar (nicht verlinkt, `noindex`). Sie enthält keine Daten und sendet nichts.
 
 ## Prüfung
 

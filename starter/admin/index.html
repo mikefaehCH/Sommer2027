@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Website-Wizard – lokale Vorschau</title>
+    <link rel="stylesheet" href="./wizard.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">Website-Baukasten · Prototyp</p>
+        <h1>Neue Website konfigurieren</h1>
+        <p>
+          Lokaler Entwurf ohne Login, Cloud-Speicherung oder Veröffentlichung. Exportiert eine
+          geprüfte site.json.
+        </p>
+      </header>
+      <form id="wizard">
+        <label
+          >Kategorie<select name="category">
+            <option value="city">Städtereise</option>
+            <option value="walking">Wanderreise</option>
+          </select></label
+        >
+        <label
+          >Projekt-ID<input
+            name="id"
+            value="meine-website"
+            required
+            maxlength="64"
+            pattern="[a-z0-9]+(-[a-z0-9]+)*"
+        /></label>
+        <label>Titel<input name="title" value="Meine Website" required maxlength="100" /></label>
+        <label
+          >Beschreibung<textarea name="description" maxlength="500" rows="3" required></textarea>
+        </label>
+        <label>Akzentfarbe<input name="color" type="color" value="#965a3e" /></label>
+        <fieldset>
+          <legend>Module</legend>
+          <label><input type="checkbox" name="places" checked /> Orte</label
+          ><label><input type="checkbox" name="map" checked /> Karte</label
+          ><label><input type="checkbox" name="favorites" checked /> Favoriten</label
+          ><label><input type="checkbox" name="planning" checked /> Planung</label
+          ><label><input type="checkbox" name="offline" checked /> Offline</label>
+        </fieldset>
+        <div class="actions">
+          <button type="submit">Konfiguration prüfen</button
+          ><button type="button" id="download" disabled>site.json herunterladen</button>
+        </div>
+        <p id="message" role="status" aria-live="polite"></p>
+      </form>
+      <section aria-label="Vorschau">
+        <h2>Vorschau</h2>
+        <div class="preview" id="preview">
+          <h3>Meine Website</h3>
+          <p>Deine Beschreibung erscheint hier.</p>
+        </div>
+      </section>
+      <p class="note">
+        Hinweis: Diese erste Version generiert noch kein Repository und aktiviert weder OAuth noch
+        Supabase. Sie dient zur sicheren Vorbereitung des einheitlichen site.json-Schemas.
+      </p>
+    </main>
+    <script type="module" src="./wizard.js"></script>
+  </body>
+</html>

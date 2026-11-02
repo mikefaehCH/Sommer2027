@@ -158,6 +158,36 @@ const playwright = require('playwright');
       assert.equal(body, 'keep');
       await context.setOffline(false);
     }
+    // The admin wizard must be exercised in every Chromium/WebKit viewport.
+    await page.goto(origin + '/admin/');
+    await page.locator('#wizard').waitFor();
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      true,
+    );
+    assert.equal(await page.locator('fieldset label').count(), 5);
+    for (const target of await page.locator('fieldset label').all()) {
+      assert.equal(await target.evaluate((el) => el.getBoundingClientRect().height >= 44), true);
+    }
+    await page.locator('input[name="places"]').uncheck();
+    await page.locator('#wizard button[type="submit"]').click();
+    assert.equal(await page.locator('#download').isDisabled(), true);
+    assert.equal(await page.locator('#message').textContent(), 'Karte benötigt Orte');
+    await page.locator('input[name="map"]').uncheck();
+    await page.locator('#wizard button[type="submit"]').click();
+    assert.equal(await page.locator('#download').isDisabled(), true);
+    assert.equal(await page.locator('#message').textContent(), 'Planung benötigt Orte');
+    await page.locator('input[name="map"]').check();
+    await page.locator('input[name="places"]').check();
+    await page.locator('#wizard button[type="submit"]').click();
+    assert.equal(await page.locator('#download').isEnabled(), true);
+    const wizardDownloadPromise = page.waitForEvent('download');
+    await page.locator('#download').click();
+    const wizardDownload = await wizardDownloadPromise;
+    const site = JSON.parse(fs.readFileSync(await wizardDownload.path(), 'utf8'));
+    assert.equal(site.category, 'city');
+    assert.equal(site.id, 'meine-website');
+    assert.equal(site.modules.places, true);
     assert.deepEqual(errors, []);
     console.log(
       'PASS: starter: both trips, map, search, favorites, plan, persistence, export/import, module switch, path isolation, mobile layout' +
