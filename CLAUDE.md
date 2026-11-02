@@ -5,7 +5,7 @@ Familien-Reisewebsite Frankreich Juli 2027 (Amboise · Île de Ré · Le PAL). S
 Abstimmungen, KI-Assistent als Edge Function). Sprache: Deutsch, Schweizer Schreibweise (kein ß).
 
 ## Arbeitsweise
-- Nie direkt auf `main`: Branch, kleine Commits, Pull Request. Kein Force-Push, kein Merge ohne Mike.
+- Nie direkt auf `main`: Branch, kleine Commits, Pull Request. Kein Force-Push. Für vom Product Owner ausdrücklich freigegebene Entwicklungsaufträge sind Merge und Deployment nach allen Qualitäts- und Review-Gates eigenständig erlaubt; keine zusätzliche Freigabeschleife für technische Teilschritte. Bei offenen älteren PRs gelten ihre konkreten Freigabevorbehalte weiter. Siehe [RELEASE_POLICY.md](RELEASE_POLICY.md).
 - SQL in `supabase/` wird **nicht** automatisch ausgeführt. Keine Secrets im Repo (siehe README «Sicherheit»).
 
 ## Dateien
