@@ -6,6 +6,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 jobs:
   guarded-merge:
     if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
@@ -32,5 +33,9 @@ jobs:
               (any(.[]; .state=="APPROVED" and .commit_id==$sha and .user.login!=$author)) and
               (all(.[]; .state!="CHANGES_REQUESTED"))
             ' reviews.json >/dev/null || continue
-            gh api -X PUT "repos/$GH_REPO/pulls/$pr/merge" -f merge_method=squash -f sha="$RUN_SHA"
+            # Explicit dispatch is required: a GITHUB_TOKEN merge does not trigger push workflows.
+            merged=$(gh api -X PUT "repos/$GH_REPO/pulls/$pr/merge" -f merge_method=squash -f sha="$RUN_SHA" --jq '.merged')
+            if [[ "$merged" == "true" ]]; then
+              gh workflow run "Deploy static content to Pages" --ref main
+            fi
           done
