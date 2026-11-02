@@ -24,7 +24,7 @@ begin
     raise exception 'Plan exceeds audit size limit';
   end if;
 
-  for d in select key from pg_catalog.jsonb_object_keys(pg_catalog.coalesce(new.data->'days','{}'::jsonb)) as t(key) loop
+  for d in select key from pg_catalog.jsonb_object_keys(coalesce(new.data->'days','{}'::jsonb)) as t(key) loop
     foreach s in array array['Morgen','Mittag','Nachmittag','Abend'] loop
       old_arr := case when pg_catalog.jsonb_typeof(old.data#>array['days',d,s])='array' then old.data#>array['days',d,s] else '[]'::jsonb end;
       new_arr := case when pg_catalog.jsonb_typeof(new.data#>array['days',d,s])='array' then new.data#>array['days',d,s] else '[]'::jsonb end;
@@ -52,8 +52,8 @@ begin
       from pg_catalog.jsonb_array_elements(removed) r cross join pg_catalog.jsonb_array_elements(added) a
       where r.value->>'activity_id'=item and a.value->>'activity_id'=item
       limit 1;
-      removed := (select pg_catalog.coalesce(pg_catalog.jsonb_agg(value),'[]'::jsonb) from pg_catalog.jsonb_array_elements(removed) where value->>'activity_id'<>item);
-      added := (select pg_catalog.coalesce(pg_catalog.jsonb_agg(value),'[]'::jsonb) from pg_catalog.jsonb_array_elements(added) where value->>'activity_id'<>item);
+      removed := (select coalesce(pg_catalog.jsonb_agg(value),'[]'::jsonb) from pg_catalog.jsonb_array_elements(removed) where value->>'activity_id'<>item);
+      added := (select coalesce(pg_catalog.jsonb_agg(value),'[]'::jsonb) from pg_catalog.jsonb_array_elements(added) where value->>'activity_id'<>item);
     end if;
   end loop;
 
