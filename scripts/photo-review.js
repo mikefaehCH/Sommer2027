@@ -39,11 +39,25 @@ function field(label, value, type = 'text') {
 }
 function metadataHint(entry) {
   if (!entry.photo) return 'Metadaten-Score: kein Bildkandidat';
-  const title = (entry.photo.title || '').normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').toLowerCase();
-  const terms = (entry.query || '').normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').toLowerCase().split(/[^a-z0-9]+/).filter((term) => term.length > 4);
+  const title = (entry.photo.title || '')
+    .normalize('NFD')
+    .replace(/[\\u0300-\\u036f]/g, '')
+    .toLowerCase();
+  const terms = (entry.query || '')
+    .normalize('NFD')
+    .replace(/[\\u0300-\\u036f]/g, '')
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((term) => term.length > 4);
   const matches = terms.filter((term) => title.includes(term)).length;
   const score = Math.min(80, 50 + matches * 10);
-  return 'Metadaten-Score: ' + score + '/100 (' + matches + ' passende Suchbegriffe). Nur Titelabgleich, keine Bild- oder Lizenzfreigabe.';
+  return (
+    'Metadaten-Score: ' +
+    score +
+    '/100 (' +
+    matches +
+    ' passende Suchbegriffe). Nur Titelabgleich, keine Bild- oder Lizenzfreigabe.'
+  );
 }
 function render() {
   const container = document.querySelector('#photos');
