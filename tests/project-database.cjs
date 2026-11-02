@@ -3,6 +3,13 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { PGlite } = require('@electric-sql/pglite');
+// Keep the family-history regression in this SQL entrypoint so independent PRs
+// can add their own check command without conflicting in package.json.
+require('node:child_process').execFileSync(
+  process.execPath,
+  [path.join(__dirname, 'plan-history.cjs')],
+  { stdio: 'inherit' },
+);
 
 (async () => {
   const db = new PGlite();
