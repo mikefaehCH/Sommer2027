@@ -146,6 +146,20 @@ function config() {
   });
 }
 function refresh() {
+  for (const [container, kind, field] of [
+    [placesEditor, 'Ort', 'name'],
+    [sectionsEditor, 'Abschnitt', 'heading'],
+  ]) {
+    [...container.querySelectorAll('.content-row')].forEach((row, index) => {
+      const name = row.querySelector('[data-field=' + field + ']').value.trim();
+      row
+        .querySelector('button')
+        .setAttribute(
+          'aria-label',
+          kind + ' ' + (index + 1) + (name ? ' «' + name + '»' : '') + ' entfernen',
+        );
+    });
+  }
   revision++;
   valid = null;
   download.disabled = true;

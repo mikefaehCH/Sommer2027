@@ -32,6 +32,20 @@ const load = async () =>
       ]),
     ),
   );
+test('travel template is byte-identical to the demo source', async () => {
+  assert.deepEqual(await readFile(resolve(source, 'templates/dated-places/index.html')), await readFile(resolve(source, 'index.html')));
+});
+test('manifest short_name truncates Unicode codepoints without splitting emoji or umlauts', async () => {
+  const templates = await load();
+  for (const ending of ['😀', 'ä']) {
+    const title = 'x'.repeat(23) + ending + 'weiter';
+    const output = generateProject({ ...site, title }, templates);
+    const manifest = JSON.parse(new TextDecoder().decode(output.get('manifest.webmanifest')));
+    assert.equal(manifest.short_name, 'x'.repeat(23) + ending);
+    assert.equal(Array.from(manifest.short_name).length, 24);
+    assert.equal(manifest.short_name.isWellFormed(), true);
+  }
+});
 test('ZIP is repeatable, extracts with CRC checks, installs, tests and regenerates', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'web-kit-zip-'));
   try {

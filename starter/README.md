@@ -92,15 +92,17 @@ Browseremulation ersetzt keine Abnahme auf einem echten iPhone oder Android-Ger�
 
 ## Website aus dem Wizard generieren
 
-Der Wizard unter `admin/` erfasst nun Beginn und Ende als Pflichtfelder. Bestehende Exporte
-ohne diese Angaben m체ssen erg채nzt werden; es werden keine Termine erfunden.
+Der Wizard unter `admin/` erzeugt `site.json` Version 2: `travel` erfasst einen
+Reisezeitraum und eigene Orte; `general` erfasst Textabschnitte ohne Reisedaten.
+Alte city/walking-Exporte werden sichtbar migriert; fehlende Reisetermine m체ssen
+erg채nzt werden. Details stehen in [`docs/neue-kategorie.md`](docs/neue-kategorie.md).
 
 ```sh
 node starter/scripts/create.mjs /pfad/site.json /absoluter/neuer/ordner
 ```
 
 Wizard und CLI verwenden dieselbe Validierung. Die Ausgabe enth채lt die normalisierte
-`site.json`, daraus abgeleitete Laufzeitkonfiguration und Metadaten, leere Orte,
+`site.json`, daraus abgeleitete Laufzeitkonfiguration und Metadaten, die erfassten Orte bzw. Abschnitte,
 lokale Assets, Offline-Dateiliste, Lockfile und Tests. `npm ci --ignore-scripts` und
 `npm test` funktionieren ohne zus채tzliche Laufzeitpakete. Regenerierung erfolgt in
 einen neuen Ordner; bestehende Ziele werden niemals 체berschrieben.

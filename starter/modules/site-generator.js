@@ -89,7 +89,7 @@ export function generateProject(input, templates) {
   const manifest = JSON.parse(text('manifest.webmanifest'));
   Object.assign(manifest, {
     name: site.title,
-    short_name: site.title.slice(0, 24),
+    short_name: Array.from(site.title).slice(0, 24).join(''),
     theme_color: site.color,
   });
   put('manifest.webmanifest', json(manifest));

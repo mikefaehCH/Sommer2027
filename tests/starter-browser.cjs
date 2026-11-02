@@ -200,6 +200,13 @@ const playwright = require('playwright');
     }))
       await page.locator('#places-editor [data-field=' + field + ']').fill(value);
 
+    await page.locator('#add-place').click();
+    const placeNames = await page
+      .locator('#places-editor .content-row button')
+      .evaluateAll((nodes) => nodes.map((n) => n.getAttribute('aria-label')));
+    assert.equal(new Set(placeNames).size, 2);
+    assert.equal(placeNames[0], 'Ort 1 «Testort <img src=x>» entfernen');
+    await page.locator('#places-editor .content-row button').last().click();
     await page.locator('#wizard button[type="submit"]').click();
     assert.equal(await page.locator('#download').isEnabled(), true);
     const wizardDownloadPromise = page.waitForEvent('download');
@@ -288,6 +295,13 @@ const playwright = require('playwright');
     await page
       .locator('#sections-editor [data-field=text]')
       .fill('Nur Text <script>alert(1)</script>');
+    await page.locator('#add-section').click();
+    const sectionNames = await page
+      .locator('#sections-editor .content-row button')
+      .evaluateAll((nodes) => nodes.map((n) => n.getAttribute('aria-label')));
+    assert.equal(new Set(sectionNames).size, 2);
+    assert.equal(sectionNames[0], 'Abschnitt 1 «Testabschnitt» entfernen');
+    await page.locator('#sections-editor .content-row button').last().click();
     await page.locator('#wizard button[type="submit"]').click();
     const generalPromise = page.waitForEvent('download');
     await page.locator('#create').click();
