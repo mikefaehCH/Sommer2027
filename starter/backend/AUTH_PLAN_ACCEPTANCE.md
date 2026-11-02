@@ -33,7 +33,7 @@ Bei jeder Zeile auch **direkte manipulierte API-Requests** prüfen, nicht nur au
 2. Editor A liest oder schreibt Projekt B mit manipulierter `project_id`.
 3. Editor A versucht sich selbst als Mitglied/Admin einzutragen oder die eigene Rolle zu ändern.
 4. Anonymer Auth-Benutzer versucht eine fremde Mitgliedschaft zu lesen.
-5. Editor sendet unbekannte Orts-ID, Datum ausserhalb der Reise, doppelte Einträge, mehr als 5000 Einträge und Payload über 1 MB.
+5. Editor sendet unbekannte Orts-ID, Datum ausserhalb der Reise, doppelte Einträge, mehr als 5000 Einträge und Payload über 1'000'000 Byte (`octet_length(payload::text)`).
 6. Editor versucht `project_id` eines bestehenden Plans zu ändern.
 7. Zwei Editoren laden Revision N; der zweite Schreibversuch mit N nach erfolgreichem N→N+1 muss scheitern.
 8. Bei verlorenem Schreib-Response: Serverstand neu laden, niemals automatisch erneut schreiben.
@@ -69,3 +69,20 @@ Die vorhandenen PGlite-/SDK-Mocktests ersetzen keine echte PostgREST-/Auth-/RLS-
 Für jede ausgeführte Prüfung festhalten: Datum, isolierte Testprojekt-ID (keine Credentials), Git-Commit, Migration-Checksumme, Testidentität/Rolle, Request-Typ, erwartetes Resultat, tatsächliches Resultat, Beleg und Befund.
 
 **Aktueller Status:** Die oben beschriebenen Live- und Gerätetests sind offen. Produktive Migration und Provideraktivierung benötigen eine gesonderte ausdrückliche Freigabe.
+
+## Exakte Payload-Grenzen
+
+Für jeden Fall einen ansonsten gültigen Payload mit erlaubten Orten, Tagen und
+Feldnamen verwenden; die Bytezahl des von PostgreSQL serialisierten `payload::text`
+messen (nicht die UTF-8-Grösse des HTTP-Requests und nicht 1 MiB).
+
+| `octet_length(payload::text)` | Erwartung am Grössenlimit |
+| --- | --- |
+| 999'999 Byte | erlaubt, wenn alle weiteren Regeln erfüllt sind |
+| 1'000'000 Byte | erlaubt, wenn alle weiteren Regeln erfüllt sind |
+| 1'000'001 Byte | abgelehnt, keine Änderung am gespeicherten Plan |
+
+Ein zusätzliches unbekanntes JSON-Feld ist keine gültige Grössenprobe: Es scheitert
+bereits am Payload-Vertrag. Ebenso 5000 ansonsten gültige Einträge als erlaubte
+Grenze und 5001 als Ablehnung prüfen. Diese Matrix ist weiterhin ein Testplan,
+kein Nachweis einer durchgeführten gehosteten Abnahme.
