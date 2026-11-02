@@ -259,8 +259,8 @@ a {
 }
 .planner {
   display: grid;
-  grid-template-columns: 1.3fr 0.85fr;
-  gap: 23px;
+  grid-template-columns: minmax(0, 1.65fr) minmax(310px, 0.85fr);
+  gap: clamp(16px, 2vw, 28px);
   margin-top: 26px;
   align-items: start;
 }
@@ -349,13 +349,13 @@ a {
   min-height: 62px;
 }
 .slotentry strong {
-  font-size: 13px;
+  font-size: 15px;
 }
 .slotentry small {
   display: block;
   color: var(--muted);
   margin-top: 4px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .slotentry button {
   border: 0;
@@ -386,13 +386,13 @@ a {
   justify-content: space-between;
 }
 .suggestionrow strong {
-  font-size: 13px;
+  font-size: 15px;
 }
 .suggestionrow small {
   display: block;
   color: var(--muted);
   margin-top: 5px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .suggestionrow button,
 .smallbtn {
