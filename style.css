@@ -259,8 +259,8 @@ a {
 }
 .planner {
   display: grid;
-  grid-template-columns: 1.3fr 0.85fr;
-  gap: 23px;
+  grid-template-columns: minmax(0, 1.65fr) minmax(310px, 0.85fr);
+  gap: clamp(16px, 2vw, 28px);
   margin-top: 26px;
   align-items: start;
 }
@@ -1678,4 +1678,14 @@ select {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* Planner readability: keep recommendations compact and the schedule dominant. */
+.planner > *, .slot > * { min-width: 0; }
+.planner .slotentry strong, .planner .suggestionrow strong { font-size: 15px; line-height: 1.45; }
+.planner .slotentry small, .planner .suggestionrow small { font-size: 13px; line-height: 1.45; }
+.planner .slotname { font-size: 13px; }
+.planner .suggestionrow { padding: 14px 0; }
+@media (max-width: 900px) {
+  .planner { grid-template-columns: minmax(0, 1fr); }
 }
