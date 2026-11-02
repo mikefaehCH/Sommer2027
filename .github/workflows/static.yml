@@ -46,3 +46,29 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+  production-smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.0
+      - name: Verify deployed HTML, app and cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://mikefaehch.github.io/Sommer2027'
+          for attempt in $(seq 1 18); do
+            current=0
+            for path in index.html app.js style.css data.js sw.js manifest.webmanifest; do
+              expected=$(sha256sum "$path" | cut -d' ' -f1)
+              actual=$(curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$base/$path?release=${GITHUB_SHA}" | sha256sum | cut -d' ' -f1) || { current=1; break; }
+              if [[ "$expected" != "$actual" ]]; then current=1; break; fi
+            done
+            if [[ "$current" -eq 0 ]]; then echo 'Production matches the deployed source commit'; exit 0; fi
+            sleep 25
+          done
+          echo 'GitHub Pages does not match the released files' >&2
+          exit 1

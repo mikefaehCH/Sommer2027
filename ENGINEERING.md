@@ -20,7 +20,7 @@ These are emulations, not tests on physical iPhones.
 ## Release and rollback
 
 1. Confirm that all required PR checks passed on the exact head commit.
-2. Merge only reviewed changes that preserve travel and photo approval data.
+2. Merge only independently reviewed changes that preserve travel and photo approval data. A Product Owner's authorization of a scoped task includes merge and deployment once all required checks and approvals pass; do not merge unrelated existing PRs. See [RELEASE_POLICY.md](RELEASE_POLICY.md).
 3. Vor dem Deployment müssen alle sechs Prüfjobs der Quality-Matrix erfolgreich sein.
    Der Pages-Workflow erzwingt dies über `quality-gate` und `needs: quality-gate`
    am Deploy-Job.
