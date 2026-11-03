@@ -36,6 +36,17 @@ for (const e of photos) {
     assert.ok(e.reviewer == null);
   }
 }
+const reviewSource = fs.readFileSync('scripts/photo-review.js', 'utf8');
+const metadataHintSource = reviewSource.match(
+  /(function metadataHint\(entry\) \{[\s\S]*?\n\})\nfunction render/,
+);
+assert.ok(metadataHintSource, 'metadataHint must remain independently testable');
+const metadataHint = vm.runInNewContext('(' + metadataHintSource[1] + ')');
+assert.match(
+  metadataHint({ photo: { title: 'Château Royal' }, query: 'chateau royal' }),
+  /2 passende Suchbegriffe/,
+  'metadata score must normalize accents before matching',
+);
 const deps = JSON.parse(fs.readFileSync('DEPENDENCIES.json'));
 const policy = JSON.parse(fs.readFileSync('CSP.json')).policy;
 assert.ok(

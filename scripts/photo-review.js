@@ -37,6 +37,28 @@ function field(label, value, type = 'text') {
   wrap.append(input);
   return [wrap, input];
 }
+function metadataHint(entry) {
+  if (!entry.photo) return 'Metadaten-Score: kein Bildkandidat';
+  const title = (entry.photo.title || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+  const terms = (entry.query || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((term) => term.length > 4);
+  const matches = terms.filter((term) => title.includes(term)).length;
+  const score = Math.min(80, 50 + matches * 10);
+  return (
+    'Metadaten-Score: ' +
+    score +
+    '/100 (' +
+    matches +
+    ' passende Suchbegriffe). Nur Titelabgleich, keine Bild- oder Lizenzfreigabe.'
+  );
+}
 function render() {
   const container = document.querySelector('#photos');
   container.replaceChildren();
@@ -53,6 +75,7 @@ function render() {
         el('p', [e.photo.title, e.photo.author, e.photo.license].filter(Boolean).join(' · ')),
       );
       article.append(el('p', 'Motiv: ' + (e.photo.motif || 'nicht angegeben')));
+      article.append(el('p', metadataHint(e), 'muted'));
       const link = el('a', 'Original und Lizenz prüfen');
       link.href = e.photo.source || '#';
       link.target = '_blank';
