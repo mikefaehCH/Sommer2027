@@ -12,8 +12,7 @@ behält EXECUTE auf den RLS-Helfern, sonst brechen die Familien-Policies ab.
 `service_role` behält die benötigten Rechte. Trigger schreiben weiterhin die Historie.
 
 Bestehende Installationen: Die Migration `supabase/migrations/20261101120000_restrict_family_function_execute.sql` separat prüfen und zunächst isoliert testen.
-Nicht `schema.sql` über eine bestehende Installation ausführen. Produktivmigration
-nur nach Mikes Freigabe; `npm run check` prüft die Rechte und Trigger isoliert,
+Nicht `schema.sql` über eine bestehende Installation ausführen. Produktivmigration nur nach den dokumentierten Voraussetzungen und konkreten Freigaben gemäss RELEASE_POLICY.md; `npm run check` prüft die Rechte und Trigger isoliert,
 beweist aber keine gehostete Auth-/PostgREST-Konfiguration.
 
 ## 2. Google-Anmeldung
