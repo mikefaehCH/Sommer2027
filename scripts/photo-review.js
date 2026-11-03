@@ -41,11 +41,11 @@ function metadataHint(entry) {
   if (!entry.photo) return 'Metadaten-Score: kein Bildkandidat';
   const title = (entry.photo.title || '')
     .normalize('NFD')
-    .replace(/[\\u0300-\\u036f]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
   const terms = (entry.query || '')
     .normalize('NFD')
-    .replace(/[\\u0300-\\u036f]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .split(/[^a-z0-9]+/)
     .filter((term) => term.length > 4);
