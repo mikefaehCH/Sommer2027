@@ -1,0 +1,37 @@
+name: Isolated Supabase feasibility
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/supabase-feasibility.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-stack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - name: Start isolated local stack
+        working-directory: ${{ runner.temp }}
+        run: |
+          mkdir isolated-supabase
+          cd isolated-supabase
+          npx --yes supabase@2.119.0 init
+          npx --yes supabase@2.119.0 start --exclude studio,imgproxy,edge-runtime,logflare,vector,supavisor
+      - name: Verify Auth and REST
+        working-directory: ${{ runner.temp }}/isolated-supabase
+        run: |
+          npx --yes supabase@2.119.0 status -o env > status.env
+          set -a
+          source status.env
+          set +a
+          curl --fail --silent --show-error "$API_URL/auth/v1/health" -H "apikey: $ANON_KEY" > /dev/null
+          curl --fail --silent --show-error "$API_URL/rest/v1/" -H "apikey: $ANON_KEY" > /dev/null
+      - name: Stop local stack
+        if: always()
+        working-directory: ${{ runner.temp }}/isolated-supabase
+        run: npx --yes supabase@2.119.0 stop --no-backup
