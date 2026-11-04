@@ -12,3 +12,12 @@
   border-color: #e4d2c0;
   padding: clamp(22px, 4vw, 44px);
 }
+
+#resetDiscover {
+  min-height: 48px;
+  margin-bottom: 1rem;
+}
+
+#resetDiscover[hidden] {
+  display: none;
+}
