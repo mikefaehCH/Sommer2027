@@ -589,7 +589,7 @@ const DISCOVER_STEP = 12;
 let discoverLimit = DISCOVER_STEP,
   discoverKey = '';
 function renderDiscover() {
-  const q = $('#search').value.toLocaleLowerCase('de');
+  const q = $('#search').value.trim().toLocaleLowerCase('de');
   const category = $('#categoryFilter').value;
   const fav = $('#favFilter').value;
   const matches = allActivities().filter(
@@ -600,7 +600,15 @@ function renderDiscover() {
         (fav === 'favorites' ? state.favorites.includes(a.id) : a.priority === 'Top')) &&
       [a.name, a.area, a.description, a.category].join(' ').toLocaleLowerCase('de').includes(q),
   );
-  $('#resultCount').textContent = `${matches.length} Ideen`;
+  $('#resultCount').textContent = matches.length
+    ? `${matches.length} Ideen`
+    : 'Keine Ideen für diese Auswahl. Passe die Suche oder die Filter an.';
+  $('#resetDiscover').hidden = !(
+    $('#search').value ||
+    region !== 'all' ||
+    category !== 'all' ||
+    fav !== 'all'
+  );
   const key = [q, category, fav, region].join('|');
   if (key !== discoverKey) {
     discoverKey = key;
@@ -938,6 +946,13 @@ $('#regionFilter').addEventListener('change', (e) => {
 ['search', 'categoryFilter', 'favFilter'].forEach((id) =>
   $('#' + id).addEventListener(id === 'search' ? 'input' : 'change', renderDiscover),
 );
+$('#resetDiscover').addEventListener('click', () => {
+  $('#search').value = '';
+  for (const id of ['regionFilter', 'categoryFilter', 'favFilter']) $('#' + id).value = 'all';
+  region = 'all';
+  $('#search').focus();
+  renderDiscover();
+});
 $('#undo').addEventListener('click', undo);
 $('#custom').addEventListener('click', () => custom());
 $('#export').addEventListener('click', download);
