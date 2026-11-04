@@ -106,6 +106,8 @@ async function main() {
   });
   assert.equal(r.status, 200);
   assert.deepEqual(JSON.parse(r.body), []);
+  assert.match(sql("select case when data->>'synthetic' is null then 'UNCHANGED' else 'MODIFIED' end from public.family_plans where id='summer2027';"), /UNCHANGED/);
+  assert.match(sql("select count(*) from public.change_log where actor_id = '" + outsider.id + "';"), /\b0\b/);
   r = await rest("family_plans?id=eq.summer2027", editor.token, {
     method: "PATCH",
     headers: { Prefer: "return=representation" },
@@ -113,9 +115,9 @@ async function main() {
   });
   assert.equal(r.status, 200, r.body);
   assert.equal(JSON.parse(r.body).length, 1);
-  r = await rest("change_log?select=action", editor.token);
+  r = await rest("change_log?select=action,actor_id", editor.token);
   assert.equal(r.status, 200);
-  assert.ok(JSON.parse(r.body).some((x) => x.action === "plan_updated"));
+  assert.ok(JSON.parse(r.body).some((x) => x.action === "plan_updated" && x.actor_id === editor.id));
   r = await rest("rpc/is_family_editor", anon, { method: "POST", body: "{}" });
   assert.ok(r.status >= 400, "Anonymous helper RPC must fail");
   console.log(
