@@ -73,10 +73,16 @@ async function main() {
   }
   const editor = await user('editor@example.test');
   const outsider = await user('outsider@example.test');
+  const admin = await user('admin@example.test');
   sql(
     "insert into public.family_members(user_id,display_name,role) values ('" +
       editor.id +
       "','Test editor','editor');",
+  );
+  sql(
+    "insert into public.family_members(user_id,display_name,role) values ('" +
+      admin.id +
+      "','Test admin','admin');",
   );
   const rest = (path, token, options = {}) =>
     call('/rest/v1/' + path, anon, {
@@ -128,6 +134,57 @@ async function main() {
   for (const fn of ['is_family_admin']) {
     r = await rest('rpc/' + fn, anon, { method: 'POST', body: '{}' });
     assert.ok(r.status >= 400);
+  }
+  for (const [token, editorExpected, adminExpected] of [
+    [editor.token, true, false],
+    [admin.token, true, true],
+    [outsider.token, false, false],
+  ]) {
+    for (const [fn, expected] of [
+      ['is_family_editor', editorExpected],
+      ['is_family_admin', adminExpected],
+    ]) {
+      r = await rest('rpc/' + fn, token, { method: 'POST', body: '{}' });
+      assert.equal(r.status, 200, r.body);
+      assert.equal(JSON.parse(r.body), expected, fn);
+    }
+  }
+  r = await rest('activity_votes', editor.token, {
+    method: 'POST',
+    headers: { Prefer: 'return=representation' },
+    body: JSON.stringify({ activity_id: 'synthetic-activity', voter_id: editor.id, vote: 'yes' }),
+  });
+  assert.equal(r.status, 201, r.body);
+  r = await rest('activity_votes', outsider.token, {
+    method: 'POST',
+    body: JSON.stringify({ activity_id: 'synthetic-activity', voter_id: outsider.id, vote: 'yes' }),
+  });
+  assert.equal(r.status, 403, r.body);
+  r = await rest('activity_votes?activity_id=eq.synthetic-activity', admin.token, {
+    method: 'PATCH',
+    headers: { Prefer: 'return=representation' },
+    body: JSON.stringify({ vote: 'no' }),
+  });
+  assert.equal(r.status, 200, r.body);
+  assert.deepEqual(JSON.parse(r.body), []);
+  r = await rest('activity_votes?activity_id=eq.synthetic-activity', editor.token, {
+    method: 'PATCH',
+    headers: { Prefer: 'return=representation' },
+    body: JSON.stringify({ vote: 'maybe' }),
+  });
+  assert.equal(r.status, 200, r.body);
+  assert.equal(JSON.parse(r.body).length, 1);
+  r = await rest('activity_votes?activity_id=eq.synthetic-activity', editor.token, {
+    method: 'DELETE',
+    headers: { Prefer: 'return=representation' },
+  });
+  assert.equal(r.status, 200, r.body);
+  assert.equal(JSON.parse(r.body).length, 1);
+  r = await rest('change_log?select=action,actor_id&action=like.vote_*', editor.token);
+  assert.equal(r.status, 200, r.body);
+  const voteAudit = JSON.parse(r.body);
+  for (const action of ['vote_insert', 'vote_update', 'vote_delete']) {
+    assert.ok(voteAudit.some((entry) => entry.action === action && entry.actor_id === editor.id));
   }
   console.log(
     'PASS: local Auth, PostgREST, anonymous and outsider isolation, editor write and audit trigger after migration',
