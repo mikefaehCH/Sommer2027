@@ -874,7 +874,7 @@ document.querySelectorAll('[data-map-region]').forEach((button) =>
 
 document.addEventListener('click', (e) => {
   const t = e.target.closest(
-    '[data-date],[data-add],[data-remove],[data-move],[data-fav],[data-region],[data-empty],[data-vote]',
+    '[data-date],[data-add],[data-remove],[data-move],[data-fav],button[data-region],[data-empty],[data-vote]',
   );
   if (!t) return;
   if (t.dataset.vote) {
