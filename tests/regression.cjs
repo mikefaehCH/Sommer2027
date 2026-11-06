@@ -109,6 +109,13 @@ const { chromium } = require('playwright');
   // Ideen ohne geprüftes Foto zeigen keine leere Bildfläche
   if (await page.locator('.activity.no-photo .activity-photo-placeholder').count())
     throw Error('empty photo placeholder');
+  // Ein Tipp auf den Kartentext darf den Regionsfilter nicht verändern (article trägt data-region nur fürs Styling).
+  await page.locator('.activity p').first().click();
+  if (
+    (await page.locator('#regionFilter').inputValue()) !== 'all' ||
+    (await page.locator('#resultCount').textContent()) !== '59 Ideen'
+  )
+    throw Error('card click changed region filter');
   await page.locator('#search').fill('Chenonceau');
   if ((await page.locator('.activity').count()) !== 1) throw Error('search');
   await page.locator('#search').fill('');
