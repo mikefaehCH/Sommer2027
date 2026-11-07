@@ -1,0 +1,13 @@
+{
+  "id": "./entdecker.html",
+  "name": "Sommer 2027 – Entdeckerpass",
+  "short_name": "Entdeckerpass",
+  "start_url": "./entdecker.html",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#fff8e7",
+  "background_color": "#fff8e7",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}

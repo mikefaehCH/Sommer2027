@@ -1,5 +1,6 @@
 // Mobile Qualität: Seitenlänge, Touch-Ziele, keine Emojis, App-Symbole. Läuft mit `npm test`.
 const playwright = require('playwright');
+const assert = require('node:assert/strict');
 const fs = require('fs'),
   path = require('path');
 (async () => {
@@ -20,6 +21,7 @@ const fs = require('fs'),
   const webkit = process.env.TEST_BROWSER === 'webkit';
   const browser = await (webkit ? playwright.webkit : playwright.chromium).launch({
     headless: true,
+    executablePath: webkit ? undefined : process.env.CHROMIUM_EXECUTABLE,
     args: webkit ? [] : ['--no-sandbox'],
   });
   const page = await browser.newPage({
@@ -36,6 +38,7 @@ const fs = require('fs'),
     'familien-login.html',
     'gemeinsamer-plan.html',
     'ai.html',
+    'entdecker.html',
   ];
   for (const p of pages) {
     await page.goto(origin + '/' + p);
@@ -69,8 +72,52 @@ const fs = require('fs'),
   for (const size of ['192x192', '512x512'])
     if (!manifest.icons?.some((i) => i.sizes === size && fs.existsSync(i.src)))
       errors.push('Manifest-Symbol fehlt: ' + size);
-  await browser.close();
-  server.close();
+  try {
+    const tablet = await browser.newContext({
+      ...playwright.devices['iPad Mini'],
+      acceptDownloads: true,
+    });
+    const adventure = await tablet.newPage();
+    const problems = [];
+    adventure.on('pageerror', (error) => problems.push(error.message));
+    await adventure.goto(origin + '/entdecker.html');
+    const stamp = adventure.getByRole('button', { name: /Schlossdetektiv/ });
+    await stamp.click();
+    assert.equal(await stamp.getAttribute('aria-pressed'), 'true');
+    await adventure.getByText('1 von 3 Stempeln', { exact: true }).waitFor();
+    await adventure.getByRole('radio', { name: 'Knifflige Missionen' }).check();
+    assert.equal(await stamp.getAttribute('aria-pressed'), 'false');
+    await adventure.locator('#region').selectOption('sea');
+    await adventure
+      .locator('#two-hours')
+      .getByText(/Spuren im Sand/)
+      .waitFor();
+    await adventure.locator('#greeting').fill('Ein Gruss von der Küste');
+    await adventure.locator('#card-photo').setInputFiles('assets/icons/icon-192.png');
+    await adventure.getByText('Foto eingefügt. Es bleibt auf diesem Gerät.').waitFor();
+    const download = adventure.waitForEvent('download');
+    await adventure.getByRole('button', { name: 'Postkarte speichern' }).click();
+    assert.equal((await download).suggestedFilename(), 'meine-ferienpost.png');
+    await adventure.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+    await adventure.getByRole('button', { name: 'Offline-Paket prüfen' }).click();
+    await adventure.getByText('Dein Entdeckerpass ist offline bereit.').waitFor();
+    for (const viewport of [
+      { width: 768, height: 1024 },
+      { width: 1024, height: 768 },
+    ]) {
+      await adventure.setViewportSize(viewport);
+      assert.ok(await adventure.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    }
+    await tablet.setOffline(true);
+    await adventure.reload();
+    assert.equal(await stamp.getAttribute('aria-pressed'), 'true');
+    await adventure.locator('#recap').getByText('Loire · Schlossdetektiv').waitFor();
+    assert.deepEqual(problems, []);
+    await tablet.close();
+  } finally {
+    await browser.close();
+    server.close();
+  }
   if (errors.length) {
     console.error(errors.join('\n'));
     process.exit(1);
