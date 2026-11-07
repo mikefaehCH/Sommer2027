@@ -169,7 +169,7 @@ const { chromium } = require('playwright');
   await page.locator('#search').fill('Aquarium');
   await page.locator('#showFilteredMap').click();
   await page.locator('.leaflet-interactive').first().dispatchEvent('click');
-  await page.locator('[data-map-show]').click();
+  await page.locator('[data-map-show="aquarium"]').click();
   await until(() => document.activeElement?.id === 'idea-aquarium');
   if ((await page.locator('#search').inputValue()) !== 'Aquarium')
     throw Error('filtered map details retain search');
