@@ -673,7 +673,12 @@ function renderSlotChoices() {
     const names = (state.days[date]?.[button.dataset.slotChoice] ?? [])
       .map((id) => getActivity(id)?.name)
       .filter(Boolean);
-    button.querySelector('small').textContent = names.length ? names.join(' · ') : 'Noch frei';
+    const draft = AGREED_ITINERARY[date]?.[button.dataset.slotChoice];
+    button.querySelector('small').textContent = names.length
+      ? names.join(' · ')
+      : draft
+        ? `Reiseentwurf · ${draft}`
+        : 'Noch frei';
   }
 }
 function chooseSlot(slot) {
