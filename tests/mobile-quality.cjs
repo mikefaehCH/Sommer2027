@@ -92,6 +92,21 @@ const fs = require('fs'),
       .locator('#two-hours')
       .getByText(/Spuren im Sand/)
       .waitFor();
+    await adventure.locator('#interest').selectOption('creative');
+    await adventure
+      .locator('#two-hours')
+      .getByText(/drei Wellenformen/)
+      .waitFor();
+    await adventure.getByRole('radio', { name: 'Kurze Missionen' }).check();
+    await adventure.locator('#recap-photos').setInputFiles('assets/icons/icon-192.png');
+    const album = adventure.waitForEvent('download');
+    await adventure.getByRole('button', { name: 'Ferienalbum speichern' }).click();
+    const albumFile = await album;
+    assert.equal(albumFile.suggestedFilename(), 'mein-ferienalbum.html');
+    assert.match(
+      fs.readFileSync(await albumFile.path(), 'utf8'),
+      /Schlossdetektiv[\s\S]*data:image\/jpeg;base64,/,
+    );
     await adventure.locator('#greeting').fill('Ein Gruss von der Küste');
     await adventure.locator('#card-photo').setInputFiles('assets/icons/icon-192.png');
     await adventure.getByText('Foto eingefügt. Es bleibt auf diesem Gerät.').waitFor();
