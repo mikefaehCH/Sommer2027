@@ -108,8 +108,16 @@ const fs = require('fs'),
       await adventure.setViewportSize(viewport);
       assert.ok(await adventure.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     }
-    await tablet.setOffline(true);
-    await adventure.reload();
+    if (webkit) {
+      await new Promise((resolve) => {
+        server.close(resolve);
+        server.closeAllConnections();
+      });
+    } else {
+      await tablet.setOffline(true);
+    }
+    const fallback = await adventure.goto(origin + '/entdecker.html');
+    assert.ok(fallback?.fromServiceWorker());
     assert.equal(await stamp.getAttribute('aria-pressed'), 'true');
     await adventure.locator('#recap').getByText('Loire · Schlossdetektiv').waitFor();
     assert.deepEqual(problems, []);
