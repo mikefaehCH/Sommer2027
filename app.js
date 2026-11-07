@@ -598,7 +598,7 @@ function discoverMatches(q, category, fav) {
       [a.name, a.area, a.description, a.category].join(' ').toLocaleLowerCase('de').includes(q),
   );
 }
-function renderDiscover() {
+function renderDiscover(activityId) {
   const q = $('#search').value.trim().toLocaleLowerCase('de');
   const category = $('#categoryFilter').value;
   const fav = $('#favFilter').value;
@@ -625,11 +625,14 @@ function renderDiscover() {
         .reduce((n, v) => n + (v.vote === 'yes' ? 2 : v.vote === 'maybe' ? 1 : 0), 0);
     return score(b.id) - score(a.id);
   });
+  if (typeof activityId === 'string') {
+    discoverLimit = Math.max(discoverLimit, matches.findIndex((a) => a.id === activityId) + 1);
+  }
   const shown = matches.slice(0, discoverLimit);
   $('#activityGrid').innerHTML = shown
     .map(
       (a) =>
-        `<article class="activity${activityPhotos[a.id] ? '' : ' no-photo'}" data-region="${escapeHTML(a.region)}">${activityPhotos[a.id] ? `<div class="activity-photo-placeholder" data-photo-id="${escapeHTML(a.id)}"></div>` : ''}<span class="tag">${escapeHTML(REGIONS[a.region])} · ${escapeHTML(a.priority)}</span><h3>${escapeHTML(a.name)}</h3><div class="location">${escapeHTML(a.area)} · ${escapeHTML(a.category)}</div><p>${escapeHTML(a.description)}</p>${PHOTO_REFERENCES[a.id] ? `<div class="photo-reference"><span>Ortsfoto: ${escapeHTML(PHOTO_REFERENCES[a.id].provider)}</span><a href="${escapeHTML(PHOTO_REFERENCES[a.id].source)}" target="_blank" rel="noopener noreferrer">Foto ansehen ↗</a></div>` : ''}${voteControls(a)}<div class="cardactions"><button class="smallbtn" data-add="${a.id}">+ Planen</button><button class="fav ${state.favorites.includes(a.id) ? 'on' : ''}" data-fav="${a.id}" aria-pressed="${state.favorites.includes(a.id)}"><span aria-hidden="true">♡</span> ${state.favorites.includes(a.id) ? 'Gemerkt' : 'Merken'}</button><a href="${escapeHTML(a.source || 'https://www.iledere.com/')}" target="_blank" rel="noopener noreferrer">Quelle ↗</a><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.name + ' ' + a.area + ' France')}" target="_blank" rel="noopener noreferrer">Karte ↗</a></div></article>`,
+        `<article class="activity${activityPhotos[a.id] ? '' : ' no-photo'}" data-region="${escapeHTML(a.region)}">${activityPhotos[a.id] ? `<div class="activity-photo-placeholder" data-photo-id="${escapeHTML(a.id)}"></div>` : ''}<span class="tag">${escapeHTML(REGIONS[a.region])} · ${escapeHTML(a.priority)}</span><h3 id="idea-${escapeHTML(a.id)}" tabindex="-1">${escapeHTML(a.name)}</h3><div class="location">${escapeHTML(a.area)} · ${escapeHTML(a.category)}</div><p>${escapeHTML(a.description)}</p>${PHOTO_REFERENCES[a.id] ? `<div class="photo-reference"><span>Ortsfoto: ${escapeHTML(PHOTO_REFERENCES[a.id].provider)}</span><a href="${escapeHTML(PHOTO_REFERENCES[a.id].source)}" target="_blank" rel="noopener noreferrer">Foto ansehen ↗</a></div>` : ''}${voteControls(a)}<div class="cardactions"><button class="smallbtn" data-add="${a.id}">+ Planen</button><button class="fav ${state.favorites.includes(a.id) ? 'on' : ''}" data-fav="${a.id}" aria-pressed="${state.favorites.includes(a.id)}"><span aria-hidden="true">♡</span> ${state.favorites.includes(a.id) ? 'Gemerkt' : 'Merken'}</button><a href="${escapeHTML(a.source || 'https://www.iledere.com/')}" target="_blank" rel="noopener noreferrer">Quelle ↗</a><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a.name + ' ' + a.area + ' France')}" target="_blank" rel="noopener noreferrer">Karte ↗</a></div></article>`,
     )
     .join('');
   let more = $('#moreIdeas');
@@ -657,10 +660,12 @@ function renderAll() {
   renderDiscover();
 }
 let pendingActivity = null;
-function add(id) {
+let restoreDiscoverFocus = false;
+function add(id, fromDiscover = false) {
   const a = getActivity(id);
   if (!a) return;
   pendingActivity = id;
+  restoreDiscoverFocus = fromDiscover;
   const dialog = $('#slotDialog');
   $('#slotDialogTitle').textContent = a.name;
   $('#slotDialogDate').value = selected;
@@ -944,7 +949,7 @@ document.addEventListener('click', (e) => {
   } else if (t.dataset.date) {
     selected = t.dataset.date;
     renderAll();
-  } else if (t.dataset.add) add(t.dataset.add);
+  } else if (t.dataset.add) add(t.dataset.add, Boolean(t.closest('#activityGrid')));
   else if (t.dataset.remove) remove(t.dataset.remove, t.dataset.slot);
   else if (t.dataset.move) move(t.dataset.move, t.dataset.slot);
   else if (t.dataset.fav) {
@@ -1084,6 +1089,10 @@ $('#slotDialog')
   .querySelector('[data-close-slot]')
   .addEventListener('click', () => $('#slotDialog').close());
 $('#slotDialog').addEventListener('close', () => {
+  if (restoreDiscoverFocus) {
+    const heading = document.getElementById('idea-' + pendingActivity);
+    (heading?.closest('article').querySelector('[data-add]') ?? $('#search')).focus();
+  }
   pendingActivity = null;
 });
 
@@ -1097,7 +1106,11 @@ document.addEventListener('click', (e) => {
   const a = getActivity(b.dataset.mapShow || b.dataset.plannerShow);
   if (!a) return;
   if (filteredMap && b.dataset.mapShow) {
+    renderDiscover(a.id);
     location.hash = 'entdecken';
+    requestAnimationFrame(() => {
+      document.getElementById('idea-' + a.id)?.focus();
+    });
     return;
   }
   region = a.region;

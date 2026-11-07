@@ -166,6 +166,16 @@ const { chromium } = require('playwright');
   await page.locator('.leaflet-interactive').first().dispatchEvent('click');
   await page.locator('[data-map-show]').click();
   if ((await page.locator('.activity').count()) !== 1) throw Error('map details');
+  await page.locator('#search').fill('Aquarium');
+  await page.locator('#showFilteredMap').click();
+  await page.locator('.leaflet-interactive').first().dispatchEvent('click');
+  await page.locator('[data-map-show]').click();
+  await until(() => document.activeElement?.id === 'idea-aquarium');
+  if ((await page.locator('#search').inputValue()) !== 'Aquarium')
+    throw Error('filtered map details retain search');
+  await page.locator('#activityGrid [data-add="aquarium"]').click();
+  await page.locator('#slotDialog [data-close-slot]').click();
+  await until(() => document.activeElement?.dataset.add === 'aquarium');
   await page.locator('[data-photo-detail]').first().click();
   if (!(await page.locator('#photoDialog').isVisible())) throw Error('gallery dialog');
   await page.locator('.photo-close').click();
