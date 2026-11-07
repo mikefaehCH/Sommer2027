@@ -588,11 +588,8 @@ fetch('ACTIVITY_PHOTOS.json')
 const DISCOVER_STEP = 12;
 let discoverLimit = DISCOVER_STEP,
   discoverKey = '';
-function renderDiscover() {
-  const q = $('#search').value.trim().toLocaleLowerCase('de');
-  const category = $('#categoryFilter').value;
-  const fav = $('#favFilter').value;
-  const matches = allActivities().filter(
+function discoverMatches(q, category, fav) {
+  return allActivities().filter(
     (a) =>
       (region === 'all' || a.region === region) &&
       (category === 'all' || a.category === category) &&
@@ -600,6 +597,12 @@ function renderDiscover() {
         (fav === 'favorites' ? state.favorites.includes(a.id) : a.priority === 'Top')) &&
       [a.name, a.area, a.description, a.category].join(' ').toLocaleLowerCase('de').includes(q),
   );
+}
+function renderDiscover() {
+  const q = $('#search').value.trim().toLocaleLowerCase('de');
+  const category = $('#categoryFilter').value;
+  const fav = $('#favFilter').value;
+  const matches = discoverMatches(q, category, fav);
   $('#resultCount').textContent = matches.length
     ? `${matches.length} Ideen`
     : 'Keine Ideen für diese Auswahl. Passe die Suche oder die Filter an.';
@@ -645,6 +648,7 @@ function renderDiscover() {
   more.hidden = rest <= 0;
   more.textContent = `Weitere ${Math.min(rest, DISCOVER_STEP * 2)} von ${rest} Ideen anzeigen`;
   observeActivityPhotos();
+  if (filteredMap) showFilteredMap(matches);
 }
 function renderAll() {
   renderDates();
@@ -659,15 +663,33 @@ function add(id) {
   pendingActivity = id;
   const dialog = $('#slotDialog');
   $('#slotDialogTitle').textContent = a.name;
-  $('#slotDialogDate').textContent = dateTitle(selected);
+  $('#slotDialogDate').value = selected;
+  renderSlotChoices();
   dialog.showModal();
+}
+function renderSlotChoices() {
+  const date = $('#slotDialogDate').value;
+  for (const button of $('#slotDialog').querySelectorAll('[data-slot-choice]')) {
+    const names = (state.days[date]?.[button.dataset.slotChoice] ?? [])
+      .map((id) => getActivity(id)?.name)
+      .filter(Boolean);
+    button.querySelector('small').textContent = names.length ? names.join(' · ') : 'Noch frei';
+  }
 }
 function chooseSlot(slot) {
   if (!pendingActivity || !SLOTS.includes(slot)) return;
+  const date = $('#slotDialogDate').value;
+  if (!DAYS.includes(date)) return;
   const id = pendingActivity;
-  pendingActivity = null;
-  $('#slotDialog').close();
-  if (change(() => state.days[selected][slot].push(id))) toast('Im Kalender eingetragen');
+  if (
+    change(() => {
+      selected = date;
+      state.days[date][slot].push(id);
+    })
+  ) {
+    $('#slotDialog').close();
+    toast('Im Kalender eingetragen');
+  }
 }
 function remove(id, slot) {
   change(() => {
@@ -802,6 +824,7 @@ function custom(targetSlot) {
     state.days[selected][slot].push(id);
   });
 }
+let filteredMap = false;
 let mapRegion = 'amboise',
   mapMarkers = { amboise: [], re: [], pal: [] };
 function focusMap(region) {
@@ -811,7 +834,7 @@ function focusMap(region) {
     b.classList.toggle('active', active);
     b.setAttribute('aria-pressed', String(active));
   });
-  if (!map) return;
+  if (!map || filteredMap) return;
   Object.entries(mapMarkers).forEach(([key, markers]) =>
     markers.forEach((marker) => {
       if (key === region) marker.addTo(map);
@@ -861,10 +884,44 @@ function initMap() {
         '">Details ansehen</button></div>',
     );
     marker.bindTooltip(a.name, { direction: 'top', offset: [0, -10] });
+    marker.activityId = a.id;
     mapMarkers[a.region].push(marker);
   });
   focusMap(mapRegion);
 }
+function showFilteredMap(matches) {
+  initMap();
+  const ids = new Set(matches.map((a) => a.id));
+  const points = [];
+  if (map) {
+    for (const marker of Object.values(mapMarkers).flat()) {
+      if (ids.has(marker.activityId)) {
+        marker.addTo(map);
+        points.push(marker.getLatLng());
+      } else map.removeLayer(marker);
+    }
+    if (points.length) map.fitBounds(points, { padding: [28, 28], maxZoom: 13, animate: false });
+  }
+  $('#filteredMapStatus').textContent = map
+    ? points.length
+      ? `${points.length} von ${matches.length} Treffern auf der Karte`
+      : 'Für diese Auswahl sind keine Kartenpunkte verfügbar.'
+    : 'Karte nicht verfügbar. Die Treffer bleiben in der Liste sichtbar.';
+}
+$('#showFilteredMap').addEventListener('click', () => {
+  filteredMap = true;
+  $('#mapControls').hidden = false;
+  $('#mapRegionTabs').hidden = true;
+  renderDiscover();
+  $('#filteredMapStatus').focus();
+});
+$('#showRegionalMap').addEventListener('click', () => {
+  filteredMap = false;
+  $('#mapControls').hidden = true;
+  $('#mapRegionTabs').hidden = false;
+  focusMap(mapRegion);
+  $('#mapRegionTabs [aria-pressed="true"]').focus();
+});
 document.querySelectorAll('[data-map-region]').forEach((button) =>
   button.addEventListener('click', () => {
     initMap();
@@ -1009,9 +1066,15 @@ window.addEventListener('focus', () => {
   if (cloudMode && !cloudBusy) refreshCloud().catch(() => {});
 });
 
+const slotDate = $('#slotDialogDate');
+slotDate.replaceChildren(...DAYS.map((day) => new Option(dateTitle(day), day)));
+slotDate.addEventListener('change', renderSlotChoices);
 $('#slotDialog')
   .querySelectorAll('[data-slot-choice]')
-  .forEach((b) => b.addEventListener('click', () => chooseSlot(b.dataset.slotChoice)));
+  .forEach((b) => {
+    b.append(document.createElement('small'));
+    b.addEventListener('click', () => chooseSlot(b.dataset.slotChoice));
+  });
 $('#slotDialog')
   .querySelector('[data-close-slot]')
   .addEventListener('click', () => $('#slotDialog').close());
@@ -1028,6 +1091,10 @@ document.addEventListener('click', (e) => {
   }
   const a = getActivity(b.dataset.mapShow || b.dataset.plannerShow);
   if (!a) return;
+  if (filteredMap && b.dataset.mapShow) {
+    location.hash = 'entdecken';
+    return;
+  }
   region = a.region;
   $('#regionFilter').value = region;
   $('#search').value = a.name;

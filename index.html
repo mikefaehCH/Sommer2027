@@ -322,6 +322,9 @@
         <button type="button" class="pill outline" id="resetDiscover" hidden>
           Filter zurücksetzen
         </button>
+        <a id="showFilteredMap" class="pill outline map-switch" href="#karte"
+          >Treffer auf der Karte ansehen</a
+        >
         <div class="activitygrid" id="activityGrid"></div>
       </section>
       <section id="karte" class="section tinted">
@@ -329,7 +332,19 @@
           <p class="eyebrow">UNTERWEGS IN FRANKREICH</p>
           <h2>Alle Ideen auf der Karte.</h2>
           <p class="lead">Entdecke die Ausflüge jeder Etappe im Detail.</p>
-          <div class="map-tabs" role="group" aria-label="Kartenausschnitt wählen">
+          <div id="mapControls" class="map-controls" hidden>
+            <p id="filteredMapStatus" role="status" tabindex="-1"></p>
+            <a class="pill outline map-switch" href="#entdecken">Zur Trefferliste</a>
+            <button id="showRegionalMap" class="pill outline map-switch" type="button">
+              Alle Regionen anzeigen
+            </button>
+          </div>
+          <div
+            id="mapRegionTabs"
+            class="map-tabs"
+            role="group"
+            aria-label="Kartenausschnitt wählen"
+          >
             <button
               type="button"
               class="map-tab active"
@@ -665,7 +680,10 @@
         <button type="button" class="slot-close" data-close-slot aria-label="Schliessen">×</button>
         <p class="eyebrow">ZUM FERIENPLAN HINZUFÜGEN</p>
         <h2 id="slotDialogTitle"></h2>
-        <p id="slotDialogDate" class="muted"></p>
+        <label class="slot-date"
+          >Ferientag
+          <select id="slotDialogDate"></select
+        ></label>
         <p>Wann passt die Aktivität am besten?</p>
         <div class="slot-options">
           <button type="button" data-slot-choice="Morgen">
