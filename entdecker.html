@@ -75,7 +75,9 @@
         <div>
           <p class="eyebrow">02 / Spontan los</p>
           <h2 id="two-title">Ich habe zwei Stunden</h2>
-          <p>Wähle eine Gegend. Du bekommst eine Idee mit zwei Aufgaben und Zeit für eine Pause.</p>
+          <p>
+            Wähle eine Gegend und worauf du Lust hast. Die Zeiten sind Vorschläge ab dem Startpunkt.
+          </p>
         </div>
         <div>
           <label for="region">Wo bist du?</label>
@@ -84,7 +86,15 @@
             <option value="sea">Am Meer</option>
             <option value="safari">Auf Safari</option>
           </select>
-          <ol id="two-hours" aria-live="polite"></ol>
+          <label for="interest">Worauf hast du Lust?</label>
+          <select id="interest">
+            <option value="discover">Suchen und entdecken</option>
+            <option value="creative">Malen und erfinden</option>
+          </select>
+          <div aria-live="polite">
+            <p id="plan-place"></p>
+            <ol id="two-hours"></ol>
+          </div>
         </div>
       </section>
       <section class="workshop" aria-labelledby="card-title">
@@ -123,11 +133,22 @@
         <div>
           <p class="eyebrow">04 / Ferienalbum</p>
           <h2 id="recap-title">Mein Ferienrückblick</h2>
-          <p>Hier landen die erledigten Missionen automatisch.</p>
+          <p>
+            Hier landen deine erledigten Missionen automatisch. Wähle Ferienfotos dazu und speichere
+            daraus dein Album.
+          </p>
         </div>
         <div>
           <ul id="recap"></ul>
           <p id="recap-empty">Dein Rückblick wächst mit jedem Stempel.</p>
+          <label for="recap-photos">Bis zu drei eigene Fotos (freiwillig)</label>
+          <input type="file" id="recap-photos" accept="image/*" multiple />
+          <button id="recap-save" type="button" class="button" disabled>
+            Ferienalbum speichern
+          </button>
+          <p id="recap-status" role="status">
+            Fotos werden beim Speichern direkt in dein Album eingebettet.
+          </p>
         </div>
       </section>
       <section class="workshop" aria-labelledby="offline-title">

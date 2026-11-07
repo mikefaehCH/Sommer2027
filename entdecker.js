@@ -3,6 +3,8 @@ const worlds = {
     name: 'Loire',
     number: '01',
     scene: 'Schlossdetektiv',
+    place: 'Château Royal d’Amboise',
+    creative: 'Skizziere das Schloss mit drei Formen. Erfinde ein eigenes Wappen dazu.',
     easy: 'Entdecke einen Turm. Zeig ihn jemandem.',
     hard: 'Finde zwei verschiedene Türme. Zeichne, woran du sie unterscheiden kannst.',
     plan: [
@@ -16,6 +18,8 @@ const worlds = {
     name: 'Atlantik',
     number: '02',
     scene: 'Küstenforscher',
+    place: 'Plage de la Conche des Baleines',
+    creative: 'Zeichne drei Wellenformen und denk dir für jede einen Namen aus.',
     easy: 'Finde am Strand drei verschiedene Formen. Lass sie an ihrem Platz.',
     hard: 'Schau nach drei Spuren im Sand. Wer oder was könnte sie gemacht haben?',
     plan: [
@@ -29,6 +33,8 @@ const worlds = {
     name: 'Safari',
     number: '03',
     scene: 'Tierbeobachter',
+    place: 'Le PAL – Tierpark',
+    creative: 'Skizziere ein Tier und erfinde ein Zeichen, das zu seiner Bewegung passt.',
     easy: 'Such ein Tier und mach seine Bewegung nach.',
     hard: 'Beobachte zwei Tiere und erfinde für jedes ein passendes Zeichen.',
     plan: [
@@ -56,7 +62,8 @@ try {
   // The pass remains playable in memory if storage is unavailable.
 }
 const stamps = new Set(saved);
-let level = 'easy';
+let level = document.querySelector('[name="level"]:checked').value;
+let albumBusy = false;
 let persists = true;
 
 function renderProgress() {
@@ -70,6 +77,7 @@ function renderProgress() {
     ...completed.map(([, world]) => make('li', world.name + ' · ' + world.scene)),
   );
   get('recap-empty').hidden = completed.length > 0;
+  get('recap-save').disabled = completed.length === 0 || albumBusy;
 }
 function renderMissions() {
   get('missions').replaceChildren(
@@ -108,11 +116,14 @@ for (const input of document.querySelectorAll('[name="level"]')) {
   });
 }
 function renderPlan() {
-  get('two-hours').replaceChildren(
-    ...worlds[get('region').value].plan.map((item) => make('li', item)),
-  );
+  const world = worlds[get('region').value];
+  const plan = [...world.plan];
+  if (get('interest').value === 'creative') plan[1] = '45 Min. · ' + world.creative;
+  get('plan-place').textContent = 'Startpunkt · ' + world.place;
+  get('two-hours').replaceChildren(...plan.map((item) => make('li', item)));
 }
 get('region').addEventListener('change', renderPlan);
+get('interest').addEventListener('change', renderPlan);
 renderPlan();
 renderMissions();
 
@@ -169,29 +180,45 @@ get('card-photo').addEventListener('change', async (event) => {
   if (!file) return;
   const revision = ++photoRevision;
   const status = get('export-status');
+  try {
+    const image = await openPhoto(file);
+    if (revision !== photoRevision) return;
+    photo = image;
+    get('remove-photo').hidden = false;
+    renderCard();
+    status.textContent = 'Foto eingefügt. Es bleibt auf diesem Gerät.';
+  } catch (error) {
+    if (revision === photoRevision) status.textContent = error.message;
+  }
+});
+async function openPhoto(file) {
   if (
     file.size > 20 * 1024 * 1024 ||
     !/^image\/(jpeg|png|webp|gif|avif|heic|heif)$/.test(file.type)
   ) {
-    status.textContent = 'Wähle ein unterstütztes Foto bis 20 MB, zum Beispiel JPEG oder PNG.';
-    return;
+    throw Error('Wähle unterstützte Fotos bis 20 MB, zum Beispiel JPEG oder PNG.');
   }
   const url = URL.createObjectURL(file);
   const image = new Image();
   try {
     image.src = url;
     await image.decode();
-    if (revision !== photoRevision) return;
-    photo = image;
-    get('remove-photo').hidden = false;
-    renderCard();
-    status.textContent = 'Foto eingefügt. Es bleibt auf diesem Gerät.';
+    if (!image.naturalWidth || !image.naturalHeight) throw Error();
+    return image;
   } catch {
-    if (revision === photoRevision) status.textContent = 'Das Foto konnte nicht geöffnet werden.';
+    throw Error('Ein Foto konnte nicht geöffnet werden.');
   } finally {
     URL.revokeObjectURL(url);
   }
-});
+}
+function saveFile(url, filename) {
+  const link = make('a', '');
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+}
 get('remove-photo').addEventListener('click', () => {
   photoRevision++;
   photo = null;
@@ -207,15 +234,70 @@ get('save').addEventListener('click', () => {
     get('export-status').textContent = 'Die Bildvorschau ist in diesem Browser nicht verfügbar.';
     return;
   }
-  const link = make('a', '');
-  link.href = canvas.toDataURL('image/png');
-  link.download = 'meine-ferienpost.png';
-  document.body.append(link);
-  link.click();
-  link.remove();
+  saveFile(canvas.toDataURL('image/png'), 'meine-ferienpost.png');
   get('export-status').textContent = 'Postkarte als PNG zum Speichern geöffnet.';
 });
 renderCard();
+
+get('recap-save').addEventListener('click', async () => {
+  const completed = Object.entries(worlds).filter(([id]) => stamps.has(level + ':' + id));
+  const selected = [...get('recap-photos').files];
+  const status = get('recap-status');
+  if (!completed.length || albumBusy) return;
+  if (selected.length > 3) {
+    status.textContent = 'Wähle höchstens drei Fotos für dein Album.';
+    return;
+  }
+  albumBusy = true;
+  renderProgress();
+  status.textContent = 'Ferienalbum wird erstellt …';
+  try {
+    const album = document.implementation.createHTMLDocument('Mein Ferienalbum');
+    album.documentElement.lang = 'de-CH';
+    const charset = album.createElement('meta');
+    charset.setAttribute('charset', 'utf-8');
+    const viewport = album.createElement('meta');
+    viewport.name = 'viewport';
+    viewport.content = 'width=device-width, initial-scale=1';
+    const style = album.createElement('style');
+    style.textContent =
+      'body{margin:0 auto;padding:2rem 1rem;max-width:58rem;background:#fff8e7;color:#193e38;font:1.1rem/1.5 system-ui,sans-serif}h1,h2{font-family:Georgia,serif}img{display:block;width:100%;height:auto;border-radius:1rem;margin:1rem 0}';
+    album.head.prepend(charset, viewport, style);
+    album.body.append(
+      make('h1', 'Mein Ferienalbum'),
+      make('p', 'Sommer 2027 · ' + completed.length + ' gesammelte Stempel'),
+    );
+    for (const [, world] of completed) {
+      album.body.append(make('h2', world.name), make('p', world.scene));
+    }
+    for (const file of selected) {
+      const image = await openPhoto(file);
+      const thumbnail = document.createElement('canvas');
+      const scale = Math.min(1, 1280 / Math.max(image.naturalWidth, image.naturalHeight));
+      thumbnail.width = Math.max(1, Math.round(image.naturalWidth * scale));
+      thumbnail.height = Math.max(1, Math.round(image.naturalHeight * scale));
+      thumbnail.getContext('2d').drawImage(image, 0, 0, thumbnail.width, thumbnail.height);
+      const picture = album.createElement('img');
+      picture.alt = 'Selbst ausgewähltes Ferienfoto';
+      picture.src = thumbnail.toDataURL('image/jpeg', 0.8);
+      album.body.append(picture);
+    }
+    const url = URL.createObjectURL(
+      new Blob(['<!doctype html>' + album.documentElement.outerHTML], {
+        type: 'text/html;charset=utf-8',
+      }),
+    );
+    saveFile(url, 'mein-ferienalbum.html');
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    status.textContent =
+      'Ferienalbum zum Speichern geöffnet. Die Datei kannst du gemeinsam anschauen oder teilen.';
+  } catch (error) {
+    status.textContent = error.message || 'Das Ferienalbum konnte nicht gespeichert werden.';
+  } finally {
+    albumBusy = false;
+    renderProgress();
+  }
+});
 
 const packageFiles = [
   'entdecker.html',
