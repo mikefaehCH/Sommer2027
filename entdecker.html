@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="de-CH">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; form-action 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js https://unpkg.com/leaflet@1.9.4/dist/leaflet.js; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com https://unpkg.com/leaflet@1.9.4/dist/leaflet.css; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://thumb.wikimedia.org https://a.tile.openstreetmap.org https://b.tile.openstreetmap.org https://c.tile.openstreetmap.org; connect-src 'self' https://kgtowblwixgfdnbgcjeq.supabase.co; worker-src 'self'; manifest-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fff8e7" />
+    <meta name="apple-mobile-web-app-title" content="Entdeckerpass" />
+    <title>Entdeckerpass · Sommer 2027</title>
+    <link rel="manifest" href="entdecker.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="entdecker.css" />
+    <script src="entdecker.js" defer></script>
+  </head>
+  <body>
+    <header class="top"><a href="index.html">Sommer 2027</a><span>Ferienlabor</span></header>
+    <main>
+      <section class="hero" aria-labelledby="title">
+        <div>
+          <p class="eyebrow">Schloss · Meer · Safari</p>
+          <h1 id="title">Mein<br />Entdeckerpass</h1>
+          <p>Such dir eine Mission aus. Geh nach draussen und sammle deinen Stempel.</p>
+          <a class="button" href="#missionen">Mission wählen</a>
+        </div>
+        <svg viewBox="0 0 440 330" class="illustration" aria-hidden="true">
+          <rect x="35" y="18" width="370" height="292" rx="95" fill="#f9d990" />
+          <circle cx="325" cy="82" r="35" fill="#f1a346" />
+          <path
+            d="M45 221Q105 126 171 203T294 200T395 206V260Q395 307 345 310H94Q45 302 45 256Z"
+            fill="#629d83"
+          />
+          <path
+            d="M45 257Q117 211 192 253T324 241T395 244V267Q390 309 344 310H97Q50 309 45 257Z"
+            fill="#3a7681"
+          />
+          <path
+            d="M117 223C162 181 200 277 275 208C302 183 301 145 283 128"
+            fill="none"
+            stroke="#fff8e7"
+            stroke-width="7"
+            stroke-linecap="round"
+            stroke-dasharray="3 15"
+          />
+          <path d="M112 202V144H135V162H156V144H178V202Z" fill="#aa5038" />
+          <path d="M251 146L266 86H289L304 146Z" fill="#fff8e7" />
+          <path d="M263 104H292L297 122H259Z" fill="#aa5038" />
+          <path d="M259 85L278 65L296 85Z" fill="#193e38" />
+          <path
+            d="M318 265Q343 252 365 265M87 275Q113 262 139 275"
+            fill="none"
+            stroke="#c2e1d6"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+          <circle cx="207" cy="230" r="10" fill="#f1a346" stroke="#fff8e7" stroke-width="4" />
+        </svg>
+      </section>
+      <div class="toolbar">
+        <fieldset>
+          <legend>Wie möchtest du spielen?</legend>
+          <label><input type="radio" name="level" value="easy" checked /> Kurze Missionen</label>
+          <label><input type="radio" name="level" value="hard" /> Knifflige Missionen</label>
+        </fieldset>
+        <p id="score" role="status"></p>
+      </div>
+      <section id="missionen" aria-labelledby="missions-title">
+        <p class="eyebrow">01 / Abenteuer</p>
+        <h2 id="missions-title">Wähle eine Mission</h2>
+        <div id="missions" class="tiles"></div>
+      </section>
+      <section class="workshop" aria-labelledby="two-title">
+        <div>
+          <p class="eyebrow">02 / Spontan los</p>
+          <h2 id="two-title">Ich habe zwei Stunden</h2>
+          <p>Wähle eine Gegend. Du bekommst eine Idee mit zwei Aufgaben und Zeit für eine Pause.</p>
+        </div>
+        <div>
+          <label for="region">Wo bist du?</label>
+          <select id="region">
+            <option value="loire">An der Loire</option>
+            <option value="sea">Am Meer</option>
+            <option value="safari">Auf Safari</option>
+          </select>
+          <ol id="two-hours" aria-live="polite"></ol>
+        </div>
+      </section>
+      <section class="workshop" aria-labelledby="card-title">
+        <div>
+          <p class="eyebrow">03 / Ferienpost</p>
+          <h2 id="card-title">Meine Postkarte</h2>
+          <p>
+            Wähle ein Motiv, ergänze auf Wunsch ein Foto und schreib einen Gruss. Du kannst die
+            Karte als Bild speichern.
+          </p>
+        </div>
+        <div>
+          <label for="card-region">Motiv</label
+          ><select id="card-region">
+            <option value="loire">Schloss</option>
+            <option value="sea">Meer</option>
+            <option value="safari">Safari</option>
+          </select>
+          <label for="card-photo">Eigenes Foto (freiwillig)</label>
+          <input id="card-photo" type="file" accept="image/*" />
+          <button class="button" type="button" id="remove-photo" hidden>Foto entfernen</button>
+          <label for="greeting">Dein Gruss</label
+          ><textarea id="greeting" maxlength="140" placeholder="Grüsse aus den Ferien!"></textarea>
+          <canvas
+            id="card"
+            width="900"
+            height="560"
+            role="img"
+            aria-label="Vorschau der Postkarte"
+          ></canvas>
+          <button class="button" type="button" id="save">Postkarte speichern</button>
+          <p id="export-status" role="status"></p>
+        </div>
+      </section>
+      <section class="workshop" aria-labelledby="recap-title">
+        <div>
+          <p class="eyebrow">04 / Ferienalbum</p>
+          <h2 id="recap-title">Mein Ferienrückblick</h2>
+          <p>Hier landen die erledigten Missionen automatisch.</p>
+        </div>
+        <div>
+          <ul id="recap"></ul>
+          <p id="recap-empty">Dein Rückblick wächst mit jedem Stempel.</p>
+        </div>
+      </section>
+      <section class="workshop" aria-labelledby="offline-title">
+        <div>
+          <p class="eyebrow">05 / Unterwegs</p>
+          <h2 id="offline-title">Für unterwegs</h2>
+          <p>
+            Auf dem iPad in Safari über «Teilen» zum Home-Bildschirm hinzufügen. Danach das Symbol
+            mit Internet einmal öffnen.
+          </p>
+        </div>
+        <div>
+          <button id="offline" class="button" type="button">Offline-Paket prüfen</button>
+          <p id="offline-status" role="status"></p>
+          <p>
+            Stempel bleiben auf diesem Gerät gespeichert. Jeder Spielmodus hat seinen eigenen Pass.
+          </p>
+        </div>
+      </section>
+      <noscript><p>Aktiviere JavaScript, um Missionen und Postkarten zu benutzen.</p></noscript>
+    </main>
+  </body>
+</html>
