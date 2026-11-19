@@ -16,10 +16,11 @@ const button = (text, action) => {
   return b;
 };
 const status = (text) => ($('status').textContent = text);
-const database = indexedDB.open('sommer2027-kinder-reisefuehrer', 1);
+const database = indexedDB.open('sommer2027-kinder-reisefuehrer', 2);
 database.onupgradeneeded = () => {
-  for (const name of ['profiles', 'films', 'days'])
-    database.result.createObjectStore(name, { keyPath: 'id' });
+  for (const name of ['profiles', 'films', 'days', 'media'])
+    if (!database.result.objectStoreNames.contains(name))
+      database.result.createObjectStore(name, { keyPath: 'id' });
 };
 database.onerror = () =>
   status('Der Gerätespeicher lässt sich nicht öffnen. Bitte prüfe die Browsereinstellungen.');
@@ -31,6 +32,21 @@ function access(store, method, ...args) {
     );
     const req = tx.objectStore(store)[method](...args);
     tx.oncomplete = () => resolve(req.result);
+    tx.onabort = () => reject(tx.error);
+  });
+}
+// Commit metadata and bytes together. Older entries may hold a File directly.
+function changeFilm(id, metadata, bytes) {
+  return new Promise((resolve, reject) => {
+    const tx = database.result.transaction(['films', 'media'], 'readwrite');
+    if (metadata) {
+      tx.objectStore('films').put(metadata);
+      tx.objectStore('media').put({ id, bytes });
+    } else {
+      tx.objectStore('films').delete(id);
+      tx.objectStore('media').delete(id);
+    }
+    tx.oncomplete = resolve;
     tx.onabort = () => reject(tx.error);
   });
 }
@@ -247,7 +263,12 @@ $('keep').onclick = async () => {
   busy = true;
   $('camera').disabled = true;
   try {
-    await access('films', 'put', pending);
+    const { file, ...metadata } = pending;
+    await changeFilm(
+      metadata.id,
+      { ...metadata, name: file.name, type: file.type },
+      await file.arrayBuffer(),
+    );
     clearPreview();
     await listFilms();
     status('Gespeichert. Dein Film ist im Reiseführer.');
@@ -274,7 +295,10 @@ async function listFilms() {
     const title = places[entry.place][0] + ' · ' + entry.day;
     row.append(
       button('Film ansehen · ' + title, async (e) => {
-        const url = URL.createObjectURL(entry.file);
+        const source =
+          entry.file ?? new Blob([(await access('media', 'get', key)).bytes], { type: entry.type });
+        if (version !== listing) return;
+        const url = URL.createObjectURL(source);
         playbackURLs.add(url);
         const v = document.createElement('video');
         v.controls = true;
@@ -284,14 +308,14 @@ async function listFilms() {
         v.play().catch(() => {});
         const a = document.createElement('a');
         a.href = url;
-        a.download = entry.file.name || 'Ferienfilm';
+        a.download = entry.name || entry.file?.name || 'Ferienfilm';
         a.textContent = 'Datei exportieren';
         row.append(a);
       }),
       button('Film löschen', async () => {
         if (!confirm('Diesen Film endgültig vom Gerät löschen?')) return;
         try {
-          await access('films', 'delete', key);
+          await changeFilm(key);
           await listFilms();
           status('Film gelöscht.');
         } catch {
