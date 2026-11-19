@@ -1,4 +1,4 @@
-const CACHE = 'sommer2027-v36';
+const CACHE = 'sommer2027-v37';
 // Fotos von Unsplash/Wikimedia: beim Ansehen gespeichert, bleiben über Updates erhalten (max. PHOTO_MAX).
 const PHOTOS = 'sommer2027-fotos';
 const PHOTO_MAX = 120;
@@ -9,6 +9,9 @@ const CORE = [
   './entdecker.html',
   './entdecker.css',
   './entdecker.js',
+  './kinder/index.html',
+  './kinder/reise.js',
+  './kinder/reise.css',
   './entdecker.webmanifest',
   './style.css',
   './data.js',

@@ -81,6 +81,7 @@ const { chromium } = require('playwright');
   });
   let errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
+  await require('./kinder.cjs')(browser, origin);
   await page.goto(origin + '/manifest.webmanifest');
   await page.evaluate(async () => {
     await caches.open('sommer2027-v17');
