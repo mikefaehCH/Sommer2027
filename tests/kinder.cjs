@@ -25,14 +25,30 @@ module.exports = async function testGuide(browser, origin) {
     await p
       .locator('#camera')
       .setInputFiles({ name: 'test.mp4', mimeType: 'video/mp4', buffer: film });
+    p.once('dialog', (dialog) => dialog.dismiss());
+    await p.getByRole('button', { name: /Test A/ }).click();
+    assert.match(await p.locator('#owner').innerText(), /Test B/);
     await p.locator('#keep').click();
     await p.getByRole('button', { name: /Film ansehen/ }).waitFor();
+    await p.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+    });
+    await p.waitForFunction(() => !!navigator.serviceWorker.controller);
+    if (process.env.TEST_BROWSER !== 'webkit') await context.setOffline(true);
     await p.reload();
     await p.getByRole('button', { name: /Test A/ }).click();
     assert.equal(await p.locator('#films article').count(), 0);
     await p.getByRole('button', { name: /Test B/ }).click();
     await p.getByRole('button', { name: /Film ansehen/ }).click();
-    assert.equal(await p.getByText('Datei exportieren').getAttribute('download'), 'test.mp4');
+    assert.equal(
+      await p
+        .getByRole('link', { name: 'Datei exportieren', exact: true })
+        .getAttribute('download'),
+      'test.mp4',
+    );
+    const download = p.waitForEvent('download');
+    await p.getByRole('link', { name: 'Datei exportieren', exact: true }).click();
+    assert.equal((await download).suggestedFilename(), 'test.mp4');
     await p.setViewportSize({ width: 1133, height: 744 });
     assert.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     p.once('dialog', (dialog) => dialog.accept());
