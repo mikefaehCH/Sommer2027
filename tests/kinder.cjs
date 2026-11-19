@@ -21,13 +21,32 @@ module.exports = async function testGuide(browser, origin) {
     }
     await p.locator('summary').first().click();
     await p.locator('#allow button').first().click();
+    await p.locator('#allow button').last().click();
+    await p.getByRole('button', { name: /Test A/ }).click();
+    await p.locator('#places button').last().click();
+    await p.getByRole('button', { name: /Test B/ }).click();
     await p.locator('#places button').first().click();
+    await p.waitForFunction(() => document.getElementById('plan').textContent.includes(' und '));
     await p
       .locator('#camera')
       .setInputFiles({ name: 'test.mp4', mimeType: 'video/mp4', buffer: film });
     p.once('dialog', (dialog) => dialog.dismiss());
     await p.getByRole('button', { name: /Test A/ }).click();
     assert.match(await p.locator('#owner').innerText(), /Test B/);
+    // Simulate storage exhaustion before the commit and retry the same preview.
+    await p.evaluate(() => {
+      const original = IDBDatabase.prototype.transaction;
+      IDBDatabase.prototype.transaction = function (stores, ...rest) {
+        if (Array.isArray(stores) && stores.includes('media')) {
+          IDBDatabase.prototype.transaction = original;
+          throw new DOMException('Test', 'QuotaExceededError');
+        }
+        return original.call(this, stores, ...rest);
+      };
+    });
+    await p.locator('#keep').click();
+    await p.getByText(/Speichern fehlgeschlagen/).waitFor();
+    assert.ok(await p.locator('#preview').isVisible());
     await p.locator('#keep').click();
     await p.getByRole('button', { name: /Film ansehen/ }).waitFor();
     await p.evaluate(async () => {
@@ -48,7 +67,9 @@ module.exports = async function testGuide(browser, origin) {
     );
     const download = p.waitForEvent('download');
     await p.getByRole('link', { name: 'Datei exportieren', exact: true }).click();
-    assert.equal((await download).suggestedFilename(), 'test.mp4');
+    const exported = await download;
+    assert.equal(exported.suggestedFilename(), 'test.mp4');
+    assert.deepEqual(require('node:fs').readFileSync(await exported.path()), film);
     await p.setViewportSize({ width: 1133, height: 744 });
     assert.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     p.once('dialog', (dialog) => dialog.accept());
