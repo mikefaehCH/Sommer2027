@@ -8,8 +8,8 @@
     "test": "node tests/service-worker.cjs && node tests/project-sdk.cjs && node tests/regression.cjs && node tests/mobile-quality.cjs && node tests/starter-browser.cjs"
   },
   "devDependencies": {
-    "playwright": "1.65.0",
-    "prettier": "3.10.0",
+    "playwright": "1.65.1",
+    "prettier": "3.10.1",
     "@electric-sql/pglite": "0.5.16"
   }
 }
